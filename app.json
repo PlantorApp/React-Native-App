@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "Plantor-App",
+    "slug": "Plantor-App",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "Plantor-App"
+}
