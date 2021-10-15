@@ -5,6 +5,7 @@ const SavedScreen = ({navigation}) => {
     return (
         <View style={styles.container}>
             <Text>Saved</Text>
+
             <Button 
                 title="Click here"
                 onPress={() => alert('Button Clicked!')}
