@@ -4,7 +4,7 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 const SavedScreen = ({navigation}) => {
     return (
         <View style={styles.container}>
-            <Text>Home</Text>
+            <Text>Saved</Text>
             <Button 
                 title="Click here"
                 onPress={() => alert('Button Clicked!')}
