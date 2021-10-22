@@ -58,7 +58,7 @@ const UserLocation = ({ navigation }) => {
                 if (address.length > 0) {
                     setTimeout(() => {
                         setText(item.postalCode);
-``                    }, 300);
+                    }, 300);
                 }
             }
         }

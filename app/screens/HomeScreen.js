@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
+
 import { View, Text, Button } from 'react-native';
 import IndoorOutdoor from "../components/suggestionFlow/IndoorOutdoor";
 import Temperature from "../components/suggestionFlow/Temperature";
@@ -17,6 +18,7 @@ const Home = ({ navigation }) => {
             <Button 
                 title="Get Plant Suggestions"
                 onPress={() => navigation.navigate('IndoorOutdoor')}
+
             />
         </View>
     );
