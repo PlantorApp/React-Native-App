@@ -1,11 +1,6 @@
 import React,{useState} from "react";
-import { Text,
-    Box,
-    FlatList,
-    Image,
-    Heading,
-    HStack,
-    VStack, } from 'native-base';
+import { Text, Box, FlatList, Image, Heading, HStack, VStack, } from 'native-base';
+import { useFonts } from 'expo-font';
 
 import { MaterialCommunityIcons,MaterialIcons,FontAwesome5 } from '@expo/vector-icons';
 import EditEnv from "../components/dropDown/EditEnv";
@@ -13,6 +8,15 @@ import EditEnv from "../components/dropDown/EditEnv";
 const SavedScreen = ({navigation}) => {
 
     const [showModal, setShowModal] = useState(false)
+    
+    const [loaded] = useFonts({
+        DMSerifText: require('../assets/fonts/DMSerifText-Regular.ttf'),
+        QuickSandBold: require('../assets/fonts/Quicksand-Bold.ttf')
+    });
+
+    if (!loaded) {
+        return null;
+    }
 
     const data = [
         {
@@ -70,7 +74,7 @@ const SavedScreen = ({navigation}) => {
 
     return (
         <Box w={{ base: "100%", md: "25%",}}>
-            <Heading fontSize="2xl" p="4" pb="3">
+            <Heading style={{fontFamily: 'DMSerifText', padding: 4, paddingBottom: 3}}>
                 Saved
             </Heading>
             
