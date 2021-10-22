@@ -13,15 +13,15 @@ const IndoorOutdoor = ({ navigation }) => {
             <HStack>
                 <TouchableOpacity onPress={() => {navigation.navigate('Temperature'); setIndoor(true)}}>
                     <Card>
-                    <Card.Image source={require('../../assets/cardImage.svg')} />
-                    <Card.Title>Grow Indoor</Card.Title>
-                </Card>
+                        <Card.Image source={require('../../assets/cardImage.svg')} />
+                        <Card.Title>Grow Indoor</Card.Title>
+                    </Card>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {navigation.navigate('UserLocation'); setOutdoor(true);}}>
                     <Card>
-                    <Card.Image source={require('../../assets/cardImage.svg')} />
-                    <Card.Title>Grow Outdoor</Card.Title>
-                </Card>
+                        <Card.Image source={require('../../assets/cardImage.svg')} />
+                        <Card.Title>Grow Outdoor</Card.Title>
+                    </Card>
                 </TouchableOpacity>
             </HStack>
             {/* <Button onPress={() => navigation.goBack()} title="Dismiss" /> */}
