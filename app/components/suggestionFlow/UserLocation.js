@@ -69,12 +69,12 @@ const UserLocation = ({ navigation }) => {
         GetCurrentLocation();
     }
 
-    const DismissKeyboard = ({ children }) => (
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>{children}</TouchableWithoutFeedback>
-    );
+    // const DismissKeyboard = ({ children }) => (
+    //     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>{children}</TouchableWithoutFeedback>
+    // );
 
     return (
-        <DismissKeyboard>
+        // <DismissKeyboard>
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text>Input Location</Text>
                 <Text>{displayCurrentAddress}</Text>
@@ -88,7 +88,7 @@ const UserLocation = ({ navigation }) => {
                 <Button title="Locate Me!" onPress={getLocation} />
                 <Button title="Next" disabled={bool} onPress={() => navigation.navigate('Temperature')} />
             </View>
-        </DismissKeyboard>
+        // </DismissKeyboard>
     )
 }
 

@@ -7,10 +7,13 @@ import Temperature from "../components/suggestionFlow/Temperature";
 import UserLocation from "../components/suggestionFlow/UserLocation";
 import Lighting from "../components/suggestionFlow/Lighting";
 import NaturalLight from "../components/suggestionFlow/NaturalLight";
+import NaturalLightDirection from "../components/suggestionFlow/NaturalLightDirection";
 import ArtificialLight from "../components/suggestionFlow/ArtificialLight";
 import { Card } from 'react-native-elements';
 import { Box, Heading, HStack, ScrollView } from "native-base";
 import Svg, { Path } from 'react-native-svg';
+import PetFriendly from "../components/suggestionFlow/PetFriendly";
+import Suggestions from "../components/suggestionFlow/Suggestions";
 // const  = Svg;
 
 const Stack = createNativeStackNavigator();
@@ -97,7 +100,10 @@ const HomeScreen = ({ navigation }) => {
             <Stack.Screen name="Temperature" component={Temperature} />
             <Stack.Screen name="Lighting" component={Lighting} />
             <Stack.Screen name="NaturalLight" component={NaturalLight} />
+            <Stack.Screen name="NaturalLightDirection" component={NaturalLightDirection} />
             <Stack.Screen name="ArtificialLight" component={ArtificialLight} />
+            <Stack.Screen name="PetFriendly" component={PetFriendly} />
+            <Stack.Screen name="Suggestions" component={Suggestions} />
         </Stack.Navigator>
     );
 };

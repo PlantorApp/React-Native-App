@@ -16,12 +16,12 @@ const Temperature = ({ navigation }) => {
         }
     }, [text]);
 
-    const DismissKeyboard = ({ children }) => (
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>{children}</TouchableWithoutFeedback>
-    );
+    // const DismissKeyboard = ({ children }) => (
+    //     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>{children}</TouchableWithoutFeedback>
+    // );
 
     return (
-        <DismissKeyboard>
+        // <DismissKeyboard>
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text>What is the average temperature indoors at your place?</Text>
                 <TextInput
@@ -33,7 +33,7 @@ const Temperature = ({ navigation }) => {
                 />
                 <Button title="Next" disabled={bool} onPress={() => navigation.navigate('Lighting')} />
             </View>
-        </DismissKeyboard>
+        // </DismissKeyboard>
     )
 }
 
