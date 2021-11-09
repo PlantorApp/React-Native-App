@@ -20,25 +20,25 @@ const NotificationScreen = ({navigation}) => {
         {
             "id" : 1,
             "title" : "Rainfall Warning",
-            "description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            "description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim.",
             "date":"12/09/2021"
         },
         {
             "id" : 2,
             "title" : "Heat Wave Warning",
-            "description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            "description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim.",
             "date":"12/09/2021"
         },
         {
             "id" : 3,
             "title" : "Winter is coming",
-            "description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            "description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim.",
             "date":"12/09/2021"
         },
         {
             "id" : 4,
             "title" : "Heavy Storm Warning",
-            "description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            "description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim.",
             "date":"12/09/2021"
         },
              ]
@@ -54,8 +54,10 @@ const NotificationScreen = ({navigation}) => {
         <Heading style={{fontFamily: 'DMSerifText', padding: 4, paddingBottom: 3}}>
             Notifications
         </Heading>
-        <HStack justifyContent="space-between" space={4}  style={{fontFamily: 'DMSerifText', padding: 6, paddingBottom: 3,}}>
-           <Button 
+       
+        <HStack justifyContent="space-evenly"   style={{fontFamily: 'DMSerifText', padding: 6, paddingBottom: 4,}}>
+            
+           <Button style={styles.button}
                 title="All"
                 onPress={() => alert('Button Clicked!')}
             />
@@ -74,29 +76,31 @@ const NotificationScreen = ({navigation}) => {
         
                          
                       </HStack>
+                      
 
         <FlatList
   data={data}
   renderItem={({ item }) => (
-              <Box my="2" mx="3" pl="4" pr="5" py="2">
+              <Box my="2" mx="0" pl="4" pr="5" w={{ base: "75%", md: "25%",}}>
                   <VStack width="100%">
-                      <HStack justifyContent="space-between">
-                          <Text fontSize="2xl">{item.title}</Text>
+                      <HStack justifyContent="space-between" >
+                          <Text fontSize="2xl" >{item.title}</Text>
                          
                       </HStack>
 
-                      <HStack width="100%" space={2} justifyContent="space-between">
+                      <HStack width="100%" space={2} justifyContent="flex-start">
                           <Image  source ={{
                                    uri: "https://wallpaperaccess.com/full/317501.jpg",
-                          }}  w="100px" h="100px" backgroundColor="rgb(200,150,139)" alt={item.title}/>
-                          <VStack space={3}>
+                          }}  w="100px" h="100px" backgroundColor="rgb(200,150,139)" alt={item.title} paddingTop="5"/>
+                          <VStack space={2}>
+                             
                               <HStack justifyContent="flex-start" space={2}>
-                                  <Text fontSize="lg">
+                                  <Text fontSize="md">
                                      {item.description}
                                   </Text>
                                   
                               </HStack>
-                                  <Text fontSize="lg">
+                                  <Text fontSize="md">
                                   {item.date}
                               </Text>
                           </VStack>
@@ -122,5 +126,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#8fcbbc'
-    }
+    },
+    button: {
+    backgroundColor: "gray",
+    padding: 20,
+    borderRadius: 90
+}
+
 });

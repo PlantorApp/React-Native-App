@@ -1,18 +1,23 @@
-import React from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
-import { Box, Image, Heading } from "native-base";
+import React, { useState } from "react";
+import { View, Text, Button, StyleSheet, Switch } from "react-native";
+import { Box, Image, Heading, HStack, VStack } from "native-base";
 import { useFonts } from "expo-font";
 import {
   MaterialCommunityIcons,
   MaterialIcons,
   FontAwesome5,
 } from "@expo/vector-icons";
+import { color } from "react-native-reanimated";
+import { borderColor } from "styled-system";
 
 const ProfileScreen = ({ navigation }) => {
   const [loaded] = useFonts({
     DMSerifText: require("../assets/fonts/DMSerifText-Regular.ttf"),
     QuickSandBold: require("../assets/fonts/Quicksand-Bold.ttf"),
   });
+
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
   return (
     <Box w={{ base: "100%", md: "25%" }}>
@@ -21,8 +26,7 @@ const ProfileScreen = ({ navigation }) => {
       >
         Profile
       </Heading>
-      <View style={styles.container}>
-      
+      <View>
         <Box mt={5}>
           <Image
             source={{
@@ -32,12 +36,49 @@ const ProfileScreen = ({ navigation }) => {
             width="90"
             height="90"
             // resizeMode="cover"
+            borderRadius="90"
           />
         </Box>
 
-        <Text fontSize="md" style={styles.container}>Notifications Settings</Text>
-        <Text fontSize="md" style={styles.container}>Saved Articles</Text>
-        <Button title="Log Out" onPress={() => alert("Button Clicked!")} />
+        {/* ----------------------------------------- */}
+
+        <VStack width="100%">
+          <HStack justifyContent="flex-start" space={2} style={styles.border}>
+            <FontAwesome5 name="envelope" size={24} color="black" />
+            <Text fontSize="sm">tomholland@gmail.com</Text>
+          </HStack>
+
+          <HStack
+            width="100%"
+            justifyContent="space-between"
+            style={styles.border}
+          >
+            <Text fontSize="md">Notifications Settings</Text>
+
+            <Switch
+              trackColor={{ false: "#767577", true: "#B7A878" }}
+              thumbColor={isEnabled ? "#827344" : "#D3D3D3"}
+              ios_backgroundColor="#B7A878"
+              onValueChange={toggleSwitch}
+              value={isEnabled}
+            />
+          </HStack>
+        </VStack>
+
+        <HStack
+          width="100%"
+          justifyContent="space-between"
+          style={styles.border}
+        >
+          <Text fontSize="md">Saved Articles</Text>
+          <FontAwesome5 name="chevron-right" size={24} color="black" />
+        </HStack>
+
+        <Button
+          title="Log Out"
+          style={styles.bc}
+          onPress={() => alert("Button Clicked!")}
+        />
       </View>
     </Box>
   );
@@ -45,8 +86,29 @@ const ProfileScreen = ({ navigation }) => {
 
 export default ProfileScreen;
 
+// style={{borderBottomWidth:1, borderBottom: 1}}
 const styles = StyleSheet.create({
   container: {
-    fontFamily: "DMSerifText", padding: 4, paddingBottom: 3
+    fontFamily: "DMSerifText",
+    padding: 30,
+    paddingBottom: 5,
+  },
+
+  border: {
+    borderBottomWidth: 1,
+    borderColor: "lightgrey",
+    paddingBottom: "8%",
+    paddingTop: "8%",
+    padding: "4%",
+  },
+
+  bc: {
+    width: 100,
+    height: 100,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+    borderRadius: 100,
+    backgroundColor: "orange",
   },
 });
