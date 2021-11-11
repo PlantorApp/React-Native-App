@@ -20,7 +20,7 @@ const SavedScreen = ({navigation}) => {
 
     const data = [
         {
-            "id" : 1,
+            "id" : "1",
             "title" : "Home Balcony",
             "season" : "winter",
             "location" : "Vancouver",
@@ -29,7 +29,7 @@ const SavedScreen = ({navigation}) => {
             "date":"12/09/2021"
         },
         {
-            "id" : 2,
+            "id" : "2",
             "title" : "Home Living Room",
             "season" : "winter",
             "location" : "Vancouver",
@@ -38,7 +38,7 @@ const SavedScreen = ({navigation}) => {
             "date":"12/09/2021"
         },
         {
-            "id" : 3,
+            "id" : "3",
             "title" : "Office Desk",
             "season" : "winter",
             "location" : "Vancouver",
@@ -47,7 +47,7 @@ const SavedScreen = ({navigation}) => {
             "date":"12/09/2021"
         },
         {
-            "id" : 4,
+            "id" : "4",
             "title" : "Dining Room",
             "season" : "winter",
             "location" : "Vancouver",
@@ -56,7 +56,7 @@ const SavedScreen = ({navigation}) => {
             "date":"12/09/2021"
         },
         {
-            "id" : 5,
+            "id" : "5",
             "title" : "Bed Room",
             "season" : "winter",
             "location" : "Vancouver",

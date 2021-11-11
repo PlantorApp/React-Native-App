@@ -11,13 +11,13 @@ const IndoorOutdoor = ({ navigation }) => {
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <Text style={{ fontSize: 30, textAlign: 'center' }}>Will the plant be growing Indoor or Outdoor?</Text>
             <HStack>
-                <TouchableOpacity onPress={() => {navigation.navigate('Temperature'); setIndoor(true)}}>
+                <TouchableOpacity onPress={() => {navigation.navigate('Temperature'); setIndoor(true); setOutdoor(false)}}>
                     <Card>
                         <Card.Image source={require('../../assets/cardImage.svg')} />
                         <Card.Title>Grow Indoor</Card.Title>
                     </Card>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate('UserLocation'); setOutdoor(true);}}>
+                <TouchableOpacity onPress={() => {navigation.navigate('UserLocation'); setOutdoor(true); setIndoor(false)}}>
                     <Card>
                         <Card.Image source={require('../../assets/cardImage.svg')} />
                         <Card.Title>Grow Outdoor</Card.Title>

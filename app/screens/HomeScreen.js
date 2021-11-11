@@ -14,6 +14,7 @@ import { Box, Heading, HStack, ScrollView } from "native-base";
 import Svg, { Path } from 'react-native-svg';
 import PetFriendly from "../components/suggestionFlow/PetFriendly";
 import Suggestions from "../components/suggestionFlow/Suggestions";
+import Climate from "../components/suggestionFlow/Climate";
 // const  = Svg;
 
 const Stack = createNativeStackNavigator();
@@ -97,6 +98,7 @@ const HomeScreen = ({ navigation }) => {
             <Stack.Screen name="Default" component={Home} options={{ headerShown: false }} />
             <Stack.Screen name="IndoorOutdoor" component={IndoorOutdoor} />
             <Stack.Screen name="UserLocation" component={UserLocation} />
+            <Stack.Screen name="Climate" component={Climate} />
             <Stack.Screen name="Temperature" component={Temperature} />
             <Stack.Screen name="Lighting" component={Lighting} />
             <Stack.Screen name="NaturalLight" component={NaturalLight} />
