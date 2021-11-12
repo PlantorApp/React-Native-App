@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { View, Text, Button, StyleSheet, Switch } from "react-native";
 import { Box, Image, Heading, HStack, VStack } from "native-base";
 import { useFonts } from "expo-font";
@@ -9,8 +9,20 @@ import {
 } from "@expo/vector-icons";
 import { color } from "react-native-reanimated";
 import { borderColor } from "styled-system";
+import Login from "../components/login/Login";
 
 const ProfileScreen = ({ navigation }) => {
+    const [name,setName] = useState('user')
+    const [email, setEmail] = useState('tomholland@gmail.com')
+    const [profilePictureUri, setProfilePictureUri] = useState("")
+
+    const setUser = (name, email,profilePicture) => {
+      setName(name)
+      setEmail(email)
+      setProfilePictureUri(profilePicture)
+      console.log("in profile :" , name, email, profilePicture)
+    }
+
   const [loaded] = useFonts({
     DMSerifText: require("../assets/fonts/DMSerifText-Regular.ttf"),
     QuickSandBold: require("../assets/fonts/Quicksand-Bold.ttf"),
@@ -21,6 +33,7 @@ const ProfileScreen = ({ navigation }) => {
 
   return (
     <Box w={{ base: "100%", md: "25%" }}>
+      <Login setUser = {setUser}/>
       <Heading
         style={{ fontFamily: "DMSerifText", padding: 4, paddingBottom: 3 }}
       >
@@ -30,7 +43,7 @@ const ProfileScreen = ({ navigation }) => {
         <Box mt={5}>
           <Image
             source={{
-              uri: "https://wallpaperaccess.com/full/317501.jpg",
+              uri: profilePictureUri,
             }}
             alt="Img"
             width="90"
@@ -45,7 +58,7 @@ const ProfileScreen = ({ navigation }) => {
         <VStack width="100%">
           <HStack justifyContent="flex-start" space={2} style={styles.border}>
             <FontAwesome5 name="envelope" size={24} color="black" />
-            <Text fontSize="sm">tomholland@gmail.com</Text>
+            <Text fontSize="sm">{email}</Text>
           </HStack>
 
           <HStack
