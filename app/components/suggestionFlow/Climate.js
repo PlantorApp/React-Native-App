@@ -35,7 +35,7 @@ const season = seasonArray.filter(({ date }) => date <= today).slice(-1)[0] || {
     const api_call = await fetch(url)
 
     const response = await api_call.json()
-    console.log('response', response)
+    // console.log('response', response)
 
     setTemp(response.main.temp)
     setWeather(response.weather[0].main)
