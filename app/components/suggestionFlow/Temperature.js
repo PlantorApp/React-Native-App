@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View } from "native-base"
-import { TextInput, Button, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { TextInput, Button } from 'react-native';
 
 const Temperature = ({ navigation }) => {
     const [text, setText] = useState("")

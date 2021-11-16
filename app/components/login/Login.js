@@ -1,10 +1,14 @@
 import { Button } from 'native-base';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import * as Facebook from 'expo-facebook';
 import * as Google from 'expo-google-app-auth';
  
 const Login = (props) => {
+
+    let user = {
+      sub: "111"
+    };
 
     const [name,setName] = useState('user')
     const [email, setEmail] = useState('email Id')
@@ -34,9 +38,33 @@ const Login = (props) => {
             setName(data.name);
             setEmail(data.email);
             setProfilePictureUri(data.picture.data.url);
-            console.log("profile pic :" , data.picture.data.url)
 
             props.setUser(data.name,data.email,data.picture.data.url)
+
+            user = {
+              sub : data.id,
+              email: data.email,
+              family_name : data.name,
+              given_name : data.name
+            }
+
+
+            const curUser = await fetchUser();
+            console.log("inside useeffect :", curUser)
+            if(curUser){
+              console.log("User exist")
+            }else{
+              console.log("user is being created")
+              const requestOptions = {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(user)
+              };
+
+              const response = await fetch('http://54.148.107.164/backend-users/users', requestOptions);
+              const data = await response.json();
+              console.log("replied with :" , data)
+            }
 
           } else {
             // type === 'cancel'
@@ -54,12 +82,39 @@ const Login = (props) => {
           });
       
           if (result.type === 'success') {
+            
             console.log("google", result)
             setName(result.user.name);
             setEmail(result.user.email);
             setProfilePictureUri(result.user.photoUrl);
 
             props.setUser(result.user.name,result.user.email,result.user.photoUrl)
+
+            user = {
+              sub : result.user.id,
+              email: result.user.email,
+              family_name : result.user.familyName,
+              given_name : result.user.givenName
+            }
+
+
+            const curUser = await fetchUser();
+            console.log("inside useeffect :", curUser)
+            if(curUser){
+              console.log("User exist")
+            }else{
+              console.log("user is being created")
+              const requestOptions = {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(user)
+              };
+
+              const response = await fetch('http://54.148.107.164/backend-users/users', requestOptions);
+              const data = await response.json();
+              console.log("replied with :" , data)
+            }
+
           } else {
             return { cancelled: true };
           }
@@ -68,6 +123,34 @@ const Login = (props) => {
         }
 
       }
+
+      const fetchUser = async () => {
+        const res = await fetch(`http://54.148.107.164/backend-users/users/${user?.sub}`)
+        const data = await res.json();
+        return data
+    }
+
+//     useEffect(() => {
+//       const getUser = async () => {
+//           const curUser = await fetchUser();
+//           console.log("inside useeffect :", curUser)
+//           if(curUser){
+//             console.log("User exist")
+//           }else{
+//             console.log("user is being created")
+//             const requestOptions = {
+//                 method: 'POST',
+//                 headers: { 'Content-Type': 'application/json' },
+//                 body: JSON.stringify(user)
+//             };
+
+//             const response = await fetch('http://54.148.107.164/backend-users/users', requestOptions);
+//             const data = await response.json();
+//             console.log("replied with :" , data)
+//           }
+//       }
+//       getUser();    
+// },[user]);
  
 return (
     <>
