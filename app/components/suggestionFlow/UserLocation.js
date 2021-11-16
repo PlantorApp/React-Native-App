@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, Alert, ScrollView, Dimensions, Pressable } from 'react-native';
+import { View, Text, TextInput, Alert, ScrollView, Dimensions, Pressable, TouchableOpacity } from 'react-native';
 import * as Location from 'expo-location';
 import Svg, { Line } from 'react-native-svg';
 import { Box, HStack } from 'native-base';
@@ -103,58 +103,47 @@ const UserLocation = ({ navigation }) => {
     <ScrollView>
       <View style={{ flex: 1, minHeight: Dimensions.get('window').height, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FFFFFF', paddingTop: 60, paddingBottom: 28}}>
         <Box style={{width: Dimensions.get('window').width - 32}}>
-          <Svg onPress={() => navigation.navigate('Home')} style={{alignSelf: 'flex-end'}} width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <Line x1="8" y1="22.8787" x2="22.8492" y2="8.02944" stroke="#B7A878" strokeWidth="3" strokeLinecap="round"/>
-            <Line x1="8.12132" y1="8" x2="22.9706" y2="22.8492" stroke="#B7A878" strokeWidth="3" strokeLinecap="round"/>
-          </Svg>
+          <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+            <Svg style={{alignSelf: 'flex-end'}} width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <Line x1="8" y1="22.8787" x2="22.8492" y2="8.02944" stroke="#B7A878" strokeWidth="3" strokeLinecap="round"/>
+              <Line x1="8.12132" y1="8" x2="22.9706" y2="22.8492" stroke="#B7A878" strokeWidth="3" strokeLinecap="round"/>
+            </Svg>
+          </TouchableOpacity>
           <HStack style={{marginTop: 12}}>
             <Box style={{flex: 1, height: 6, backgroundColor: '#B7A878', borderRadius: 7}}></Box>
             <Box style={{flex: 1, height: 6, backgroundColor: '#E3DECE', marginLeft: 8, borderRadius: 7}}></Box>
             <Box style={{flex: 1, height: 6, backgroundColor: '#E3DECE', marginLeft: 8, borderRadius: 7}}></Box>
             <Box style={{flex: 1, height: 6, backgroundColor: '#E3DECE', marginLeft: 8, borderRadius: 7}}></Box>
           </HStack>
-          <View style={{ flex: 1, height: '100%', alignItems: 'center', justifyContent: 'center', marginTop: 40}}>
+          <View style={{ flex: 1, height: '100%', alignItems: 'center', justifyContent: 'center', marginTop: 36}}>
             <Text style={{fontFamily: 'DMSerifText', color: '#827344', fontSize: 32, textAlign: 'center', marginTop: 12 }}>You are currently Located in...</Text>
             <TextInput
-              style={{fontFamily: 'DMSerifText', color: '#666666', fontSize: 64, marginTop: 96, padding: 10, textAlign: 'center', borderBottomColor: '#BBBBBB', borderBottomWidth: 1 }}
+              style={{fontFamily: 'DMSerifText', color: '#666666', fontSize: 64, marginTop: 90, padding: 10, textAlign: 'center', borderBottomColor: '#BBBBBB', borderBottomWidth: 1 }}
               onChangeText={setText}
               placeholder="Postcode"
               defaultValue={text}
             />
             {/* <Text>OR</Text> */}
-            <Pressable style={{marginTop: 76, borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', padding: 14, width: 270}} onPress={getLocation}>
-              <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, color: '#827344', textAlign: 'center'}}>Locate Me!</Text>
-            </Pressable>
-            <Pressable style={{marginTop: 16, borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', padding: 14, width: 270, backgroundColor: bool ? '#E3DECE' : "#827344"}} disabled={bool} onPress={ async () => {
-              if(!displayCurrentAddress) {
-                const cityName = await getCityFromPostal();
-                console.log(cityName);
-                navigation.navigate('Climate', {
-                  address: cityName
-                })
-              } else {
-                navigation.navigate('Climate', {
-                  address: displayCurrentAddress
-                })
-              }
-            }}>
-              <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>Next</Text>
-            </Pressable>
-            {/* <Button title="Next" disabled={bool} onPress={ async () => {
-              if(!displayCurrentAddress) {
-                const cityName = await getCityFromPostal();
-                console.log(cityName);
-                navigation.navigate('Climate', {
-                  address: cityName
-                })
-              } else {
-                navigation.navigate('Climate', {
-                  address: displayCurrentAddress
-                })
-              }
-            }} /> */}
           </View>
         </Box>
+        <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', padding: 14, width: 270, position: 'absolute', bottom: 88}} onPress={getLocation}>
+          <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, color: '#827344', textAlign: 'center'}}>Locate Me!</Text>
+        </Pressable>
+        <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', padding: 14, width: 270, backgroundColor: bool ? '#E3DECE' : "#827344", position: 'absolute', bottom: 16}} disabled={bool} onPress={ async () => {
+          if(!displayCurrentAddress) {
+            const cityName = await getCityFromPostal();
+            console.log(cityName);
+            navigation.navigate('Climate', {
+              address: cityName
+            })
+          } else {
+            navigation.navigate('Climate', {
+              address: displayCurrentAddress
+            })
+          }
+        }}>
+          <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>Next</Text>
+        </Pressable>
       </View>
     </ScrollView>
   )

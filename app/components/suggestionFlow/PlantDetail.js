@@ -4,7 +4,9 @@ import { Text, Image, Dimensions, ScrollView } from 'react-native';
 import Svg, { Circle, Line, Path, Rect } from 'react-native-svg';
 import { useFonts } from 'expo-font';
 
-const PlantDetail = ({ navigation }) => {
+const PlantDetail = ({ navigation, route }) => {
+
+  const plantId = route.param.plantId
   
   const [loaded] = useFonts({
     DMSerifText: require('../../assets/fonts/DMSerifText-Regular.ttf'),
