@@ -57,8 +57,8 @@ const NotificationScreen = ({ navigation }) => {
 
   return (
     <Box w={{ base: "100%", md: "25%" }}>
-      <Heading
-        style={styles.mainTitle}
+      <Heading 
+        style={styles.mainTitle} 
       >
         Notifications
       </Heading>
@@ -68,8 +68,8 @@ const NotificationScreen = ({ navigation }) => {
         style={{ fontFamily: "DMSerifText", paddingBottom: 4 }}
        
       >
-        <Pressable style={styles.button}>
-          <Text style={styles.text}>All</Text>
+        <Pressable style={styles.firstButton}>
+          <Text style={styles.firstButtonText}>All</Text>
         </Pressable>
 
         <Pressable style={styles.button}>
@@ -145,7 +145,18 @@ const styles = StyleSheet.create({
   },
 
   mainTitle: {
-    fontFamily: "DMSerifText", padding: 14, paddingBottom: 15
+    fontFamily: "DMSerifText", padding: 14, paddingBottom: 15, color: "#827344", fontSize: 32
+  },
+  firstButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 90,
+    elevation: 3,
+    backgroundColor: "#B7A878",
+    borderColor: "#B7A878",
+    borderWidth: .8
   },
 
   button: {
@@ -155,14 +166,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 90,
     elevation: 3,
-    backgroundColor: "#B7A878",
+    backgroundColor: "#FCFAF7",
+    borderColor: "#B7A878",
+    borderWidth: .8
+  },
+  firstButtonText: {
+    fontSize: 14,
+    lineHeight: 19,
+
+    color: "#FCFAF7",
   },
 
   text: {
     fontSize: 14,
     lineHeight: 19,
 
-    color: "white",
+    color: "#827344",
   },
 
   titleText: {
@@ -183,7 +202,7 @@ const styles = StyleSheet.create({
   border: {
     borderBottomWidth: 1,
     borderColor: "lightgrey",
-    paddingBottom: "8%",
+    paddingBottom: "4%",
     paddingTop: "5%",
     width: "130%",
   },
