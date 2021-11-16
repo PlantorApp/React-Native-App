@@ -11,7 +11,7 @@ import HomeScreen from './app/screens/HomeScreen';
 export default function App() {
 
     const [isLogged, setIsLogged] = useState(false)
-    const [loggedInUser,setLoggedInUser] = useState({})
+    const [loggedInUser, setLoggedInUser] = useState({})
     console.log("logged in user is : ", loggedInUser);
     console.log("value of is logged is: ", isLogged);
 

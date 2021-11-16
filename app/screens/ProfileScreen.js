@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Switch, Pressable } from "react-native";
 import { Box, Image, Heading, HStack, VStack } from "native-base";
 import { useFonts } from "expo-font";
@@ -7,21 +7,20 @@ import {
   MaterialIcons,
   FontAwesome5,
 } from "@expo/vector-icons";
-import { color } from "react-native-reanimated";
-import { borderColor } from "styled-system";
 import Login from "../components/login/Login";
+// import propic from "../assets/plantImage.png";
 
 const ProfileScreen = (props) => {
     
     const [name,setName] = useState('user')
     const [email, setEmail] = useState('tomholland@gmail.com')
-    const [profilePictureUri, setProfilePictureUri] = useState("")
+    // const [profilePictureUri, setProfilePictureUri] = useState(propic)
 
     const setUser = (name, email,profilePicture) => {
       setName(name)
       setEmail(email)
-      setProfilePictureUri(profilePicture)
-      console.log("in profile :" , name, email, profilePicture)
+      // setProfilePictureUri(profilePicture)
+      // console.log("in profile :" , name, email, profilePicture)
     }
 
   const [loaded] = useFonts({
@@ -42,7 +41,7 @@ const ProfileScreen = (props) => {
       </Heading>
       <View>
         <Box mt={5}>
-          <Image
+          {/* <Image
             source={{
               uri: profilePictureUri,
             }}
@@ -51,7 +50,7 @@ const ProfileScreen = (props) => {
             height="90"
             // resizeMode="cover"
             borderRadius="90"
-          />
+          /> */}
         </Box>
 
         {/* ----------------------------------------- */}
