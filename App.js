@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { NativeBaseProvider } from 'native-base';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import Nav from './app/components/nav/Nav';
 import * as Notifications from 'expo-notifications';
@@ -8,6 +8,12 @@ import * as Permissions from 'expo-permissions';
 
 
 export default function App() {
+
+    const [isLogged, setIsLogged] = useState(false)
+    const [loggedInUser,setLoggedInUser] = useState({})
+    console.log("logged in user is : ", loggedInUser);
+    console.log("value of is logged is: ", isLogged);
+
   useEffect(()=>{
     registerForPushNotification().then(token=>console.log(token)).catch(err => console.log(err))
     
@@ -31,7 +37,7 @@ export default function App() {
   return (
     <NativeBaseProvider>
       <NavigationContainer>
-        <Nav />
+        <Nav isLogged={isLogged} setIsLogged={setIsLogged} setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser}/>
       </NavigationContainer>
       <StatusBar style='dark' />
     </NativeBaseProvider>

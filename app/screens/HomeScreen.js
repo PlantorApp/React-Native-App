@@ -19,7 +19,9 @@ import Climate from "../components/suggestionFlow/Climate";
 
 const Stack = createNativeStackNavigator();
 
-const Home = ({ navigation }) => {
+const Home = (props) => {
+    //console.log("in home :", props.loggedInUser)
+
     const [bookmarked, setBookmarked] = useState(false)
 
     const [loaded] = useFonts({
@@ -31,20 +33,84 @@ const Home = ({ navigation }) => {
         return null;
     }
 
-    const bookmark = () => {
+    // const bookmark = () => {
+    //     if (!bookmarked) {
+    //         setBookmarked(true)
+    //         /* 
+    //         * Code to save this article to user's object
+    //         */
+    //     } else {
+    //         setBookmarked(false)
+    //         /* 
+    //         * Code to remove this article from user's object
+    //         */
+    //     }
+    //}
+
+    const toggleBookmarked = async (id) => {
+        // closest = e.target.closest("button");
+        // console.log("hi closed", closest);
+        console.log("clicked id is :", id);
+        let user = props.loggedInUser;
+        if(user){
+
+            const response = await fetch(
+                `http://54.148.107.164/backend-users/users/${user.sub}`
+                );
+            const data = await response.json();
+            console.log("user from db :", data)
+        
         if (!bookmarked) {
-            setBookmarked(true)
-            /* 
-            * Code to save this article to user's object
-            */
+          setBookmarked(true);
+          if (id === "1") {
+              
+              console.log("user is :", user)
+              
+              let condition = data.favouriteArticles.findIndex((element) => element === "1")
+          
+                if(condition === -1){
+                    console.log("inside line 70",condition)
+                    data.favouriteArticles.push("1");
+                    console.log("after pushing : ", data)
+                    const requestOptions = {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
+                    };
+            
+                    const response2 = await fetch(
+                    `http://54.148.107.164/backend-users/users/${data.sub}`,
+                    requestOptions
+                    );
+                    const data2 = await response2.json();
+                    console.log("inside favouriteArticles :", data2)
+                }
+          }
         } else {
-            setBookmarked(false)
-            /* 
-            * Code to remove this article from user's object
-            */
+          setBookmarked(false);
+          if (id === "1") {
+            
+            data.favouriteArticles.splice(
+              data.favouriteArticles.findIndex((element) => element === "1"),
+              1
+            );
+    
+            const requestOptions = {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
+            };
+    
+            const response = await fetch(
+              `http://54.148.107.164/backend-users/users/${data.sub}`,
+              requestOptions
+            );
+            const data2 = await response.json();
+            console.log("after removing", data2)
+          }
         }
     }
-
+    }
     return (
         <ScrollView containerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
             <Heading style={{fontFamily: 'DMSerifText', marginTop: 60, paddingHorizontal: 80, textAlign: 'center'}}>Tap to get plant suggestions</Heading>
@@ -53,7 +119,7 @@ const Home = ({ navigation }) => {
                 onPress={() => navigation.navigate('IndoorOutdoor')}
             /> */}
             <Box style={{height: 200, alignItems: 'center', marginTop: 60}}>
-                <TouchableOpacity onPress={() => navigation.navigate('IndoorOutdoor')}>
+                <TouchableOpacity onPress={() => props.navigate('IndoorOutdoor')}>
                     <Image source={require('../assets/plantSuggestions.png')} style={{width: 200, height: 200}} />
                 </TouchableOpacity>
             </Box>
@@ -71,7 +137,7 @@ const Home = ({ navigation }) => {
                     <Card.Image source={require('../assets/cardImage.svg')} style={{width: 286, height: 196, borderTopLeftRadius: 20, borderTopRightRadius: 20}} />
                     <HStack style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 16, paddingVertical: 12}}>
                         <Card.Title style={{textAlign: 'left', fontFamily: 'QuickSandBold', fontSize: 20, width: '80%'}}>Gardening 101: A Beginner’s Guide To...</Card.Title>
-                        <Svg onPress={bookmark} width="25" height="45" viewBox="0 10 55 45" fill={bookmarked ? "#eee" : "none"} xmlns="http://www.w3.org/2000/svg">
+                        <Svg onPress={(e) => {toggleBookmarked("1")}} width="25" height="45" viewBox="0 10 55 45" fill={bookmarked ? "#827344" : "none"} xmlns="http://www.w3.org/2000/svg">
                             <Path d="M1.51322 7.50442C1.51322 4.7175 2.36616 2 7.57305 2H48.1322C50.7654 2 53.3391 2.61491 53.3044 7.06308C53.2696 11.5112 53.3044 66.2777 53.3044 67.8646C53.3044 70.6714 52.1688 74.2567 47.2495 70.1259C42.3302 65.9951 30.771 55.1598 29.6502 54.1184C28.5295 53.0771 27.3146 52.4473 25.2963 54.1829C23.278 55.9185 7.69702 69.6945 7.69702 69.6945C7.69702 69.6945 1.50331 75.1493 1.51322 68.306C1.48347 63.6049 1.51322 10.2913 1.51322 7.50442Z" stroke="#231F20" strokeWidth="3" strokeMiterlimit="10"/>
                         </Svg>
                     </HStack>
@@ -80,7 +146,7 @@ const Home = ({ navigation }) => {
                     <Card.Image source={require('../assets/cardImage.svg')} style={{width: 286, height: 196, borderTopLeftRadius: 20, borderTopRightRadius: 20}} />
                     <HStack style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 16, paddingVertical: 12}}>
                         <Card.Title style={{textAlign: 'left', fontFamily: 'QuickSandBold', fontSize: 20, width: '80%'}}>Gardening 101: A Beginner’s Guide To...</Card.Title>
-                        <Svg onPress={bookmark} width="25" height="45" viewBox="0 10 55 45" fill={bookmarked ? "#eee" : "none"} xmlns="http://www.w3.org/2000/svg">
+                        <Svg id = "1" onPress={(e) => toggleBookmarked(e)} width="25" height="45" viewBox="0 10 55 45" fill={bookmarked ? "#827344" : "none"} xmlns="http://www.w3.org/2000/svg">
                             <Path d="M1.51322 7.50442C1.51322 4.7175 2.36616 2 7.57305 2H48.1322C50.7654 2 53.3391 2.61491 53.3044 7.06308C53.2696 11.5112 53.3044 66.2777 53.3044 67.8646C53.3044 70.6714 52.1688 74.2567 47.2495 70.1259C42.3302 65.9951 30.771 55.1598 29.6502 54.1184C28.5295 53.0771 27.3146 52.4473 25.2963 54.1829C23.278 55.9185 7.69702 69.6945 7.69702 69.6945C7.69702 69.6945 1.50331 75.1493 1.51322 68.306C1.48347 63.6049 1.51322 10.2913 1.51322 7.50442Z" stroke="#231F20" strokeWidth="3" strokeMiterlimit="10"/>
                         </Svg>
                     </HStack>
@@ -89,7 +155,7 @@ const Home = ({ navigation }) => {
                     <Card.Image source={require('../assets/cardImage.svg')} style={{width: 286, height: 196, borderTopLeftRadius: 20, borderTopRightRadius: 20}} />
                     <HStack style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 16, paddingVertical: 12}}>
                         <Card.Title style={{textAlign: 'left', fontFamily: 'QuickSandBold', fontSize: 20, width: '80%'}}>Gardening 101: A Beginner’s Guide To...</Card.Title>
-                        <Svg onPress={bookmark} width="25" height="45" viewBox="0 10 55 45" fill={bookmarked ? "#eee" : "none"} xmlns="http://www.w3.org/2000/svg">
+                        <Svg onPress={(e) => toggleBookmarked(e)} width="25" height="45" viewBox="0 10 55 45" fill={bookmarked ? "#827344" : "none"} xmlns="http://www.w3.org/2000/svg">
                             <Path d="M1.51322 7.50442C1.51322 4.7175 2.36616 2 7.57305 2H48.1322C50.7654 2 53.3391 2.61491 53.3044 7.06308C53.2696 11.5112 53.3044 66.2777 53.3044 67.8646C53.3044 70.6714 52.1688 74.2567 47.2495 70.1259C42.3302 65.9951 30.771 55.1598 29.6502 54.1184C28.5295 53.0771 27.3146 52.4473 25.2963 54.1829C23.278 55.9185 7.69702 69.6945 7.69702 69.6945C7.69702 69.6945 1.50331 75.1493 1.51322 68.306C1.48347 63.6049 1.51322 10.2913 1.51322 7.50442Z" stroke="#231F20" strokeWidth="3" strokeMiterlimit="10"/>
                         </Svg>
                     </HStack>
@@ -98,7 +164,7 @@ const Home = ({ navigation }) => {
                     <Card.Image source={require('../assets/cardImage.svg')} style={{width: 286, height: 196, borderTopLeftRadius: 20, borderTopRightRadius: 20}} />
                     <HStack style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 16, paddingVertical: 12}}>
                         <Card.Title style={{textAlign: 'left', fontFamily: 'QuickSandBold', fontSize: 20, width: '80%'}}>Gardening 101: A Beginner’s Guide To...</Card.Title>
-                        <Svg onPress={bookmark} width="25" height="45" viewBox="0 10 55 45" fill={bookmarked ? "#eee" : "none"} xmlns="http://www.w3.org/2000/svg">
+                        <Svg onPress={(e) => toggleBookmarked(e)} width="25" height="45" viewBox="0 10 55 45" fill={bookmarked ? "#827344" : "none"} xmlns="http://www.w3.org/2000/svg">
                             <Path d="M1.51322 7.50442C1.51322 4.7175 2.36616 2 7.57305 2H48.1322C50.7654 2 53.3391 2.61491 53.3044 7.06308C53.2696 11.5112 53.3044 66.2777 53.3044 67.8646C53.3044 70.6714 52.1688 74.2567 47.2495 70.1259C42.3302 65.9951 30.771 55.1598 29.6502 54.1184C28.5295 53.0771 27.3146 52.4473 25.2963 54.1829C23.278 55.9185 7.69702 69.6945 7.69702 69.6945C7.69702 69.6945 1.50331 75.1493 1.51322 68.306C1.48347 63.6049 1.51322 10.2913 1.51322 7.50442Z" stroke="#231F20" strokeWidth="3" strokeMiterlimit="10"/>
                         </Svg>
                     </HStack>
@@ -107,7 +173,7 @@ const Home = ({ navigation }) => {
                     <Card.Image source={require('../assets/cardImage.svg')} style={{width: 286, height: 196, borderTopLeftRadius: 20, borderTopRightRadius: 20}} />
                     <HStack style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 16, paddingVertical: 12}}>
                         <Card.Title style={{textAlign: 'left', fontFamily: 'QuickSandBold', fontSize: 20, width: '80%'}}>Gardening 101: A Beginner’s Guide To...</Card.Title>
-                        <Svg onPress={bookmark} width="25" height="45" viewBox="0 10 55 45" fill={bookmarked ? "#eee" : "none"} xmlns="http://www.w3.org/2000/svg">
+                        <Svg onPress={(e) => toggleBookmarked(e)} width="25" height="45" viewBox="0 10 55 45" fill={bookmarked ? "#827344" : "none"} xmlns="http://www.w3.org/2000/svg">
                             <Path d="M1.51322 7.50442C1.51322 4.7175 2.36616 2 7.57305 2H48.1322C50.7654 2 53.3391 2.61491 53.3044 7.06308C53.2696 11.5112 53.3044 66.2777 53.3044 67.8646C53.3044 70.6714 52.1688 74.2567 47.2495 70.1259C42.3302 65.9951 30.771 55.1598 29.6502 54.1184C28.5295 53.0771 27.3146 52.4473 25.2963 54.1829C23.278 55.9185 7.69702 69.6945 7.69702 69.6945C7.69702 69.6945 1.50331 75.1493 1.51322 68.306C1.48347 63.6049 1.51322 10.2913 1.51322 7.50442Z" stroke="#231F20" strokeWidth="3" strokeMiterlimit="10"/>
                         </Svg>
                     </HStack>
@@ -118,11 +184,14 @@ const Home = ({ navigation }) => {
     );
 };
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = (props) => {
 
     return (
         <Stack.Navigator initialRouteName="PlantsSuggestion">
-            <Stack.Screen name="Default" component={Home} options={{ headerShown: false }} />
+            <Stack.Screen name="Default" options={{ headerShown: false }} >
+            {() => <Home isLogged={props.isLogged} setLoggedInUser = {props.setLoggedInUser}
+            loggedInUser={props.loggedInUser}/>}
+            </Stack.Screen>
             <Stack.Screen name="IndoorOutdoor" component={IndoorOutdoor} />
             <Stack.Screen name="UserLocation" component={UserLocation} />
             <Stack.Screen name="Climate" component={Climate} />

@@ -34,7 +34,7 @@ const Login = (props) => {
             // console.log('Logged in!', `Hi ${JSON.stringify((await response.json()))}!`);
             const data = await response.json();
 
-            console.log("user data", data)
+            //console.log("user data", data)
             setName(data.name);
             setEmail(data.email);
             setProfilePictureUri(data.picture.data.url);
@@ -47,10 +47,10 @@ const Login = (props) => {
               family_name : data.name,
               given_name : data.name
             }
-
-
+            props.setIsLogged(true)
+            props.setLoggedInUser(user)
             const curUser = await fetchUser();
-            console.log("inside useeffect :", curUser)
+            //console.log("inside useeffect :", curUser)
             if(curUser){
               console.log("User exist")
             }else{
@@ -63,7 +63,7 @@ const Login = (props) => {
 
               const response = await fetch('http://54.148.107.164/backend-users/users', requestOptions);
               const data = await response.json();
-              console.log("replied with :" , data)
+              //console.log("replied with :" , data)
             }
 
           } else {
@@ -97,9 +97,11 @@ const Login = (props) => {
               given_name : result.user.givenName
             }
 
+            props.setIsLogged(true)
+            props.setLoggedInUser(user)
 
             const curUser = await fetchUser();
-            console.log("inside useeffect :", curUser)
+            //console.log("inside useeffect :", curUser)
             if(curUser){
               console.log("User exist")
             }else{
@@ -112,7 +114,7 @@ const Login = (props) => {
 
               const response = await fetch('http://54.148.107.164/backend-users/users', requestOptions);
               const data = await response.json();
-              console.log("replied with :" , data)
+              //console.log("replied with :" , data)
             }
 
           } else {

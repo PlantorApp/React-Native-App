@@ -11,7 +11,8 @@ import { color } from "react-native-reanimated";
 import { borderColor } from "styled-system";
 import Login from "../components/login/Login";
 
-const ProfileScreen = ({ navigation }) => {
+const ProfileScreen = (props) => {
+    
     const [name,setName] = useState('user')
     const [email, setEmail] = useState('tomholland@gmail.com')
     const [profilePictureUri, setProfilePictureUri] = useState("")
@@ -33,7 +34,7 @@ const ProfileScreen = ({ navigation }) => {
 
   return (
     <Box w={{ base: "100%", md: "25%" }}>
-      <Login setUser = {setUser}/>
+      <Login setUser = {setUser} setIsLogged={props.setIsLogged} setLoggedInUser={props.setLoggedInUser}/>
       <Heading
         style={{ fontFamily: "DMSerifText", padding: 4, paddingBottom: 3 }}
       >
