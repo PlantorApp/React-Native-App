@@ -1,5 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useState } from "react";
+import { useFonts } from 'expo-font';
+import { View, Image, Platform, TouchableOpacity, Button } from 'react-native';
+
 import IndoorOutdoor from "../components/suggestionFlow/IndoorOutdoor";
 import Temperature from "../components/suggestionFlow/Temperature";
 import UserLocation from "../components/suggestionFlow/UserLocation";
@@ -14,7 +17,6 @@ import PlantDetail from "../components/suggestionFlow/PlantDetail";
 import Nav from "../components/nav/Nav";
 
 const Stack = createNativeStackNavigator();
-
 const HomeScreen = () => {
 
     return (
@@ -33,6 +35,7 @@ const HomeScreen = () => {
             <Stack.Screen name="PlantDetail" component={PlantDetail} options={{headerShown: false}} />
         </Stack.Navigator>
     );
-};
-
-export default HomeScreen;
+  };
+  
+  export default HomeScreen;
+  
