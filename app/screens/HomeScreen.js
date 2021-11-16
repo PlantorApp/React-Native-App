@@ -1,7 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useState } from "react";
 import { useFonts } from 'expo-font';
-import { View, Image, Platform, TouchableOpacity } from 'react-native';
+import { View, Image, Platform, TouchableOpacity, Button } from 'react-native';
+
 import IndoorOutdoor from "../components/suggestionFlow/IndoorOutdoor";
 import Temperature from "../components/suggestionFlow/Temperature";
 import UserLocation from "../components/suggestionFlow/UserLocation";
@@ -9,17 +10,15 @@ import Lighting from "../components/suggestionFlow/Lighting";
 import NaturalLight from "../components/suggestionFlow/NaturalLight";
 import NaturalLightDirection from "../components/suggestionFlow/NaturalLightDirection";
 import ArtificialLight from "../components/suggestionFlow/ArtificialLight";
-import { Card } from 'react-native-elements';
-import { Box, Heading, HStack, ScrollView } from "native-base";
-import Svg, { Path } from 'react-native-svg';
 import PetFriendly from "../components/suggestionFlow/PetFriendly";
 import Suggestions from "../components/suggestionFlow/Suggestions";
 import Climate from "../components/suggestionFlow/Climate";
-// const  = Svg;
+import PlantDetail from "../components/suggestionFlow/PlantDetail";
+import Nav from "../components/nav/Nav";
 
 const Stack = createNativeStackNavigator();
 
-const Home = (props) => {
+/* const Home = (props) => {
     //console.log("in home :", props.loggedInUser)
 
     const [bookmarked, setBookmarked] = useState(false)
@@ -37,27 +36,13 @@ const Home = (props) => {
     if (!loaded) {
         return null;
     }
-
-    // const bookmark = () => {
-    //     if (!bookmarked) {
-    //         setBookmarked(true)
-    //         /* 
-    //         * Code to save this article to user's object
-    //         */
-    //     } else {
-    //         setBookmarked(false)
-    //         /* 
-    //         * Code to remove this article from user's object
-    //         */
-    //     }
-    //}
-
     const toggleBookmarked = async (id) => {
-        // closest = e.target.closest("button");
-        // console.log("hi closed", closest);
         console.log("clicked id is :", id);
         let user = props.loggedInUser;
-        if(user){
+        if(user){ */
+
+const HomeScreen = () => {
+
 
             const response = await fetch(
                 `http://54.148.107.164/backend-users/users/${user.sub}`
@@ -289,7 +274,8 @@ const Home = (props) => {
     }
     }
     return (
-        <ScrollView containerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+
+/*        <ScrollView containerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
             <Heading style={{fontFamily: 'DMSerifText', marginTop: 60, paddingHorizontal: 80, textAlign: 'center'}}>Tap to get plant suggestions</Heading>
             {/* <Button 
                 title="Get Plant Suggestions"
@@ -368,7 +354,11 @@ const HomeScreen = (props) => {
             <Stack.Screen name="Default" options={{ headerShown: false }} >
             {() => <Home isLogged={props.isLogged} setLoggedInUser = {props.setLoggedInUser}
             loggedInUser={props.loggedInUser}/>}
-            </Stack.Screen>
+            </Stack.Screen> */
+
+        <Stack.Navigator initialRouteName="PlantsSuggestion" screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Nav" component={Nav} />
+
             <Stack.Screen name="IndoorOutdoor" component={IndoorOutdoor} />
             <Stack.Screen name="UserLocation" component={UserLocation} />
             <Stack.Screen name="Climate" component={Climate} />
@@ -379,8 +369,10 @@ const HomeScreen = (props) => {
             <Stack.Screen name="ArtificialLight" component={ArtificialLight} />
             <Stack.Screen name="PetFriendly" component={PetFriendly} />
             <Stack.Screen name="Suggestions" component={Suggestions} />
+            <Stack.Screen name="PlantDetail" component={PlantDetail} options={{headerShown: false}} />
         </Stack.Navigator>
     );
-};
-
-export default HomeScreen;
+  };
+  
+  export default HomeScreen;
+  

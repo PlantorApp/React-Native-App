@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import { View, Text, Button, StyleSheet, Switch } from "react-native";
+import { View, Text, StyleSheet, Switch, Pressable } from "react-native";
 import { Box, Image, Heading, HStack, VStack } from "native-base";
 import { useFonts } from "expo-font";
 import {
@@ -88,11 +88,13 @@ const ProfileScreen = (props) => {
           <FontAwesome5 name="chevron-right" size={24} color="black" />
         </HStack>
 
-        <Button
-          title="Log Out"
-          style={styles.bc}
-          onPress={() => alert("Button Clicked!")}
-        />
+
+        <Box my="9" mx="0" pl="3" pr="3" w={{ base: "100%"}}>
+        <Pressable style={styles.button}>
+          <Text>Logout</Text>
+        </Pressable> 
+        </Box>
+      
       </View>
     </Box>
   );
@@ -125,4 +127,18 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     backgroundColor: "orange",
   },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 12,
+    borderRadius: 90,
+    elevation: 1,
+    backgroundColor: 'white',
+    borderColor: '#827344',
+    width: "100%",
+
+
+   
+}
 });

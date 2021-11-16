@@ -2,9 +2,10 @@ import { StatusBar } from 'expo-status-bar';
 import { NativeBaseProvider } from 'native-base';
 import React, {useEffect, useState} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import Nav from './app/components/nav/Nav';
+// import Nav from './app/components/nav/Nav';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
+import HomeScreen from './app/screens/HomeScreen';
 
 
 export default function App() {
@@ -37,7 +38,7 @@ export default function App() {
   return (
     <NativeBaseProvider>
       <NavigationContainer>
-        <Nav isLogged={isLogged} setIsLogged={setIsLogged} setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser}/>
+        <HomeScreen isLogged={isLogged} setIsLogged={setIsLogged} setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} />
       </NavigationContainer>
       <StatusBar style='dark' />
     </NativeBaseProvider>
