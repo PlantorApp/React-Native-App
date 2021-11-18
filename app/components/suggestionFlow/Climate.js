@@ -4,19 +4,21 @@ import { Text, Image, ScrollView, Dimensions, Pressable, TouchableOpacity } from
 import Svg, { Line } from 'react-native-svg';
 import { useFonts } from 'expo-font';
 
-const images = {
-  Clear: 'http://ayay.co.uk/mobiles/weather/strange/northern-lights.jpg',
-  Clouds:
-    'https://www.princeton.edu/sites/default/files/styles/full_2x/public/images/2018/01/clouds-19.jpg?itok=7jputHX1',
-  Rain: 'https://i.pinimg.com/736x/54/59/d7/5459d741279e8d72661990f52774473f--cell-phone-wallpapers-gif-photos.jpg'
-}
+// const images = {
+//   Clear: 'http://ayay.co.uk/mobiles/weather/strange/northern-lights.jpg',
+//   Clouds:
+//     'https://www.princeton.edu/sites/default/files/styles/full_2x/public/images/2018/01/clouds-19.jpg?itok=7jputHX1',
+//   Rain: 'https://i.pinimg.com/736x/54/59/d7/5459d741279e8d72661990f52774473f--cell-phone-wallpapers-gif-photos.jpg'
+// }
 
 const Climate = ({ navigation, route }) => {
   const [temp, setTemp] = useState('')
   const [weather, setWeather] = useState('')
 
   const city = route.params.address;
-  let today = new Date();
+  const today = new Date();
+  const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const curMonth = month[today.getMonth()];
 
   // Get season
   var seasonArray = [
@@ -59,34 +61,38 @@ const Climate = ({ navigation, route }) => {
   }
 
   return (
-    <ScrollView>
-      <View style={{ flex: 1, minHeight: Dimensions.get('window').height, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FFFFFF', paddingTop: 60, paddingBottom: 28}}>
-        <Box style={{width: Dimensions.get('window').width - 32}}>
-          <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-            <Svg style={{alignSelf: 'flex-end'}} width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <Line x1="8" y1="22.8787" x2="22.8492" y2="8.02944" stroke="#B7A878" strokeWidth="3" strokeLinecap="round"/>
-              <Line x1="8.12132" y1="8" x2="22.9706" y2="22.8492" stroke="#B7A878" strokeWidth="3" strokeLinecap="round"/>
-            </Svg>
-          </TouchableOpacity>
-          <HStack style={{marginTop: 12}}>
-            <Box style={{flex: 1, height: 6, backgroundColor: '#B7A878', borderRadius: 7}}></Box>
-            <Box style={{flex: 1, height: 6, backgroundColor: '#B7A878', marginLeft: 8, borderRadius: 7}}></Box>
-            <Box style={{flex: 1, height: 6, backgroundColor: '#E3DECE', marginLeft: 8, borderRadius: 7}}></Box>
-            <Box style={{flex: 1, height: 6, backgroundColor: '#E3DECE', marginLeft: 8, borderRadius: 7}}></Box>
-          </HStack>
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            {/* <Image source={{ uri: images[weather] }} style={{position: 'absolute', height: '100%', width: '100%'}} /> */}
-            <Text style={{fontFamily: 'DMSerifText', color: '#827344', fontSize: 32, textAlign: 'center', marginTop: 40 }}>Climate information of {city}</Text>
-            {/* <Text>{weather}</Text> */}
-            <Text style={{fontFamily: 'DMSerifText', color: '#666666', fontSize: 64, marginTop: 96, textAlign: 'center'}}>{temp} °C</Text>
-            <Text style={{fontFamily: 'DMSerifText', color: '#666666', fontSize: 32, textAlign: 'center', marginTop: 12 }}>{season.name}</Text>
-          </View>
-        </Box>
-        <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', padding: 14, width: 270, backgroundColor: '#827344', position: 'absolute', bottom: 16}} onPress={() => navigation.navigate('NaturalLight')}>
-          <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>Next</Text>
-        </Pressable>
-      </View>
-    </ScrollView>
+    <View style={{backgroundColor: "#FCFAF7"}}>
+      <Box style={{position: 'absolute', top: 40, right: 16, zIndex: 10}}>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+          <Svg style={{alignSelf: 'flex-end'}} width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <Line x1="8" y1="22.8787" x2="22.8492" y2="8.02944" stroke="#B7A878" strokeWidth="3" strokeLinecap="round"/>
+            <Line x1="8.12132" y1="8" x2="22.9706" y2="22.8492" stroke="#B7A878" strokeWidth="3" strokeLinecap="round"/>
+          </Svg>
+        </TouchableOpacity>
+      </Box>
+      <ScrollView>
+        <View style={{ flex: 1, minHeight: Dimensions.get('window').height, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FCFAF7', paddingTop: 88, paddingBottom: 28}}>
+          <Box style={{width: Dimensions.get('window').width - 32}}>
+            <HStack style={{marginTop: 12}}>
+              <Box style={{flex: 1, height: 6, backgroundColor: '#B7A878', borderRadius: 7}}></Box>
+              <Box style={{flex: 1, height: 6, backgroundColor: '#B7A878', marginLeft: 8, borderRadius: 7}}></Box>
+              <Box style={{flex: 1, height: 6, backgroundColor: '#E3DECE', marginLeft: 8, borderRadius: 7}}></Box>
+              <Box style={{flex: 1, height: 6, backgroundColor: '#E3DECE', marginLeft: 8, borderRadius: 7}}></Box>
+            </HStack>
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              {/* <Image source={{ uri: images[weather] }} style={{position: 'absolute', height: '100%', width: '100%'}} /> */}
+              <Text style={{fontFamily: 'DMSerifText', color: '#827344', fontSize: 32, textAlign: 'center', marginTop: 40 }}>Climate information of {city}</Text>
+              {/* <Text>{weather}</Text> */}
+              <Text style={{fontFamily: 'DMSerifText', color: '#666666', fontSize: 64, marginTop: 96, textAlign: 'center'}}>{temp} °C</Text>
+              <Text style={{fontFamily: 'DMSerifText', color: '#666666', fontSize: 32, textAlign: 'center', marginTop: 12 }}>{season.name}</Text>
+            </View>
+          </Box>
+          <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', justifyContent: 'center', height: 48, width: 270, backgroundColor: '#827344', position: 'absolute', bottom: 24}} onPress={() => navigation.navigate('NaturalLight', {city: city, outdoor: route.params.outdoor, temp: temp, date: curMonth})}>
+            <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>Next</Text>
+          </Pressable>
+        </View>
+      </ScrollView>
+    </View>
   )
 }
 

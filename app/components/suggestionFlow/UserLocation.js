@@ -5,147 +5,154 @@ import Svg, { Line } from 'react-native-svg';
 import { Box, HStack } from 'native-base';
 import { useFonts } from 'expo-font';
 
-const UserLocation = ({ navigation }) => {
+const UserLocation = ({ navigation, route }) => {
   const [text, setText] = useState("");
   const [bool, setBool] = useState(true);
   const [locationServiceEnabled, setLocationServiceEnabled] = useState(false);
   const [displayCurrentAddress, setDisplayCurrentAddress] = useState("");
+  // const outdoors = route.params.outdoor
+  // console.log(outdoors)
 
   useEffect(() => {
-      if(text) {
-          if (text.length === 6 || text.length === 7) {
-              setBool(false)
-          } else {
-              setBool(true)
-          }
+    if(text) {
+      if (text.length === 6 || text.length === 7) {
+        setBool(false)
+      } else {
+        setBool(true)
       }
+    }
   }, [text]);
 
-    const [loaded] = useFonts({
-      DMSerifText: require('../../assets/fonts/DMSerifText-Regular.ttf'),
-      QuickSandBold: require('../../assets/fonts/Quicksand-Bold.ttf'),
-      QuickSandRegular: require('../../assets/fonts/Quicksand-Regular.ttf')
-    });
+  const [loaded] = useFonts({
+    DMSerifText: require('../../assets/fonts/DMSerifText-Regular.ttf'),
+    QuickSandBold: require('../../assets/fonts/Quicksand-Bold.ttf'),
+    QuickSandRegular: require('../../assets/fonts/Quicksand-Regular.ttf')
+  });
   
-    if (!loaded) {
-      return null;
+  if (!loaded) {
+    return null;
+  }
+
+  // Checking if location permitted or not
+  const CheckIfLocationEnabled = async () => {
+    let enabled = await Location.hasServicesEnabledAsync();
+
+    if (!enabled) {
+      Alert.alert(
+        'Location Service not enabled',
+        'Please enable your location services to continue',
+        [{ text: 'OK' }],
+        { cancelable: false }
+      );
+    } else {
+      setLocationServiceEnabled(enabled);
+    }
+  };
+
+  const GetCurrentLocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+  
+    if (status !== 'granted') {
+      Alert.alert(
+        'Permission not granted',
+        'Allow the app to use location service.',
+        [{ text: 'OK' }],
+        { cancelable: false }
+      );
     }
 
-    // Checking if location permitted or not
-    const CheckIfLocationEnabled = async () => {
-        let enabled = await Location.hasServicesEnabledAsync();
-    
-        if (!enabled) {
-            Alert.alert(
-                'Location Service not enabled',
-                'Please enable your location services to continue',
-                [{ text: 'OK' }],
-                { cancelable: false }
-            );
-        } else {
-            setLocationServiceEnabled(enabled);
-        }
-    };
-
-    const GetCurrentLocation = async () => {
-        let { status } = await Location.requestForegroundPermissionsAsync();
-      
-        if (status !== 'granted') {
-            Alert.alert(
-                'Permission not granted',
-                'Allow the app to use location service.',
-                [{ text: 'OK' }],
-                { cancelable: false }
-            );
-        }
-
-        let { coords } = await Location.getCurrentPositionAsync();
-        if (coords) {
-            const { latitude, longitude } = coords;
-            let response = await Location.reverseGeocodeAsync({ latitude, longitude });
-            let postal;
-            for (let item of response) {
-                let address = `${item.name}, ${item.street}, ${item.postalCode}, ${item.city}`;
-                setDisplayCurrentAddress(item.city);
-                if (address.length > 0) {
-                    setTimeout(() => {
-                        if(item.postalCode) {
-                            postal = item.postalCode;
-                        } else if(item.name === "Langara College") {
-                            postal = "V5Y 2Z6"
-                        } else {
-                            postal = item.name;
-                        }
-                        setText(postal);
-                    }, 300);
-                }
+    let { coords } = await Location.getCurrentPositionAsync();
+    if (coords) {
+      const { latitude, longitude } = coords;
+      let response = await Location.reverseGeocodeAsync({ latitude, longitude });
+      let postal;
+      for (let item of response) {
+        let address = `${item.name}, ${item.street}, ${item.postalCode}, ${item.city}`;
+        setDisplayCurrentAddress(item.city);
+        if (address.length > 0) {
+          setTimeout(() => {
+            if(item.postalCode) {
+              postal = item.postalCode;
+            } else if(item.name === "Langara College") {
+              postal = "V5Y 2Z6"
+            } else {
+              postal = item.name;
             }
+            setText(postal);
+          }, 300);
         }
-    };
-
-    const getLocation = () => {
-        CheckIfLocationEnabled();
-        GetCurrentLocation();
+      }
     }
+  };
 
-    const getCityFromPostal = async () => {
-        // console.log(text)
-        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:${text}&key=AIzaSyDZFbQUBmIom77z-BJilZWZ39617HAGmps`)
-        const completeResponseObject = await response.json();
-        if(!completeResponseObject) {
-            return "Invalid Postal"
-        }
-        const city = completeResponseObject.results[0].formatted_address.split(',');
-        return city[0];
+  const getLocation = () => {
+    CheckIfLocationEnabled();
+    GetCurrentLocation();
+  }
+
+  const getCityFromPostal = async () => {
+    // console.log(text)
+    const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:${text}&key=AIzaSyDZFbQUBmIom77z-BJilZWZ39617HAGmps`)
+    const completeResponseObject = await response.json();
+    if(!completeResponseObject) {
+      return "Invalid Postal"
     }
+    const city = completeResponseObject.results[0].formatted_address.split(',');
+    return city[0];
+  }
 
   return (
-    <ScrollView>
-      <View style={{ flex: 1, minHeight: Dimensions.get('window').height, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FFFFFF', paddingTop: 60, paddingBottom: 28}}>
-        <Box style={{width: Dimensions.get('window').width - 32}}>
-          <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-            <Svg style={{alignSelf: 'flex-end'}} width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <Line x1="8" y1="22.8787" x2="22.8492" y2="8.02944" stroke="#B7A878" strokeWidth="3" strokeLinecap="round"/>
-              <Line x1="8.12132" y1="8" x2="22.9706" y2="22.8492" stroke="#B7A878" strokeWidth="3" strokeLinecap="round"/>
-            </Svg>
-          </TouchableOpacity>
-          <HStack style={{marginTop: 12}}>
-            <Box style={{flex: 1, height: 6, backgroundColor: '#B7A878', borderRadius: 7}}></Box>
-            <Box style={{flex: 1, height: 6, backgroundColor: '#E3DECE', marginLeft: 8, borderRadius: 7}}></Box>
-            <Box style={{flex: 1, height: 6, backgroundColor: '#E3DECE', marginLeft: 8, borderRadius: 7}}></Box>
-            <Box style={{flex: 1, height: 6, backgroundColor: '#E3DECE', marginLeft: 8, borderRadius: 7}}></Box>
-          </HStack>
-          <View style={{ flex: 1, height: '100%', alignItems: 'center', justifyContent: 'center', marginTop: 36}}>
-            <Text style={{fontFamily: 'DMSerifText', color: '#827344', fontSize: 32, textAlign: 'center', marginTop: 12 }}>You are currently Located in...</Text>
-            <TextInput
-              style={{fontFamily: 'DMSerifText', color: '#666666', fontSize: 64, marginTop: 90, padding: 10, textAlign: 'center', borderBottomColor: '#BBBBBB', borderBottomWidth: 1 }}
-              onChangeText={setText}
-              placeholder="Postcode"
-              defaultValue={text}
-            />
-            {/* <Text>OR</Text> */}
-          </View>
-        </Box>
-        <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', padding: 14, width: 270, position: 'absolute', bottom: 88}} onPress={getLocation}>
-          <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, color: '#827344', textAlign: 'center'}}>Locate Me!</Text>
-        </Pressable>
-        <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', padding: 14, width: 270, backgroundColor: bool ? '#E3DECE' : "#827344", position: 'absolute', bottom: 16}} disabled={bool} onPress={ async () => {
-          if(!displayCurrentAddress) {
-            const cityName = await getCityFromPostal();
-            console.log(cityName);
-            navigation.navigate('Climate', {
-              address: cityName
-            })
-          } else {
-            navigation.navigate('Climate', {
-              address: displayCurrentAddress
-            })
-          }
-        }}>
-          <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>Next</Text>
-        </Pressable>
-      </View>
-    </ScrollView>
+    <View style={{backgroundColor: "#FCFAF7"}}>
+      <Box style={{position: 'absolute', top: 40, right: 16, zIndex: 10}}>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+          <Svg style={{alignSelf: 'flex-end'}} width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <Line x1="8" y1="22.8787" x2="22.8492" y2="8.02944" stroke="#B7A878" strokeWidth="3" strokeLinecap="round"/>
+            <Line x1="8.12132" y1="8" x2="22.9706" y2="22.8492" stroke="#B7A878" strokeWidth="3" strokeLinecap="round"/>
+          </Svg>
+        </TouchableOpacity>
+      </Box>
+      <ScrollView>
+        <View style={{ flex: 1, minHeight: Dimensions.get('window').height, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FCFAF7', paddingTop: 88, paddingBottom: 28}}>
+          <Box style={{width: Dimensions.get('window').width - 32}}>
+            <HStack style={{marginTop: 12}}>
+              <Box style={{flex: 1, height: 6, backgroundColor: '#B7A878', borderRadius: 7}}></Box>
+              <Box style={{flex: 1, height: 6, backgroundColor: '#E3DECE', marginLeft: 8, borderRadius: 7}}></Box>
+              <Box style={{flex: 1, height: 6, backgroundColor: '#E3DECE', marginLeft: 8, borderRadius: 7}}></Box>
+              <Box style={{flex: 1, height: 6, backgroundColor: '#E3DECE', marginLeft: 8, borderRadius: 7}}></Box>
+            </HStack>
+            <View style={{ flex: 1, height: '100%', alignItems: 'center', justifyContent: 'center', marginTop: 36}}>
+              <Text style={{fontFamily: 'DMSerifText', color: '#827344', fontSize: 32, textAlign: 'center', marginTop: 12 }}>You are currently Located in...</Text>
+              <TextInput
+                style={{fontFamily: 'DMSerifText', color: '#666666', fontSize: 64, marginTop: 90, padding: 10, textAlign: 'center', borderBottomColor: '#BBBBBB', borderBottomWidth: 1 }}
+                onChangeText={setText}
+                placeholder="Postcode"
+                defaultValue={text}
+              />
+            </View>
+          </Box>
+          <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', justifyContent: 'center', height: 48, width: 270, position: 'absolute', bottom: 88}} onPress={getLocation}>
+            <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, color: '#827344', textAlign: 'center'}}>Locate Me!</Text>
+          </Pressable>
+          <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', justifyContent: 'center', height: 48, width: 270, backgroundColor: bool ? '#E3DECE' : "#827344", position: 'absolute', bottom: 24}} disabled={bool} onPress={ async () => {
+            if(!displayCurrentAddress) {
+              const cityName = await getCityFromPostal();
+              // console.log(cityName);
+              navigation.navigate('Climate', {
+                address: cityName,
+                outdoors: route.params.outdoor
+              })
+            } else {
+              navigation.navigate('Climate', {
+                address: displayCurrentAddress,
+                outdoor: route.params.outdoor
+              })
+            }
+          }}>
+            <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>Next</Text>
+          </Pressable>
+        </View>
+      </ScrollView>
+    </View>
   )
 }
 
