@@ -1,31 +1,37 @@
 import React from "react";
 import { Divider, Actionsheet, useDisclose } from "native-base";
 import { useFonts } from 'expo-font';
-import { AntDesign} from '@expo/vector-icons';
+import Svg, { Circle } from "react-native-svg";
+import { TouchableOpacity } from "react-native";
 
 const EditEnv = () => {
   const { isOpen, onOpen, onClose } = useDisclose()
+
   const [loaded] = useFonts({
     DMSerifText: require('../../assets/fonts/DMSerifText-Regular.ttf'),
     QuickSandBold: require('../../assets/fonts/Quicksand-Bold.ttf')
   });
 
   if (!loaded) {
-      return null;
+    return null;
   }
 
   return (
     <>
-      {/* <Button onPress={onOpen}>Actionsheet</Button> */}
-      <AntDesign name="ellipsis1" size={24} color="black" onPress={onOpen}/>
-
+      <TouchableOpacity onPress={onOpen}>
+        <Svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <Circle cx="12" cy="6" r="1.5" fill="#666666"/>
+          <Circle cx="12" cy="12" r="1.5" fill="#666666"/>
+          <Circle cx="12" cy="18" r="1.5" fill="#666666"/>
+        </Svg>
+      </TouchableOpacity>
       <Actionsheet isOpen={isOpen} onClose={onClose} style={{fontFamily: 'QuickSandBold'}}>
         <Actionsheet.Content>
-          <Actionsheet.Item style={{ justifyContent: "center", fontFamily: 'QuickSandBold' }}>
+          <Actionsheet.Item style={{justifyContent: "center", fontFamily: 'QuickSandBold'}}>
             Rename Environment
           </Actionsheet.Item>
           <Divider borderColor="gray.300" />
-          <Actionsheet.Item style={{ justifyContent: "center", fontFamily: 'QuickSandBold' }}>
+          <Actionsheet.Item style={{justifyContent: "center", fontFamily: 'QuickSandBold'}}>
             Delete Environment
           </Actionsheet.Item>
         </Actionsheet.Content>
