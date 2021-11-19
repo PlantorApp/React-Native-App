@@ -1,18 +1,32 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import { Text, Box, FlatList, Image, Heading, HStack, VStack, } from 'native-base';
 import { useFonts } from 'expo-font';
 
 import { MaterialCommunityIcons,MaterialIcons,FontAwesome5 } from '@expo/vector-icons';
 import EditEnv from "../components/dropDown/EditEnv";
+import { getUserIDAsync } from "expo-facebook";
 
-const SavedScreen = ({navigation}) => {
+const SavedScreen = (props) => {
 
-    const [showModal, setShowModal] = useState(false)
     
+    const [envList, setEnvList] = useState(props.envList);
+    const [showModal, setShowModal] = useState(false);    
     const [loaded] = useFonts({
         DMSerifText: require('../assets/fonts/DMSerifText-Regular.ttf'),
         QuickSandBold: require('../assets/fonts/Quicksand-Bold.ttf')
     });
+
+
+    // useEffect(() => {
+    //     const getUser = async () => {
+    //         const response = await fetch(`http://54.148.107.164/backend-users/users/${props.loggedInUser.sub}`);
+    //         const data = await response.json();
+    //         setUser(data)
+    //         setEnvList(data.savedEnvironments)
+    //         console.log("list ah aa:" , envList)
+    //     }
+    //     getUser()
+    // },[])
 
     if (!loaded) {
         return null;
@@ -66,7 +80,11 @@ const SavedScreen = ({navigation}) => {
         }
       ]
 
-
+      const list = []
+      envList.forEach(element => {
+        list.push(data[element])    
+      });
+      
       const handlePress = (option) => {
           console.log('Pressed')
           setShowModal(option)
@@ -79,7 +97,7 @@ const SavedScreen = ({navigation}) => {
             </Heading>
             
             <FlatList
-                data={data}
+                data={list}
                 renderItem={({ item }) => (
                             <Box my="2" mx="3" pl="4" pr="5" py="2">
                                 <VStack width="100%">
@@ -133,14 +151,5 @@ const SavedScreen = ({navigation}) => {
 };
 
 
-
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         alignItems: 'center',
-//         justifyContent: 'center',
-//         backgroundColor: '#8fcbbc'
-//     }
-// });
 
 export default SavedScreen;

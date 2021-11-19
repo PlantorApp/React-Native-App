@@ -20,8 +20,9 @@ const HomeScreen = (props) => {
   return (
     <Stack.Navigator initialRouteName="PlantsSuggestion" screenOptions={{ headerShown: false }}>
       <Stack.Group>
+
         <Stack.Screen name="Nav">
-          {() => <Nav isLogged={props.isLogged} setIsLogged={props.setIsLogged} setLoggedInUser={props.setLoggedInUser} loggedInUser={props.loggedInUser}/>}
+          {() => <Nav isLogged={props.isLogged} setIsLogged={props.setIsLogged} setLoggedInUser={props.setLoggedInUser} loggedInUser={props.loggedInUser} envList={props.envList}/>} 
         </Stack.Screen>
         <Stack.Screen name="IndoorOutdoor" component={IndoorOutdoor} />
         <Stack.Screen name="UserLocation" component={UserLocation} />
