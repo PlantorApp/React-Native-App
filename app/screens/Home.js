@@ -1,26 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card } from 'react-native-elements';
 import { useFonts } from 'expo-font';
 import { View, Image, Platform, TouchableOpacity } from 'react-native';
 import { Box, Heading, HStack, ScrollView } from "native-base";
 import Svg, { Path } from 'react-native-svg';
 
-const Home = ({ navigation, loggedInUser }) => {
+
+const Home = ({ navigation }) => {
   const [bookmarkedOne, setBookmarkedOne] = useState(false)
   const [bookmarkedTwo, setBookmarkedTwo] = useState(false)
   const [bookmarkedThree, setBookmarkedThree] = useState(false)
   const [bookmarkedFour, setBookmarkedFour] = useState(false)
   const [bookmarkedFive, setBookmarkedFive] = useState(false)
-
-  const [loaded] = useFonts({
-    DMSerifText: require('../assets/fonts/DMSerifText-Regular.ttf'),
-    QuickSandBold: require('../assets/fonts/Quicksand-Bold.ttf'),
-    QuickSandRegular: require('../assets/fonts/Quicksand-Regular.ttf')
-  });
-
-  if (!loaded) {
-    return null;
-  }
 
   const toggleBookmarked = async (id) => {
     // console.log("clicked id is :", id);
@@ -206,6 +197,16 @@ const Home = ({ navigation, loggedInUser }) => {
         }
       }
     }
+  }
+
+  const [loaded] = useFonts({
+    DMSerifText: require('../assets/fonts/DMSerifText-Regular.ttf'),
+    QuickSandBold: require('../assets/fonts/Quicksand-Bold.ttf'),
+    QuickSandRegular: require('../assets/fonts/Quicksand-Regular.ttf')
+  });
+
+  if (!loaded) {
+    return null;
   }
 
   return (

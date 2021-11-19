@@ -17,11 +17,12 @@ import Nav from "../components/nav/Nav";
 const Stack = createNativeStackNavigator();
 
 const HomeScreen = (props) => {
+  // console.log("HomeScreen.js has setLoggedInUser ", props.setLoggedInUser)
   return (
     <Stack.Navigator initialRouteName="PlantsSuggestion" screenOptions={{ headerShown: false }}>
       <Stack.Group>
         <Stack.Screen name="Nav">
-          {() => <Nav isLogged={props.isLogged} setIsLogged={props.setIsLogged} setLoggedInUser={props.setLoggedInUser} loggedInUser={props.loggedInUser}/>}
+          {() => <Nav isLogged={props.isLogged} setIsLogged={props.setIsLogged} setLoggedInUser={props.setLoggedInUser} loggedInUser={props.loggedInUser} />}
         </Stack.Screen>
         <Stack.Screen name="IndoorOutdoor" component={IndoorOutdoor} />
         <Stack.Screen name="UserLocation" component={UserLocation} />
