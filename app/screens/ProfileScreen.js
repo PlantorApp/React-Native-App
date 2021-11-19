@@ -13,7 +13,7 @@ import Login from "../components/login/Login";
 const ProfileScreen = (props) => {
     
     const [name,setName] = useState('user')
-    const [email, setEmail] = useState('tomholland@gmail.com')
+    const [email, setEmail] = useState('user12345@gmail.com')
     // const [profilePictureUri, setProfilePictureUri] = useState(propic)
 
     const setUser = (name, email,profilePicture) => {
@@ -34,8 +34,8 @@ const ProfileScreen = (props) => {
   return (
     <Box w={{ base: "100%", md: "25%" }}>
       <Login setUser = {setUser} setIsLogged={props.setIsLogged} setLoggedInUser={props.setLoggedInUser}/>
-      <Heading
-        style={{ fontFamily: "DMSerifText", padding: 4, paddingBottom: 3 }}
+      <Heading 
+        style={styles.mainTitle} 
       >
         Profile
       </Heading>
@@ -57,8 +57,8 @@ const ProfileScreen = (props) => {
 
         <VStack width="100%">
           <HStack justifyContent="flex-start" space={2} style={styles.border}>
-            <FontAwesome5 name="envelope" size={24} color="black" />
-            <Text fontSize="sm">{email}</Text>
+            <FontAwesome5 name="envelope" size={24} color="#B7A878" />
+            <Text fontSize="sm" style={styles.emailStyle}>{email}</Text>
           </HStack>
 
           <HStack
@@ -66,7 +66,7 @@ const ProfileScreen = (props) => {
             justifyContent="space-between"
             style={styles.border}
           >
-            <Text fontSize="md">Notifications Settings</Text>
+            <Text fontSize="md" style={styles.normalText}>Notifications Settings</Text>
 
             <Switch
               trackColor={{ false: "#767577", true: "#B7A878" }}
@@ -83,7 +83,7 @@ const ProfileScreen = (props) => {
           justifyContent="space-between"
           style={styles.border}
         >
-          <Text fontSize="md">Saved Articles</Text>
+          <Text fontSize="md" style={styles.normalText}>Saved Articles</Text>
           <FontAwesome5 name="chevron-right" size={24} color="black" />
         </HStack>
 
@@ -139,5 +139,18 @@ const styles = StyleSheet.create({
 
 
    
+},
+mainTitle: {
+  fontFamily: "DMSerifText", padding: 14, paddingBottom: 15, color: "#827344", fontSize: 32
+},
+
+normalText: {
+  color: "#666666",
+  fontSize: 20,
+  fontFamily: "Quicksand"
+},
+
+emailStyle: {
+  color: "#666666"
 }
 });

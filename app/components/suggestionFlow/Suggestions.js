@@ -21,7 +21,8 @@ const Suggestions = ({ navigation, route }) => {
   let lightDirLighting;
   if(route.params.lightDir === "South") {
     lightDirLighting = route.params.lightDir;
-  } else if ()
+  } 
+  // else if ()
   const petFriendly = route.params.petFriendly;
 
   let yourPlants = [];
