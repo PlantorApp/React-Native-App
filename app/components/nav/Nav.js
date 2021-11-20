@@ -54,7 +54,7 @@ const Nav = (props) => {
           }
         }}
       >
-        {() => <SavedScreen loggedInUser={props.loggedInUser} envList={props.envList}/>}
+        {() => <SavedScreen envList = {props.envList}/>}
       </Tab.Screen>
       <Tab.Screen
         name="Notifications"

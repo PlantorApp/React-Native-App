@@ -5,13 +5,15 @@ import { Text, View, SafeAreaView, Image, Pressable, TouchableOpacity, ScrollVie
 import Carousel from 'react-native-snap-carousel';
 import Svg, { Circle, Line, Path } from "react-native-svg";
 
-const Suggestions = ({ navigation, route }) => {
+const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
   const [entries, setEntries] = useState([])
   const [Cities, setCities] = useState([])
   const [callFetch, setCallFecth] = useState(true);
 
-  const outdoor = route.params.outdoor;
-  const city = route.params.city;
+  // const outdoor = route.params.outdoor;
+  const outdoor = true;
+  // const city = route.params.city;
+  const city = "Vancouver"
   // const temp = route.params.temp;
   const temp = 22;
   // const date = route.params.date;
@@ -22,8 +24,37 @@ const Suggestions = ({ navigation, route }) => {
   if(route.params.lightDir === "South") {
     lightDirLighting = route.params.lightDir;
   } 
-  const petFriendly = route.params.petFriendly;
+  // const cityLightingDuration = "South"
+  // const petFriendly = route.params.petFriendly;
+  const petFriendly = "Yes"
 
+  const envToSave = {
+    outdoorField : outdoor,
+    cityField : city,
+    tempField : temp,
+    dateField : date,
+    cityLightingDurationField : cityLightingDuration,
+    petFriendlyField : petFriendly 
+  }
+
+  const handlePress = async () => {
+    console.log("pressssssd")
+
+    const environmentArray = loggedInUser.savedEnvironments;
+    environmentArray.push(envToSave)
+
+    const requestOptions = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ savedEnvironments: environmentArray }),
+    };
+    const response2 = await fetch(`http://54.148.107.164/backend-users/users/${loggedInUser.sub}`,
+      requestOptions
+    );
+    const data2 = await response2.json();
+    setEnvList(data2.savedEnvironments)
+  }
+  
   let yourPlants = [];
   if(outdoor) {
     plants.forEach((plant) => {
@@ -169,7 +200,7 @@ const Suggestions = ({ navigation, route }) => {
               {/* <Button title="Save Environment" /> */}
             {/* </SafeAreaView> */}
           </Box>
-          <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', padding: 14, width: 270, backgroundColor: '#827344', position: 'absolute', bottom: 24}} onPress={() => { /* ---- code for save env ---- navigation.navigate('PetFriendly', { lightDir: captured }) */}} >
+          <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', padding: 14, width: 270, backgroundColor: '#827344', position: 'absolute', bottom: 24}} onPress={handlePress} >
             <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>Save Environment</Text>
         </Pressable>
         </View>

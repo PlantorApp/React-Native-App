@@ -23,8 +23,7 @@ export default function App() {
             const response = await fetch(`http://54.148.107.164/backend-users/users/${loggedInUser.sub}`);
             const data = await response.json();
             setLoggedInUser(data)
-            setEnvList(data.savedEnvironments)
-            console.log("list ah aa:" , envList)
+            console.log("user from mongo" , loggedInUser)
         }
   if(loggedInUser){
     getUser();
@@ -58,7 +57,7 @@ export default function App() {
   return (
     <NativeBaseProvider>
       <NavigationContainer>
-        <HomeScreen isLogged={isLogged} setIsLogged={setIsLogged} setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} envList={envList}/>
+        <HomeScreen isLogged={isLogged} setIsLogged={setIsLogged} setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} setEnvList = {setEnvList} envList = {envList}/>
       </NavigationContainer>
       <StatusBar style='dark' />
     </NativeBaseProvider>

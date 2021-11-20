@@ -8,8 +8,7 @@ import { getUserIDAsync } from "expo-facebook";
 
 const SavedScreen = (props) => {
 
-    
-    const [envList, setEnvList] = useState(props.envList);
+
     const [showModal, setShowModal] = useState(false);    
     const [loaded] = useFonts({
         DMSerifText: require('../assets/fonts/DMSerifText-Regular.ttf'),
@@ -32,58 +31,60 @@ const SavedScreen = (props) => {
         return null;
     }
 
-    const data = [
-        {
-            "id" : "1",
-            "title" : "Home Balcony",
-            "season" : "winter",
-            "location" : "Vancouver",
-            "temperature": "20C",
-            "light":"Artificial light",
-            "date":"12/09/2021"
-        },
-        {
-            "id" : "2",
-            "title" : "Home Living Room",
-            "season" : "winter",
-            "location" : "Vancouver",
-            "temperature": "20C",
-            "light":"Artificial light",
-            "date":"12/09/2021"
-        },
-        {
-            "id" : "3",
-            "title" : "Office Desk",
-            "season" : "winter",
-            "location" : "Vancouver",
-            "temperature": "20C",
-            "light":"Artificial light",
-            "date":"12/09/2021"
-        },
-        {
-            "id" : "4",
-            "title" : "Dining Room",
-            "season" : "winter",
-            "location" : "Vancouver",
-            "temperature": "20C",
-            "light":"Artificial light",
-            "date":"12/09/2021"
-        },
-        {
-            "id" : "5",
-            "title" : "Bed Room",
-            "season" : "winter",
-            "location" : "Vancouver",
-            "temperature": "20C",
-            "light":"Artificial light",
-            "date":"12/09/2021"
-        }
-      ]
+    // const data = [
+    //     {
+    //         "id" : "1",
+    //         "title" : "Home Balcony",
+    //         "season" : "winter",
+    //         "location" : "Vancouver",
+    //         "temperature": "20C",
+    //         "light":"Artificial light",
+    //         "date":"12/09/2021"
+    //     },
+    //     {
+    //         "id" : "2",
+    //         "title" : "Home Living Room",
+    //         "season" : "winter",
+    //         "location" : "Vancouver",
+    //         "temperature": "20C",
+    //         "light":"Artificial light",
+    //         "date":"12/09/2021"
+    //     },
+    //     {
+    //         "id" : "3",
+    //         "title" : "Office Desk",
+    //         "season" : "winter",
+    //         "location" : "Vancouver",
+    //         "temperature": "20C",
+    //         "light":"Artificial light",
+    //         "date":"12/09/2021"
+    //     },
+    //     {
+    //         "id" : "4",
+    //         "title" : "Dining Room",
+    //         "season" : "winter",
+    //         "location" : "Vancouver",
+    //         "temperature": "20C",
+    //         "light":"Artificial light",
+    //         "date":"12/09/2021"
+    //     },
+    //     {
+    //         "id" : "5",
+    //         "title" : "Bed Room",
+    //         "season" : "winter",
+    //         "location" : "Vancouver",
+    //         "temperature": "20C",
+    //         "light":"Artificial light",
+    //         "date":"12/09/2021"
+    //     }
+    //   ]
 
-      const list = []
-      envList.forEach(element => {
-        list.push(data[element])    
-      });
+    const data = props.envList;
+
+    //   const list = []
+    //   envList.forEach(element => {
+    //     list.push(data[element])    
+    //   });
       
       const handlePress = (option) => {
           console.log('Pressed')
@@ -97,7 +98,7 @@ const SavedScreen = (props) => {
             </Heading>
             
             <FlatList
-                data={list}
+                data={data}
                 renderItem={({ item }) => (
                             <Box my="2" mx="3" pl="4" pr="5" py="2">
                                 <VStack width="100%">
