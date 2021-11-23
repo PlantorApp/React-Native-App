@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Card, normalize } from 'react-native-elements';
+import { Card } from 'react-native-elements';
 import { useFonts } from 'expo-font';
-import { View, Image, Platform, TouchableOpacity, TouchableWithoutFeedback, Animated } from 'react-native';
+import { View, Image, Platform, TouchableWithoutFeedback, Animated } from 'react-native';
 import { Box, Heading, HStack, ScrollView } from "native-base";
 import Svg, { Path } from 'react-native-svg';
-
 
 const Home = ({ navigation }) => {
   const [bookmarkedOne, setBookmarkedOne] = useState(false)
@@ -12,12 +11,11 @@ const Home = ({ navigation }) => {
   const [bookmarkedThree, setBookmarkedThree] = useState(false)
   const [bookmarkedFour, setBookmarkedFour] = useState(false)
   const [bookmarkedFive, setBookmarkedFive] = useState(false)
-  // const [, handlePressIn] = useState()
-  // const [, handlePressOut] = useState()
+  const [loop, setLoop] = useState(true)
   const [animatedValue] = useState(new Animated.Value(1))
-  const animatedStyle = {
-    transform: [{ scale: animatedValue }]
-  }
+  const [animatedValueLoop] = useState(new Animated.Value(1))
+  const animatedStyle = { transform: [{ scale: animatedValue }] }
+  const animatedStyleLoop = { transform: [{ scale: animatedValueLoop }] }
 
   const toggleBookmarked = async (id) => {
     // console.log("clicked id is :", id);
@@ -219,8 +217,35 @@ const Home = ({ navigation }) => {
       tension: 40,
       useNativeDriver: true
     }).start()
-    // navigation.navigate('IndoorOutdoor')
+    navigation.navigate('IndoorOutdoor')
   }
+
+  const shrink = () => { 
+    Animated.spring(animatedValueLoop, {
+      toValue: 0.8,
+      friction: 3,
+      tension: 40,
+      duration: 5000,
+      useNativeDriver: true
+    }).start(() => expand())
+  }
+  
+  const expand = () => { 
+    Animated.spring(animatedValueLoop, {
+      toValue: 1,
+      friction: 3,
+      tension: 40,
+      duration: 5000,
+      useNativeDriver: true
+    }).start(() => shrink())
+  }
+
+  useEffect(() => {
+    if(loop) {
+      setLoop(false)
+      shrink()
+    }
+  }, [loop])
 
   const [loaded] = useFonts({
     DMSerifText: require('../assets/fonts/dmseriftext-regular.ttf'),
@@ -233,12 +258,17 @@ const Home = ({ navigation }) => {
   }
 
   return (
-    <View style={{backgroundColor: "#FCFAF7"}}>
+    <View style={{backgroundColor: "#FCFAF7", marginTop: 24}}>
       <ScrollView containerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Heading style={{fontFamily: 'DMSerifText', marginTop: 88, fontWeight: 'normal', color: "#827344", fontSize: 32, lineHeight: 38.4, paddingHorizontal: 80, textAlign: 'center'}}>Tap to get plant suggestions</Heading>
-        <Box style={{height: 200, alignItems: 'center', marginTop: 60}}>
+        <Heading style={{fontFamily: 'DMSerifText', marginTop: 60, fontWeight: 'normal', color: "#827344", fontSize: 32, lineHeight: 38.4, paddingHorizontal: 16, textAlign: 'center'}}>Tap to get plant suggestions</Heading>
+        <Box style={{height: 200, alignItems: 'center', marginTop: 37}}>
           <TouchableWithoutFeedback onPressIn={() => handlePressIn()} onPressOut={() => handlePressOut()}>
-            <Animated.Image source={require('../assets/plantSuggestions.png')} style={{width: 200, height: 200}, animatedStyle} />
+            <View>
+              <Animated.Image source={require('../assets/animatedEllipse.png')} style={{width: 200, height: 200}, animatedStyleLoop} />
+              <Box style={{position: 'absolute', top: 23, left: 23, zIndex: 10}}>
+                <Animated.Image source={require('../assets/plantSuggestions.png')} style={{width: 200, height: 200}, animatedStyle} />
+              </Box>
+            </View>
           </TouchableWithoutFeedback>
         </Box>
         <Heading style={{fontFamily: 'DMSerifText', fontSize: 32, fontWeight: 'normal', color: "#827344", width: '100%', textAlign: 'left', marginTop: 56, lineHeight: 38.4, marginLeft: 16}}>Gardening Tips</Heading>
