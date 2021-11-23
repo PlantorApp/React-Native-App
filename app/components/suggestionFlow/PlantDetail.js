@@ -70,7 +70,7 @@ const PlantDetail = ({ navigation, route }) => {
   }
 
   const [loaded] = useFonts({
-    DMSerifText: require('../../assets/fonts/DMSerifText-Regular.ttf'),
+    DMSerifText: require('../../assets/fonts/dmseriftext-regular.ttf'),
     QuickSandBold: require('../../assets/fonts/Quicksand-Bold.ttf'),
     QuickSandRegular: require('../../assets/fonts/Quicksand-Regular.ttf')
   });
@@ -149,7 +149,7 @@ const PlantDetail = ({ navigation, route }) => {
         <Box style={{width: Dimensions.get('window').width - 32, height: 1, backgroundColor: '#EEEEEE', marginTop: 24}}></Box>
         <Box style={{marginTop: 32, width: Dimensions.get('window').width - 32}}>
           <VStack>
-            <Text style={{fontFamily: 'QuickSandBold', color: '#827344', fontSize: 20}}>Lighting Duration</Text>
+            <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', color: '#827344', fontSize: 20}}>Lighting Duration</Text>
             <HStack style={{marginTop: 8}}>
               <Box style={{flex: 1, height: 31, justifyContent: 'center', backgroundColor: min ? "#7D9867" : '#E3DECE', borderTopLeftRadius: 38.25, borderBottomLeftRadius: 38.25}}>
                 <Text style={{textAlign: 'center', color: '#ffffff'}}>{minDuration} {minDuration ? "hours" : ""}</Text>
@@ -163,7 +163,7 @@ const PlantDetail = ({ navigation, route }) => {
             </HStack>
           </VStack>
           <VStack style={{marginTop: 28}}>
-            <Text style={{fontFamily: 'QuickSandBold', color: '#827344', fontSize: 20}}>Lighting Intensity</Text>
+            <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', color: '#827344', fontSize: 20}}>Lighting Intensity</Text>
             <HStack style={{marginTop: 8}}>
               <Box style={{flex: 1, height: 31, justifyContent: 'center', backgroundColor: low ? "#7D9867" : '#E3DECE', borderTopLeftRadius: 38.25, borderBottomLeftRadius: 38.25}}>
                 <Text style={{textAlign: 'center', color: '#ffffff'}}>{lowIntensity} {lowIntensity ? "LUX" : ""}</Text>
@@ -177,7 +177,7 @@ const PlantDetail = ({ navigation, route }) => {
             </HStack>
           </VStack>
           <VStack style={{marginTop: 28}}>
-            <Text style={{fontFamily: 'QuickSandBold', color: '#827344', fontSize: 20}}>Temperature Requirement</Text>
+            <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', color: '#827344', fontSize: 20}}>Temperature Requirement</Text>
             <HStack style={{marginTop: 8}}>
               <Box style={{flex: 1, height: 31, justifyContent: 'center', backgroundColor: '#E3DECE', borderTopLeftRadius: 38.25, borderBottomLeftRadius: 38.25, borderBottomRightRadius: 38.25, borderTopRightRadius: 38.25}}>
                 <Box style={{height: 31, marginLeft: temperatureMinimum === 0 ? 16 : temperatureMinimum * 8, backgroundColor: '#7D9867', justifyContent: 'center', width: '45%'}}>
@@ -187,7 +187,7 @@ const PlantDetail = ({ navigation, route }) => {
             </HStack>
           </VStack>
           <VStack style={{marginTop: 28}}>
-            <Text style={{fontFamily: 'QuickSandBold', color: '#827344', fontSize: 20}}>Season</Text>
+            <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', color: '#827344', fontSize: 20}}>Season</Text>
             <HStack style={{marginTop: 8}}>
               <Box style={{flex: 1, height: 31, justifyContent: 'center', backgroundColor: startSeason.find(el => el === "January") ? "#7D9867" : '#E3DECE', borderTopLeftRadius: 38.25, borderBottomLeftRadius: 38.25}}>
                 <Text style={{textAlign: 'center', color: '#ffffff'}}>J</Text>

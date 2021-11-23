@@ -9,7 +9,7 @@ const IndoorOutdoor = ({ navigation }) => {
     const [outdoor, setOutdoor] = useState(false)
 
     const [loaded] = useFonts({
-      DMSerifText: require('../../assets/fonts/DMSerifText-Regular.ttf'),
+      DMSerifText: require('../../assets/fonts/dmseriftext-regular.ttf'),
       QuickSandBold: require('../../assets/fonts/Quicksand-Bold.ttf'),
       QuickSandRegular: require('../../assets/fonts/Quicksand-Regular.ttf')
     });
@@ -39,7 +39,7 @@ const IndoorOutdoor = ({ navigation }) => {
                   <Image style={{width: 86, height: 86}} source={require('../../assets/illusIndoor.png')} />
                 </Box>
                 <Box style={{height: 48, justifyContent: 'center'}}>
-                  <Text style={{fontFamily: 'QuickSandBold', textAlign: 'center', fontSize: 20, color: '#666666'}}>Indoor</Text>
+                  <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', textAlign: 'center', fontSize: 20, color: '#666666'}}>Indoor</Text>
                 </Box>
               </TouchableOpacity>
               <TouchableOpacity style={{flex: 1, height: 204, backgroundColor: '#FFFFFF', borderRadius: 12, borderWidth: 1, marginLeft: 8, borderColor: '#DDDDDD', shadowColor: '#000000', shadowOffset: {width: 2, height: 2}, shadowOpacity: 0.12, shadowRadius: 8}} onPress={() => { setIndoor(false); setOutdoor(true); navigation.navigate('UserLocation', { outdoor: true }); }}>
@@ -47,7 +47,7 @@ const IndoorOutdoor = ({ navigation }) => {
                   <Image style={{width: 86, height: 86}} source={require('../../assets/illusOutdoor.png')} />
                 </Box>
                 <Box style={{height: 48, justifyContent: 'center'}}>
-                  <Text style={{fontFamily: 'QuickSandBold', textAlign: 'center', fontSize: 20, color: '#666666'}}>Outdoor</Text>
+                  <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', textAlign: 'center', fontSize: 20, color: '#666666'}}>Outdoor</Text>
                 </Box>
               </TouchableOpacity>
             </HStack>

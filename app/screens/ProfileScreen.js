@@ -20,7 +20,7 @@ const ProfileScreen = ({ navigation, isLogged, setIsLogged, setLoggedInUser, log
   }
 
   const [loaded] = useFonts({
-    DMSerifText: require("../assets/fonts/DMSerifText-Regular.ttf"),
+    DMSerifText: require("../assets/fonts/dmseriftext-regular.ttf"),
     QuickSandBold: require("../assets/fonts/Quicksand-Bold.ttf"),
     QuickSandRegular: require("../assets/fonts/Quicksand-Regular.ttf"),
   });
@@ -89,7 +89,7 @@ const ProfileScreen = ({ navigation, isLogged, setIsLogged, setLoggedInUser, log
 
               <Box my="9" mx="0" pl="3" pr="3" w={{ base: "100%"}}>
               <Pressable style={styles.button}>
-                <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, color: '#827344'}}>Logout</Text>
+                <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', fontSize: 20, color: '#827344'}}>Logout</Text>
               </Pressable> 
               </Box>
             
@@ -145,6 +145,7 @@ const styles = StyleSheet.create({
     fontFamily: "DMSerifText",
     color: "#827344",
     fontSize: 32,
+    fontWeight: 'normal',
     lineHeight: 38
   },
   normalText: {
