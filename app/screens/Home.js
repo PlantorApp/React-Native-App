@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card } from 'react-native-elements';
 import { useFonts } from 'expo-font';
-import { View, Image, Platform, TouchableOpacity } from 'react-native';
+import { View, Image, Platform, TouchableOpacity, TouchableWithoutFeedback, Animated } from 'react-native';
 import { Box, Heading, HStack, ScrollView } from "native-base";
 import Svg, { Path } from 'react-native-svg';
 
@@ -12,6 +12,12 @@ const Home = ({ navigation }) => {
   const [bookmarkedThree, setBookmarkedThree] = useState(false)
   const [bookmarkedFour, setBookmarkedFour] = useState(false)
   const [bookmarkedFive, setBookmarkedFive] = useState(false)
+  // const [, handlePressIn] = useState()
+  // const [, handlePressOut] = useState()
+  const [animatedValue] = useState(new Animated.Value(1))
+  const animatedStyle = {
+    transform: [{ scale: animatedValue }]
+  }
 
   const toggleBookmarked = async (id) => {
     // console.log("clicked id is :", id);
@@ -199,6 +205,23 @@ const Home = ({ navigation }) => {
     }
   }
 
+  const handlePressIn = () => {
+    Animated.spring(animatedValue, {
+      toValue: 0.9,
+      useNativeDriver: true
+    }).start()
+  }
+  
+  const handlePressOut = () => {
+    Animated.spring(animatedValue, {
+      toValue: 1,
+      friction: 3,
+      tension: 40,
+      useNativeDriver: true
+    }).start()
+    // navigation.navigate('IndoorOutdoor')
+  }
+
   const [loaded] = useFonts({
     DMSerifText: require('../assets/fonts/DMSerifText-Regular.ttf'),
     QuickSandBold: require('../assets/fonts/Quicksand-Bold.ttf'),
@@ -214,9 +237,9 @@ const Home = ({ navigation }) => {
       <ScrollView containerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <Heading style={{fontFamily: 'DMSerifText', marginTop: 88, color: "#827344", fontSize: 32, lineHeight: 38.4, paddingHorizontal: 80, textAlign: 'center'}}>Tap to get plant suggestions</Heading>
         <Box style={{height: 200, alignItems: 'center', marginTop: 60}}>
-          <TouchableOpacity onPress={() => navigation.navigate('IndoorOutdoor')}>
-            <Image source={require('../assets/plantSuggestions.png')} style={{width: 200, height: 200}} />
-          </TouchableOpacity>
+          <TouchableWithoutFeedback onPressIn={() => handlePressIn()} onPressOut={() => handlePressOut()}>
+            <Animated.Image source={require('../assets/plantSuggestions.png')} style={{width: 200, height: 200}, animatedStyle} />
+          </TouchableWithoutFeedback>
         </Box>
         <Heading style={{fontFamily: 'DMSerifText', fontSize: 32, color: "#827344", width: '100%', textAlign: 'left', marginTop: 56, lineHeight: 38.4, marginLeft: 16}}>Gardening Tips</Heading>
         <View style={{height: 300, marginTop: 8, marginBottom: 32}}>
