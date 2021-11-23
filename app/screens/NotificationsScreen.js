@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Button, StyleSheet, Pressable } from "react-native";
+import { View, Text, Button, StyleSheet, Pressable, ScrollView, Dimensions } from "react-native";
 import { useFonts } from "expo-font";
 
 import { Box, Heading, FlatList, Image, HStack, VStack } from "native-base";
@@ -9,6 +9,7 @@ const NotificationScreen = ({ navigation }) => {
   const [loaded] = useFonts({
     DMSerifText: require("../assets/fonts/DMSerifText-Regular.ttf"),
     QuickSandBold: require("../assets/fonts/Quicksand-Bold.ttf"),
+    QuickSandRegular: require("../assets/fonts/Quicksand-Regular.ttf")
   });
 
   if (!loaded) {
@@ -17,35 +18,35 @@ const NotificationScreen = ({ navigation }) => {
 
   const data = [
     {
-      id: 1,
+      id: "1",
       image: require("../assets/png/1872.png"),
       title: "Rainfall Warning",
       description:
-        "Lorem ipsum dolor sit amet, elit, sed do incididunt ut labore et.",
+        "Short description about alert & how it will impact the garden so that use...",
       date: "12/09/2021",
     },
     {
-      id: 2,
+      id: "2",
       image: require("../assets/png/1875.png"),
       title: "Heat Wave Warning",
       description:
-        "Lorem ipsum dolor sit amet, elit, sed do incididunt ut labore et.",
+        "Short description about alert & how it will impact the garden so that use...",
       date: "12/09/2021",
     },
     {
-      id: 3,
+      id: "3",
       image: require("../assets/png/1871.png"),
-      title: "Winter is coming",
+      title: "Winter is coming!",
       description:
-        "Lorem ipsum dolor sit amet, elit, sed do incididunt ut labore et.",
+        "Short description about alert & how it will impact the garden so that use...",
       date: "12/09/2021",
     },
     {
-      id: 4,
+      id: "4",
       image: require("../assets/png/1870.png"),
-      title: "Heavy Storm Warning",
+      title: "Fall is coming!",
       description:
-        "Lorem ipsum dolor sit amet, elit, sed do incididunt ut labore et.",
+        "Short description about alert & how it will impact the garden so that use...",
       date: "12/09/2021",
     },
   ];
@@ -56,135 +57,113 @@ const NotificationScreen = ({ navigation }) => {
   };
 
   return (
-    <Box w={{ base: "100%", md: "25%" }}>
-      <Heading
-        style={styles.mainTitle}
-      >
-        Notifications
-      </Heading>
-
-      <HStack
-        justifyContent="space-evenly"
-        style={{ fontFamily: "DMSerifText", paddingBottom: 4 }}
-       
-      >
-        <Pressable style={styles.button}>
-          <Text style={styles.text}>All</Text>
-        </Pressable>
-
-        <Pressable style={styles.button}>
-          <Text style={styles.text}>Seasonal</Text>
-        </Pressable>
-
-        <Pressable style={styles.button}>
-          <Text style={styles.text}>Warnings</Text>
-        </Pressable>
-
-        <Pressable style={styles.button}>
-          <Text style={styles.text}>Hazards</Text>
-        </Pressable>
-      </HStack>
-
-<View  style={styles.border}>
-</View>
-
-
-      <FlatList
-        data={data}
-        renderItem={({ item }) => (
-          <Box my="2" mx="0" pl="4" pr="5" w={{ base: "75%", md: "25%" }}>
-            <VStack width="100%">
-              <HStack justifyContent="space-between">
-                <Text fontSize="2xl" style={styles.titleText}>
-                  {item.title}
-                </Text>
-              </HStack>
-
-              <HStack width="100%" space={2} justifyContent="flex-start">
-                <Image source={item.image} />
-                {/* <Image  source ={{
-                                   uri: "https://wallpaperaccess.com/full/317501.jpg",
-                          }}  w="100px" h="100px" backgroundColor="rgb(200,150,139)" alt={item.title} paddingTop="5"/> */}
-
-                <VStack space={2}>
-                  <HStack justifyContent="flex-start" space={2}>
-                    <Text fontSize="md" style={styles.descriptionnddateText}>
+    <View style={{ flex: 1, minHeight: Dimensions.get('window').height, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FCFAF7', paddingTop: 44, paddingBottom: 28}}>
+        <Box style={{width: Dimensions.get('window').width - 32}}>
+          <Heading style={styles.mainTitle} >Notifications</Heading>
+          <Box style={styles.border}>
+            <HStack space={2} >
+              <Pressable style={styles.firstButton}>
+                <Text style={styles.firstButtonText}>All</Text>
+              </Pressable>
+              <Pressable style={styles.button}>
+                <Text style={styles.text}>Seasonal</Text>
+              </Pressable>
+              <Pressable style={styles.button}>
+                <Text style={styles.text}>Warnings</Text>
+              </Pressable>
+              <Pressable style={styles.button}>
+                <Text style={styles.text}>Hazards</Text>
+              </Pressable>
+            </HStack>
+          </Box>
+          <FlatList
+            data={data} style={{height: "100%"}}
+            renderItem={({ item }) => (
+              <Box style={{marginTop: 24}} >
+                <Text style={styles.titleText}>{item.title}</Text>
+                <HStack justifyContent="flex-start" style={{marginTop: 8}}>
+                  <Image source={item.image} alt="notification illustration" width="70" height="70" />
+                  <Box style={{marginLeft: 16, width: Dimensions.get('window').width - 118}}>
+                    <Text style={styles.descriptionText}>
                       {item.description}
                     </Text>
-                  </HStack>
-                  <Text fontSize="md" style={styles.descriptionnddateText}>
+                    <Text style={styles.descriptiondateText}>
                     {item.date}
-                  </Text>
-                </VStack>
-                
-              </HStack>
-              
-            </VStack>
-            <View style={styles.border}></View>
-
-          </Box>
-          
-          
-        )}
-        keyExtractor={(item) => item.id}
-     
-      />
-
-    </Box>
-  );
+                    </Text>
+                  </Box>
+                </HStack>
+              </Box>
+            )}
+            keyExtractor={(item) => item.id}
+          />
+        </Box>
+    </View>
+  )
 };
 
 export default NotificationScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#8fcbbc",
-  },
-
   mainTitle: {
-    fontFamily: "DMSerifText", padding: 14, paddingBottom: 15
+    fontFamily: "DMSerifText",
+    lineHeight: 38,
+    color: "#827344",
+    fontSize: 32
   },
-
-  button: {
+  firstButton: {
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 12,
-    paddingHorizontal: 20,
+    paddingVertical: 4,
+    paddingHorizontal: 12,
     borderRadius: 90,
     elevation: 3,
     backgroundColor: "#B7A878",
+    borderColor: "#B7A878",
+    borderWidth: 1
   },
-
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 90,
+    elevation: 3,
+    backgroundColor: "#FCFAF7",
+    borderColor: "#B7A878",
+    borderWidth: 1
+  },
+  firstButtonText: {
+    fontSize: 14,
+    fontFamily: 'QuickSandRegular',
+    color: "#FCFAF7",
+  },
   text: {
     fontSize: 14,
-    lineHeight: 19,
-
-    color: "white",
+    fontFamily: 'QuickSandRegular',
+    color: "#827344",
   },
-
   titleText: {
     fontSize: 20,
-    lineHeight: 21,
-    letterSpacing: 0.25,
+    lineHeight: 28,
     color: "#666666",
-    fontFamily: "QuickSandBold",
-    paddingBottom: 16,
+    fontFamily: "QuickSandBold"
   },
-  descriptionnddateText: {
+  descriptionText: {
     fontSize: 14,
-    lineHeight: 19.9,
-    letterSpacing: 0.25,
+    lineHeight: 22,
     color: "#666666",
-    fontFamily: "QuickSandBold",
+    fontFamily: "QuickSandRegular",
+  },
+  descriptiondateText: {
+    marginTop: 8,
+    fontSize: 14,
+    lineHeight: 22,
+    color: "#AAAAAA",
+    fontFamily: "QuickSandRegular",
   },
   border: {
     borderBottomWidth: 1,
-    borderColor: "lightgrey",
-    paddingBottom: "8%",
-    paddingTop: "5%",
-    width: "130%",
+    borderColor: "#EEEEEE",
+    paddingVertical: 22,
   },
 });

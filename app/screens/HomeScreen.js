@@ -17,6 +17,7 @@ import Nav from "../components/nav/Nav";
 const Stack = createNativeStackNavigator();
 
 const HomeScreen = (props) => {
+  // console.log("HomeScreen.js has setLoggedInUser ", props.setLoggedInUser)
   return (
     <Stack.Navigator initialRouteName="PlantsSuggestion" screenOptions={{ headerShown: false }}>
       <Stack.Group>

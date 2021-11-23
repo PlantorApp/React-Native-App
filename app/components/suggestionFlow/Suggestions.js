@@ -1,7 +1,7 @@
 import { useFonts } from "expo-font";
 import { Box, HStack, Stack } from "native-base";
 import React, { useEffect, useState } from "react";
-import { Text, View, SafeAreaView, Image, Pressable, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
+import { Text, View, Image, Pressable, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import Svg, { Circle, Line, Path } from "react-native-svg";
 
@@ -57,14 +57,14 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
   
   let yourPlants = [];
   if(outdoor) {
-    plants.forEach((plant) => {
+    entries.forEach((plant) => {
       if(plant.startSeason.includes(date)) {
         if(plant.temperatureMinimum < temp && plant.temperatureMaximum > temp) {
           if(parseInt(plant.lightingDurationMaximum) < parseInt(cityLightingDuration)) {
-            if(plant.petFriendly === petFriendly) {console.log(plant)
-              if(plant.lightingRequirement === lightDirLighting) {
+            if(plant.petFriendly === petFriendly) {//console.log(plant.image)
+              // if(plant.lightingRequirement === lightDirLighting) {
                 yourPlants.push(plant)
-              }
+              // }
             }
           }
         }
@@ -76,15 +76,16 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
     breaks into 2 cases again natural light or artificial light
     */
   }
-  console.log(yourPlants.length);
+  //console.log(yourPlants.length);
 
   const [carousel, setCarousel] = useState('0')
 
   const fetchData = () => {
     if(callFetch) {
-      // fetchCityDate();
-      // fetchPlantsData();
-      // setCallFecth(false);
+      fetchCityDate();
+      fetchPlantsData();
+      // console.log("callFetch is true: ", callFetch)
+      setCallFetch(false);
     }
   }
   
@@ -121,9 +122,9 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
       <TouchableOpacity onPress={() => {navigation.navigate('PlantDetail', {plant: item})}}>
         <View style={{borderRadius: 20, height: 356, width: 270, marginLeft: 32, marginRight: 32, marginTop: 18, backgroundColor: '#FFFFFF', shadowColor: '#000000', shadowOffset: {width: 2, height: 2}, shadowOpacity: 0.12, shadowRadius: 8}}>
           <Box style={{backgroundColor: '#FCFAF7', borderTopLeftRadius: 20, borderTopRightRadius: 20}}>
-            <Image source={item.image} style={{width: 230, height: 199, margin: 20}} />
+            {/* <Image source={{uri: item.image}} style={{width: 230, height: 199, margin: 20}} alt={item.plantName} /> */}
+          <Image source={require('../../assets/spiderPlant.png')} style={{width: 230, height: 199, margin: 20}} alt={item.plantName} />
           </Box>
-          {/* <Image source={require('../../assets/plantImage.png')} /> */}
           <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, marginLeft: 20, lineHeight: 28, marginTop: 12, color: '#827344'}}>{item.plantName}</Text>
           <Stack style={{marginLeft: 20}}>
               <HStack style={{marginTop: 8}}>
@@ -242,7 +243,7 @@ const plants = [
       "edible": true,
       "potSize": 5,
       "createdDate": "2021-11-18T01:07:50.304Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -267,7 +268,7 @@ const plants = [
       "duration": 50,
       "petFriendly": true,
       "createdDate": "2021-11-18T01:07:50.304Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -292,7 +293,7 @@ const plants = [
       "duration": 70,
       "petFriendly": true,
       "createdDate": "2021-11-18T01:07:50.304Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -317,7 +318,7 @@ const plants = [
       "duration": 80,
       "petFriendly": true,
       "createdDate": "2021-11-18T01:07:50.304Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -342,7 +343,7 @@ const plants = [
       "duration": 70,
       "petFriendly": true,
       "createdDate": "2021-11-18T01:07:50.304Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -367,7 +368,7 @@ const plants = [
       "duration": 75,
       "petFriendly": false,
       "createdDate": "2021-11-18T01:07:50.305Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -391,7 +392,7 @@ const plants = [
       "duration": 100,
       "petFriendly": true,
       "createdDate": "2021-11-18T01:07:50.305Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -417,7 +418,7 @@ const plants = [
       "duration": 85,
       "petFriendly": true,
       "createdDate": "2021-11-18T01:07:50.305Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -440,7 +441,7 @@ const plants = [
       "duration": 100,
       "petFriendly": false,
       "createdDate": "2021-11-18T01:07:50.305Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -467,7 +468,7 @@ const plants = [
       "duration": 30,
       "petFriendly": true,
       "createdDate": "2021-11-18T01:07:50.305Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -492,7 +493,7 @@ const plants = [
       "duration": 90,
       "petFriendly": false,
       "createdDate": "2021-11-18T01:07:50.305Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -518,7 +519,7 @@ const plants = [
       "duration": 80,
       "petFriendly": false,
       "createdDate": "2021-11-18T01:07:50.306Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -540,7 +541,7 @@ const plants = [
       "duration": 80,
       "petFriendly": true,
       "createdDate": "2021-11-18T01:07:50.306Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -564,7 +565,7 @@ const plants = [
       "duration": 75,
       "petFriendly": true,
       "createdDate": "2021-11-18T01:07:50.306Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -590,7 +591,7 @@ const plants = [
       "duration": 45,
       "petFriendly": true,
       "createdDate": "2021-11-18T01:07:50.306Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -615,7 +616,7 @@ const plants = [
       "duration": 45,
       "petFriendly": true,
       "createdDate": "2021-11-18T01:07:50.306Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -638,7 +639,7 @@ const plants = [
       "duration": 80,
       "petFriendly": false,
       "createdDate": "2021-11-18T01:07:50.307Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -663,7 +664,7 @@ const plants = [
       "duration": 45,
       "petFriendly": true,
       "createdDate": "2021-11-18T01:07:50.307Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -692,7 +693,7 @@ const plants = [
       "duration": 100,
       "petFriendly": true,
       "createdDate": "2021-11-18T01:07:50.307Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -716,7 +717,7 @@ const plants = [
       "duration": 180,
       "petFriendly": false,
       "createdDate": "2021-11-18T01:07:50.307Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -742,7 +743,7 @@ const plants = [
       "duration": 720,
       "petFriendly": true,
       "createdDate": "2021-11-18T01:07:50.307Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -768,7 +769,7 @@ const plants = [
       "duration": 720,
       "petFriendly": false,
       "createdDate": "2021-11-18T01:07:50.308Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -794,7 +795,7 @@ const plants = [
       "duration": 720,
       "petFriendly": true,
       "createdDate": "2021-11-18T01:07:50.308Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   },
   {
       "startSeason": [
@@ -820,7 +821,7 @@ const plants = [
       "duration": 720,
       "petFriendly": true,
       "createdDate": "2021-11-18T01:07:50.308Z",
-      "image": require('../../assets/spiderPlant.png')
+      "image": "../../assets/spiderPlant.png"
   }
 ]
 

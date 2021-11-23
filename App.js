@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { NativeBaseProvider } from 'native-base';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
@@ -13,9 +13,9 @@ export default function App() {
   const [envList, setEnvList] = useState([]);
   // console.log("logged in user is : ", loggedInUser);
   // console.log("value of is logged is: ", isLogged);
-
+  // console.log("App.js has setLoggedInUser ", setLoggedInUser)
   useEffect(() => {
-    registerForPushNotification().then(token=>console.log(token)).catch(err => console.log(err))    
+    registerForPushNotification().then(token => console.log(token)).catch(err => console.log(err))    
   }, []);
 
 
