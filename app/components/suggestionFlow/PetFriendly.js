@@ -8,7 +8,7 @@ const PetFriendly = ({ navigation, route }) => {
   const [friendly, setFriendly] = useState(false);
 
   const [loaded] = useFonts({
-    DMSerifText: require('../../assets/fonts/dmseriftext-regular.ttf'),
+    DMSerifText: require('../../assets/fonts/DMSerifText-Regular.ttf'),
     QuickSandBold: require('../../assets/fonts/Quicksand-Bold.ttf'),
     QuickSandRegular: require('../../assets/fonts/Quicksand-Regular.ttf')
   });
