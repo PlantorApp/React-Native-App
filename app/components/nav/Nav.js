@@ -27,7 +27,8 @@ const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser }) => {
     }}>
       <Tab.Screen
         name="Home"
-        component={Home}
+        // component={Home}
+        children={(props) => <Home {...props} loggedInUser={loggedInUser} />}
         options={{
           headerShown: false,
           tabBarIcon: ({color}) => (<Svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
