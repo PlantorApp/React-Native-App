@@ -22,7 +22,7 @@ const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser }) => {
     
   return (
     <Tab.Navigator screenOptions={{
-      tabBarStyle: { paddingTop: 16 },
+      tabBarStyle: { paddingTop: 6, height: 64 },
     }}>
       <Tab.Screen
         name="Home"
@@ -35,7 +35,7 @@ const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser }) => {
           tabBarActiveTintColor: "#827344",
           tabBarInactiveTintColor: "#BBBBBB",
           tabBarLabelStyle: {
-            marginTop: 8,
+            paddingBottom: 8,
             fontSize: 12,
             fontFamily: 'QuickSandBold',
             fontWeight: 'normal'
@@ -54,7 +54,7 @@ const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser }) => {
           tabBarActiveTintColor: "#827344",
           tabBarInactiveTintColor: "#BBBBBB",
           tabBarLabelStyle: {
-            marginTop: 8,
+            paddingBottom: 8,
             fontSize: 12,
             fontFamily: 'QuickSandBold',
             fontWeight: 'normal'
@@ -73,7 +73,7 @@ const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser }) => {
           tabBarActiveTintColor: "#827344",
           tabBarInactiveTintColor: "#BBBBBB",
           tabBarLabelStyle: {
-            marginTop: 8,
+            paddingBottom: 8,
             fontSize: 12,
             fontFamily: 'QuickSandBold',
             fontWeight: 'normal'
@@ -91,7 +91,7 @@ const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser }) => {
           tabBarActiveTintColor: "#827344",
           tabBarInactiveTintColor: "#BBBBBB",
           tabBarLabelStyle: {
-            marginTop: 8,
+            paddingBottom: 8,
             fontSize: 12,
             fontFamily: 'QuickSandBold',
             fontWeight: 'normal'
