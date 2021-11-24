@@ -214,28 +214,23 @@ const Home = ({ navigation }) => {
     Animated.spring(animatedValue, {
       toValue: 1,
       friction: 3,
-      tension: 40,
+      tension: 70,
       useNativeDriver: true
-    }).start()
-    navigation.navigate('IndoorOutdoor')
+    }).start(() => navigation.navigate('IndoorOutdoor'))
   }
 
   const shrink = () => { 
-    Animated.spring(animatedValueLoop, {
+    Animated.timing(animatedValueLoop, {
       toValue: 0.8,
-      friction: 3,
-      tension: 40,
-      duration: 5000,
+      duration: 1000,
       useNativeDriver: true
     }).start(() => expand())
   }
   
   const expand = () => { 
-    Animated.spring(animatedValueLoop, {
+    Animated.timing(animatedValueLoop, {
       toValue: 1,
-      friction: 3,
-      tension: 40,
-      duration: 5000,
+      duration: 1000,
       useNativeDriver: true
     }).start(() => shrink())
   }
@@ -261,17 +256,17 @@ const Home = ({ navigation }) => {
     <View style={{backgroundColor: "#FCFAF7", marginTop: 24}}>
       <ScrollView containerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <Heading style={{fontFamily: 'DMSerifText', marginTop: 60, fontWeight: 'normal', color: "#827344", fontSize: 32, lineHeight: 38.4, paddingHorizontal: 16, textAlign: 'center'}}>Tap to get plant suggestions</Heading>
-        <Box style={{height: 200, alignItems: 'center', marginTop: 37}}>
-          <TouchableWithoutFeedback onPressIn={() => handlePressIn()} onPressOut={() => handlePressOut()}>
-            <View>
-              <Animated.Image source={require('../assets/animatedEllipse.png')} style={{width: 200, height: 200}, animatedStyleLoop} />
-              <Box style={{position: 'absolute', top: 23, left: 23, zIndex: 10}}>
+        <Box style={{height: 200, alignItems: 'center', marginTop: 32}}>
+          <View>
+            <Animated.Image source={require('../assets/animatedEllipse.png')} style={{width: 200, height: 200}, animatedStyleLoop} />
+            <Box style={{position: 'absolute', top: 23, left: 23, zIndex: 10}}>
+              <TouchableWithoutFeedback onPressIn={() => handlePressIn()} onPressOut={() => handlePressOut()}>
                 <Animated.Image source={require('../assets/plantSuggestions.png')} style={{width: 200, height: 200}, animatedStyle} />
-              </Box>
-            </View>
-          </TouchableWithoutFeedback>
+              </TouchableWithoutFeedback>
+            </Box>
+          </View>
         </Box>
-        <Heading style={{fontFamily: 'DMSerifText', fontSize: 32, fontWeight: 'normal', color: "#827344", width: '100%', textAlign: 'left', marginTop: 56, lineHeight: 38.4, marginLeft: 16}}>Gardening Tips</Heading>
+        <Heading style={{fontFamily: 'DMSerifText', fontSize: 32, fontWeight: 'normal', color: "#827344", width: '100%', textAlign: 'left', marginTop: 60, lineHeight: 38.4, marginLeft: 16}}>Gardening Tips</Heading>
         <View style={{height: 300, marginTop: 8, marginBottom: 32}}>
           <ScrollView 
             horizontal 
