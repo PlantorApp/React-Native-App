@@ -5,28 +5,60 @@ import { Text, View, Image, Pressable, TouchableOpacity, ScrollView, Dimensions 
 import Carousel from 'react-native-snap-carousel';
 import Svg, { Circle, Line, Path } from "react-native-svg";
 
-const Suggestions = ({ navigation, route }) => {
+const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
   const [entries, setEntries] = useState([])
   const [Cities, setCities] = useState([])
   const [callFetch, setCallFetch] = useState(true);
-  const outdoor = route.params.outdoor;
-  const city = route.params.city;
+
+  // const outdoor = route.params.outdoor;
+  const outdoor = true;
+  // const city = route.params.city;
+  const city = "Vancouver"
   // const temp = route.params.temp;
   const temp = 22;
   // const date = route.params.date;
   const date = "April";
-  const cityLightingDuration = Cities.length > 0 && Cities.filter(el => el.location === city).filter(el => el.month === date)[0].dayLight;
+  const cityLightingDuration = cities.length > 0 && cities.filter(el => el.location === city).filter(el => el.month === date)[0].dayLight;
   // console.log(cityLightingDuration);
-  // let lightDirLighting;
-  // if(route.params.lightDir === "South") {
-  //   lightDirLighting = route.params.lightDir;
-  // } 
-  // else if ()
-  const petFriendly = route.params.petFriendly;
+  let lightDirLighting;
+  if(route?.params?.lightDir === "South") {
+    lightDirLighting = route.params.lightDir;
+  } 
+  // const cityLightingDuration = "South"
+  // const petFriendly = route.params.petFriendly;
+  const petFriendly = true
 
+  const envToSave = {
+    outdoorField : outdoor,
+    cityField : city,
+    tempField : temp,
+    dateField : date,
+    cityLightingDurationField : cityLightingDuration,
+    petFriendlyField : petFriendly 
+  }
+
+  const handlePress = async () => {
+    console.log("pressssssd")
+
+    const environmentArray = loggedInUser.savedEnvironments;
+    environmentArray.push(envToSave)
+
+    const requestOptions = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ savedEnvironments: environmentArray }),
+    };
+    // const response2 = await fetch(`http://54.148.107.164/backend-users/users/${loggedInUser.sub}`,
+    const response2 = await fetch(`http://192.168.0.18:3003/users/${loggedInUser.sub}`,
+      requestOptions
+    );
+    const data2 = await response2.json();
+    setEnvList(data2.savedEnvironments)
+  }
+  
   let yourPlants = [];
   if(outdoor) {
-    entries.forEach((plant) => {
+    plants.forEach((plant) => {
       if(plant.startSeason.includes(date)) {
         if(plant.temperatureMinimum < temp && plant.temperatureMaximum > temp) {
           if(parseInt(plant.lightingDurationMaximum) < parseInt(cityLightingDuration)) {
@@ -170,7 +202,7 @@ const Suggestions = ({ navigation, route }) => {
               {/* <Button title="Save Environment" /> */}
             {/* </SafeAreaView> */}
           </Box>
-          <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', padding: 14, width: 270, backgroundColor: '#827344', position: 'absolute', bottom: 24}} onPress={() => { /* ---- code for save env ---- navigation.navigate('PetFriendly', { lightDir: captured }) */}} >
+          <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', padding: 14, width: 270, backgroundColor: '#827344', position: 'absolute', bottom: 24}} onPress={handlePress} >
             <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>Save Environment</Text>
         </Pressable>
         </View>

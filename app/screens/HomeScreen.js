@@ -21,8 +21,9 @@ const HomeScreen = (props) => {
   return (
     <Stack.Navigator initialRouteName="PlantsSuggestion" screenOptions={{ headerShown: false }}>
       <Stack.Group>
+
         <Stack.Screen name="Nav">
-          {() => <Nav isLogged={props.isLogged} setIsLogged={props.setIsLogged} setLoggedInUser={props.setLoggedInUser} loggedInUser={props.loggedInUser} />}
+          {() => <Nav isLogged={props.isLogged} setIsLogged={props.setIsLogged} setLoggedInUser={props.setLoggedInUser} loggedInUser={props.loggedInUser} envList={props.envList}/>} 
         </Stack.Screen>
         <Stack.Screen name="IndoorOutdoor" component={IndoorOutdoor} />
         <Stack.Screen name="UserLocation" component={UserLocation} />
@@ -33,7 +34,9 @@ const HomeScreen = (props) => {
         <Stack.Screen name="NaturalLightDirection" component={NaturalLightDirection} />
         <Stack.Screen name="ArtificialLight" component={ArtificialLight} />
         <Stack.Screen name="PetFriendly" component={PetFriendly} />
-        <Stack.Screen name="Suggestions" component={Suggestions} />
+        <Stack.Screen name="Suggestions">
+          {(props) => <Suggestions {...props} loggedInUser={props.loggedInUser} setEnvList={props.setEnvList}/>} 
+        </Stack.Screen>
         <Stack.Screen name="PlantDetail" component={PlantDetail} options={{headerShown: false}} />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'modal'}}>

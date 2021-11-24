@@ -3,10 +3,11 @@ import { Text, Box, FlatList, Image, Heading, HStack, VStack, View, Stack, } fro
 import { useFonts } from 'expo-font';
 import { Dimensions, StyleSheet } from 'react-native';
 import EditEnv from "../components/dropDown/EditEnv";
+import { getUserIDAsync } from "expo-facebook";
 import Svg, { Ellipse, Path, Rect } from "react-native-svg";
 
-const SavedScreen = ({ navigation }) => {
-
+const SavedScreen = (props) => {
+  const data = props.envList;
   const [showModal, setShowModal] = useState(false)
   
   const [loaded] = useFonts({
@@ -18,60 +19,6 @@ const SavedScreen = ({ navigation }) => {
   if (!loaded) {
     return null;
   }
-
-  const data = [
-    {
-      "id" : "1",
-      "image": require("../assets/savedpage/illusOutdoorSaved.png"),
-      "title" : "Home Balcony",
-      "season" : "winter",
-      "location" : "Vancouver",
-      "temperature": "20C",
-      "light":"Artificial light",
-      "date":"12/09/2021",
-      "outdoor" : true
-    },
-    {
-      "id" : "2",
-      "image": require("../assets/savedpage/illusIndoorSaved.png"),
-      "title" : "Home Living Room",  
-      "season" : "winter",
-      "location" : "Vancouver",
-      "temperature": "20C",
-      "light":"Artificial light",
-      "date":"12/09/2021"
-    },
-    {
-      "id" : "3",
-      "image": require("../assets/savedpage/illusIndoorSaved.png"),
-      "title" : "Office Desk",
-      "season" : "winter",
-      "location" : "Vancouver",
-      "temperature": "20C",
-      "light":"Artificial light",
-      "date":"12/09/2021"
-    },
-    {
-      "id" : "4",
-      "image": require("../assets/savedpage/illusIndoorSaved.png"),
-      "title" : "Dining Room",
-      "season" : "winter",
-      "location" : "Vancouver",
-      "temperature": "20C",
-      "light":"Artificial light",
-      "date":"12/09/2021"
-    },
-    {
-      "id" : "5",
-      "image": require("../assets/savedpage/illusIndoorSaved.png"),
-      "title" : "Bed Room",
-      "season" : "winter",
-      "location" : "Vancouver",
-      "temperature": "20C",
-      "light":"Artificial light",
-      "date":"12/09/2021"
-    }
-  ]
 
   const handlePress = (option) => {
     console.log('Pressed')
