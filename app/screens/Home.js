@@ -5,7 +5,7 @@ import { View, Image, Platform, TouchableWithoutFeedback, Animated } from 'react
 import { Box, Heading, HStack, ScrollView } from "native-base";
 import Svg, { Path } from 'react-native-svg';
 
-const Home = ({ navigation }) => {
+const Home = ({ navigation, loggedInUser }) => {
   const [bookmarkedOne, setBookmarkedOne] = useState(false)
   const [bookmarkedTwo, setBookmarkedTwo] = useState(false)
   const [bookmarkedThree, setBookmarkedThree] = useState(false)
@@ -22,7 +22,8 @@ const Home = ({ navigation }) => {
     let user = loggedInUser;
     // console.log(user);
     if(user) {
-      const response = await fetch(`http://54.148.107.164/backend-users/users/${user.sub}`);
+      // const response = await fetch(`http://54.148.107.164/backend-users/users/${user.sub}`);
+      const response = await fetch(`http://192.168.0.18:3003/users/${user.sub}`);
       const data = await response.json();
       // console.log("user from db :", data)
       
@@ -40,7 +41,8 @@ const Home = ({ navigation }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
           };
-          const response2 = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+          // const response2 = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+          const response2 = await fetch(`http://192.168.0.18:3003/users/${data.sub}`,
             requestOptions
           );
           const data2 = await response2.json();
@@ -56,7 +58,8 @@ const Home = ({ navigation }) => {
               body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
             };
 
-            const response = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+            // const response = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+            const response = await fetch(`http://192.168.0.18:3003/users/${data.sub}`,
               requestOptions
             );
             const data2 = await response.json();
@@ -75,7 +78,8 @@ const Home = ({ navigation }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
           };
-          const response2 = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+          // const response2 = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+          const response2 = await fetch(`http://192.168.0.18:3003/users/${data.sub}`,
             requestOptions
           );
           const data2 = await response2.json();
@@ -90,7 +94,8 @@ const Home = ({ navigation }) => {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
             };
-            const response = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+            // const response = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+            const response = await fetch(`http://192.168.0.18:3003/users/${data.sub}`,
               requestOptions
             );
             const data2 = await response.json();
@@ -109,7 +114,8 @@ const Home = ({ navigation }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
           };
-          const response2 = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+          // const response2 = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+          const response2 = await fetch(`http://192.168.0.18:3003/users/${data.sub}`,
             requestOptions
           );
           const data2 = await response2.json();
@@ -124,7 +130,8 @@ const Home = ({ navigation }) => {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
             };
-            const response = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+            // const response = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+            const response = await fetch(`http://192.168.0.18:3003/users/${data.sub}`,
               requestOptions
             );
             const data2 = await response.json();
@@ -143,7 +150,8 @@ const Home = ({ navigation }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
           };
-          const response2 = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+          // const response2 = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+          const response2 = await fetch(`http://192.168.0.18:3003/users/${data.sub}`,
             requestOptions
           );
           const data2 = await response2.json();
@@ -158,7 +166,8 @@ const Home = ({ navigation }) => {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
             };
-            const response = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+            // const response = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+            const response = await fetch(`http://192.168.0.18:3003/users/${data.sub}`,
               requestOptions
             );
             const data2 = await response.json();
@@ -177,7 +186,8 @@ const Home = ({ navigation }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
           };
-          const response2 = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+          // const response2 = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+          const response2 = await fetch(`http://192.168.0.18:3003/users/${data.sub}`,
             requestOptions
           );
           const data2 = await response2.json();
@@ -192,7 +202,8 @@ const Home = ({ navigation }) => {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
             };
-            const response = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+            // const response = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+            const response = await fetch(`http://192.168.0.18:3003/users/${data.sub}`,
               requestOptions
             );
             const data2 = await response.json();
