@@ -8,7 +8,7 @@ const EditEnv = () => {
   const { isOpen, onOpen, onClose } = useDisclose()
 
   const [loaded] = useFonts({
-    DMSerifText: require('../../assets/fonts/dmseriftext-regular.ttf'),
+    DMSerifText: require('../../assets/fonts/DMSerifText-Regular.ttf'),
     QuickSandBold: require('../../assets/fonts/Quicksand-Bold.ttf')
   });
 
