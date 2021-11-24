@@ -80,12 +80,12 @@ const Login = (props) => {
     try {
       const result = await Google.logInAsync({
         iosClientId: '651674954421-5a6cadejpmdbnlam73hub6f4e12ll869.apps.googleusercontent.com',
-        // androidClientId: '391894144300-i0v0vk3met9oqj2t8pg68vtt7j6bf2u1.apps.googleusercontent.com',
+        // androidClientId: '934967982455-a24a50q46451ngc2989mdmj3p9c4an1i.apps.googleusercontent.com',
         scopes: ['profile', 'email', 'openid'],
         });
         // console.log(result)
       if (result.type === 'success') {      
-        console.log("google", result)
+        // console.log("google", result)
         setEmail(result.user.email);
         setProfilePictureUri(result.user.photoUrl);
         props.setUser(result.user.name, result.user.email, result.user.photoUrl)
@@ -111,7 +111,7 @@ const Login = (props) => {
             body: JSON.stringify(user)
           };
           // const response = await fetch('http://54.148.107.164/backend-users/users', requestOptions);
-          const response = await fetch('http://192.168.0.18:3003/users', requestOptions);
+          const response = await fetch('http://localhost:3003/users', requestOptions);
           const data = await response.json();
           //console.log("replied with :" , data)
         }

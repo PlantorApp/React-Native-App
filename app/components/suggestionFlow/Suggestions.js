@@ -8,7 +8,7 @@ import Svg, { Circle, Line, Path } from "react-native-svg";
 const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
   const [entries, setEntries] = useState([])
   const [Cities, setCities] = useState([])
-  const [callFetch, setCallFecth] = useState(true);
+  const [callFetch, setCallFetch] = useState(true);
 
   // const outdoor = route.params.outdoor;
   const outdoor = true;
@@ -19,14 +19,14 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
   // const date = route.params.date;
   const date = "April";
   const cityLightingDuration = cities.length > 0 && cities.filter(el => el.location === city).filter(el => el.month === date)[0].dayLight;
-  console.log(cityLightingDuration);
+  // console.log(cityLightingDuration);
   let lightDirLighting;
-  if(route.params.lightDir === "South") {
+  if(route?.params?.lightDir === "South") {
     lightDirLighting = route.params.lightDir;
   } 
   // const cityLightingDuration = "South"
   // const petFriendly = route.params.petFriendly;
-  const petFriendly = "Yes"
+  const petFriendly = true
 
   const envToSave = {
     outdoorField : outdoor,
@@ -48,7 +48,8 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ savedEnvironments: environmentArray }),
     };
-    const response2 = await fetch(`http://54.148.107.164/backend-users/users/${loggedInUser.sub}`,
+    // const response2 = await fetch(`http://54.148.107.164/backend-users/users/${loggedInUser.sub}`,
+    const response2 = await fetch(`http://192.168.0.18:3003/users/${loggedInUser.sub}`,
       requestOptions
     );
     const data2 = await response2.json();
@@ -57,7 +58,7 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
   
   let yourPlants = [];
   if(outdoor) {
-    entries.forEach((plant) => {
+    plants.forEach((plant) => {
       if(plant.startSeason.includes(date)) {
         if(plant.temperatureMinimum < temp && plant.temperatureMaximum > temp) {
           if(parseInt(plant.lightingDurationMaximum) < parseInt(cityLightingDuration)) {
