@@ -8,7 +8,7 @@ const PetFriendly = ({ navigation, route }) => {
   const [friendly, setFriendly] = useState(false);
 
   const [loaded] = useFonts({
-    DMSerifText: require('../../assets/fonts/DMSerifText-Regular.ttf'),
+    DMSerifText: require('../../assets/fonts/dmseriftext-regular.ttf'),
     QuickSandBold: require('../../assets/fonts/Quicksand-Bold.ttf'),
     QuickSandRegular: require('../../assets/fonts/Quicksand-Regular.ttf')
   });
@@ -44,7 +44,7 @@ const PetFriendly = ({ navigation, route }) => {
                     <Image style={{width: 86, height: 86}} source={require('../../assets/illusPets.png')} />
                   </Box>
                   <Box style={{height: 48, justifyContent: 'center'}}>
-                    <Text style={{fontFamily: 'QuickSandBold', textAlign: 'center', fontSize: 20, color: '#666666'}}>Yes please!</Text>
+                    <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', textAlign: 'center', fontSize: 20, color: '#666666'}}>Yes please!</Text>
                   </Box>
                 </TouchableOpacity>
                 <TouchableOpacity style={{flex: 1, height: 204, backgroundColor: '#FFFFFF', borderRadius: 12, borderWidth: 1, marginLeft: 8, borderColor: '#DDDDDD', shadowColor: '#000000', shadowOffset: {width: 2, height: 2}, shadowOpacity: 0.12, shadowRadius: 8}} onPress={() => { setFriendly(false); navigation.navigate('Suggestions', {outdoor: route.params.outdoor, city: route.params.city, temp: route.params.temp, date: route.params.date, lightDir: route.params.lightDir, petFriendly: false});}}>
@@ -52,7 +52,7 @@ const PetFriendly = ({ navigation, route }) => {
                     <Image style={{width: 86, height: 86}} source={require('../../assets/illusNoPets.png')} />
                   </Box>
                   <Box style={{height: 48, justifyContent: 'center'}}>
-                    <Text style={{fontFamily: 'QuickSandBold', textAlign: 'center', fontSize: 20, color: '#666666'}}>No thanks</Text>
+                    <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', textAlign: 'center', fontSize: 20, color: '#666666'}}>No thanks</Text>
                   </Box>
                 </TouchableOpacity>
               </HStack>

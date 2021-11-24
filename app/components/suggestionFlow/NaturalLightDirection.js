@@ -134,7 +134,7 @@ const NaturalLightDirection = ({ navigation, route }) => {
   }, []);
 
   const [loaded] = useFonts({
-    DMSerifText: require('../../assets/fonts/DMSerifText-Regular.ttf'),
+    DMSerifText: require('../../assets/fonts/dmseriftext-regular.ttf'),
     QuickSandBold: require('../../assets/fonts/Quicksand-Bold.ttf'),
     QuickSandRegular: require('../../assets/fonts/Quicksand-Regular.ttf')
   });
@@ -169,7 +169,7 @@ const NaturalLightDirection = ({ navigation, route }) => {
             </View>
           </Box>
           <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', justifyContent: 'center', height: 48, width: 270, backgroundColor: bool ? '#E3DECE' : '#827344', position: 'absolute', bottom: 24}} disabled={bool} onPress={() => { navigation.navigate('PetFriendly', { outdoor: route.params.outdoor, city: route.params.city, temp: route.params.temp, date: route.params.date, lightDir: captured }) }} >
-            <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>Save Measurement</Text>
+            <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>Save Measurement</Text>
           </Pressable>
         </View>
       </ScrollView>

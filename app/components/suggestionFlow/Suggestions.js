@@ -109,7 +109,7 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
   }, [callFetch])
 
   const [loaded] = useFonts({
-    DMSerifText: require('../../assets/fonts/DMSerifText-Regular.ttf'),
+    DMSerifText: require('../../assets/fonts/dmseriftext-regular.ttf'),
     QuickSandBold: require('../../assets/fonts/Quicksand-Bold.ttf'),
     QuickSandRegular: require('../../assets/fonts/Quicksand-Regular.ttf')
   });
@@ -126,7 +126,7 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
             {/* <Image source={{uri: item.image}} style={{width: 230, height: 199, margin: 20}} alt={item.plantName} /> */}
           <Image source={require('../../assets/spiderPlant.png')} style={{width: 230, height: 199, margin: 20}} alt={item.plantName} />
           </Box>
-          <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, marginLeft: 20, lineHeight: 28, marginTop: 12, color: '#827344'}}>{item.plantName}</Text>
+          <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', fontSize: 20, marginLeft: 20, lineHeight: 28, marginTop: 12, color: '#827344'}}>{item.plantName}</Text>
           <Stack style={{marginLeft: 20}}>
               <HStack style={{marginTop: 8}}>
                 <Svg width="22" height="22" viewBox="0 3 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">

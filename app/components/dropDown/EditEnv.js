@@ -8,7 +8,7 @@ const EditEnv = () => {
   const { isOpen, onOpen, onClose } = useDisclose()
 
   const [loaded] = useFonts({
-    DMSerifText: require('../../assets/fonts/DMSerifText-Regular.ttf'),
+    DMSerifText: require('../../assets/fonts/dmseriftext-regular.ttf'),
     QuickSandBold: require('../../assets/fonts/Quicksand-Bold.ttf')
   });
 
@@ -25,13 +25,13 @@ const EditEnv = () => {
           <Circle cx="12" cy="18" r="1.5" fill="#666666"/>
         </Svg>
       </TouchableOpacity>
-      <Actionsheet isOpen={isOpen} onClose={onClose} style={{fontFamily: 'QuickSandBold'}}>
+      <Actionsheet isOpen={isOpen} onClose={onClose} style={{fontFamily: 'QuickSandBold', fontWeight: 'bold'}}>
         <Actionsheet.Content>
-          <Actionsheet.Item style={{justifyContent: "center", fontFamily: 'QuickSandBold'}}>
+          <Actionsheet.Item style={{justifyContent: "center", fontFamily: 'QuickSandBold', fontWeight: 'bold'}}>
             Rename Environment
           </Actionsheet.Item>
           <Divider borderColor="gray.300" />
-          <Actionsheet.Item style={{justifyContent: "center", fontFamily: 'QuickSandBold'}}>
+          <Actionsheet.Item style={{justifyContent: "center", fontFamily: 'QuickSandBold', fontWeight: 'normal'}}>
             Delete Environment
           </Actionsheet.Item>
         </Actionsheet.Content>

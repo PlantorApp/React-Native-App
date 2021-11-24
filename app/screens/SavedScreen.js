@@ -11,7 +11,7 @@ const SavedScreen = (props) => {
   const [showModal, setShowModal] = useState(false)
   
   const [loaded] = useFonts({
-    DMSerifText: require('../assets/fonts/DMSerifText-Regular.ttf'),
+    DMSerifText: require('../assets/fonts/dmseriftext-regular.ttf'),
     QuickSandBold: require('../assets/fonts/Quicksand-Bold.ttf'),
     QuickSandRegular: require('../assets/fonts/Quicksand-Regular.ttf')
   });
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     fontFamily: "DMSerifText",
     color: "#827344",
     fontSize: 32,
+    fontWeight: 'normal',
     lineHeight: 38
   },
   titleStyle: {
