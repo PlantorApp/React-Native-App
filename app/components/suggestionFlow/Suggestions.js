@@ -48,8 +48,8 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ savedEnvironments: environmentArray }),
     };
-    // const response2 = await fetch(`http://54.148.107.164/backend-users/users/${loggedInUser.sub}`,
-    const response2 = await fetch(`http://192.168.0.18:3003/users/${loggedInUser.sub}`,
+    const response2 = await fetch(`http://54.148.107.164/backend-users/users/${loggedInUser.sub}`,
+    // const response2 = await fetch(`http://192.168.0.18:3003/users/${loggedInUser.sub}`,
       requestOptions
     );
     const data2 = await response2.json();

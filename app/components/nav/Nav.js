@@ -9,7 +9,7 @@ import { useFonts } from 'expo-font';
 
 const Tab = createBottomTabNavigator();
 
-const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser }) => {
+const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, envList }) => {
 
   const [loaded] = useFonts({
     QuickSandBold: require('../../assets/fonts/Quicksand-Bold.ttf'),
@@ -61,7 +61,7 @@ const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser }) => {
           }
         }}
       >
-        {() => <SavedScreen envList = {props.envList}/>}
+        {(props) => <SavedScreen {...props} envList={envList}/>}
       </Tab.Screen>
       <Tab.Screen
         name="Notifications"

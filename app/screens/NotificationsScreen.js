@@ -77,7 +77,8 @@ const NotificationScreen = ({ navigation }) => {
             </HStack>
           </Box>
           <FlatList
-            data={data} style={{height: "100%"}}
+            data={data} style={{height: Dimensions.get('window').height, paddingBottom: 124}}
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <Box style={{marginTop: 24}} >
                 <Text style={styles.titleText}>{item.title}</Text>
