@@ -22,7 +22,9 @@ export default function App() {
   const getUser = async () => {
             const response = await fetch(`http://54.148.107.164/backend-users/users/${loggedInUser.sub}`);
             const data = await response.json();
-            setLoggedInUser(data)
+            if(!loggedInUser) {
+              setLoggedInUser(data)
+            }
             console.log("user from mongo" , loggedInUser)
         }
   if(loggedInUser){
