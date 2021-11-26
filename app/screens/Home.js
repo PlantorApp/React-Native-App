@@ -266,7 +266,7 @@ const Home = ({ navigation, loggedInUser }) => {
   return (
     <View style={{backgroundColor: "#FCFAF7", marginTop: 24}}>
       <ScrollView containerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Heading style={{fontFamily: 'DMSerifText', marginTop: 60, fontWeight: 'normal', color: "#827344", fontSize: 32, lineHeight: 38.4, paddingHorizontal: 16, textAlign: 'center'}}>Tap to get plant suggestions</Heading>
+        <Heading style={{fontFamily: 'DMSerifText', marginTop: 60, fontWeight: 'normal', color: "#827344", fontSize: 32, lineHeight: 38.4, paddingHorizontal: 16, textAlign: 'center'}}>Tap to find plants you can grow</Heading>
         <Box style={{height: 200, alignItems: 'center', marginTop: 56}}>
           <View>
             <Animated.Image source={require('../assets/animatedEllipse.png')} style={{width: 200, height: 200}, animatedStyleLoop} />
