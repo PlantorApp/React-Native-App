@@ -10,11 +10,7 @@ import { useFonts } from 'expo-font';
 
 const Tab = createBottomTabNavigator();
 
-<<<<<<< HEAD
 const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, schedulePushNotification }) => {
-=======
-const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, envList }) => {
->>>>>>> 8fc507b478abcc564d73e74387d5b4d681e0b462
 
   const [loaded] = useFonts({
     QuickSandBold: require('../../assets/fonts/Quicksand-Bold.ttf'),

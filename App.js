@@ -58,7 +58,6 @@ export default function App() {
   }, [notification]);
 
   const getUser = async () => {
-<<<<<<< HEAD
     const response = await fetch(
       `http://54.148.107.164/backend-users/users/${loggedInUser.sub}`
     );
@@ -67,16 +66,6 @@ export default function App() {
     console.log("user from mongo", loggedInUser);
   };
   if (loggedInUser) {
-=======
-            const response = await fetch(`http://54.148.107.164/backend-users/users/${loggedInUser.sub}`);
-            const data = await response.json();
-            if(!loggedInUser) {
-              setLoggedInUser(data)
-            }
-            console.log("user from mongo" , loggedInUser)
-        }
-  if(loggedInUser){
->>>>>>> 8fc507b478abcc564d73e74387d5b4d681e0b462
     getUser();
   }
 
