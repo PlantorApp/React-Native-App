@@ -23,7 +23,7 @@ const HomeScreen = (props) => {
       <Stack.Group>
 
         <Stack.Screen name="Nav">
-          {() => <Nav isLogged={props.isLogged} setIsLogged={props.setIsLogged} setLoggedInUser={props.setLoggedInUser} loggedInUser={props.loggedInUser} envList={props.envList}/>} 
+          {() => <Nav isLogged={props.isLogged} setIsLogged={props.setIsLogged} setLoggedInUser={props.setLoggedInUser} loggedInUser={props.loggedInUser} envList={props.envList} schedulePushNotification={props.schedulePushNotification}/>} 
         </Stack.Screen>
         <Stack.Screen name="IndoorOutdoor" component={IndoorOutdoor} />
         <Stack.Screen name="UserLocation" component={UserLocation} />

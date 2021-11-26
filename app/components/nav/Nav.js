@@ -7,9 +7,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Svg, { Circle, Path } from 'react-native-svg';
 import { useFonts } from 'expo-font';
 
+
 const Tab = createBottomTabNavigator();
 
-const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser }) => {
+const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, schedulePushNotification }) => {
 
   const [loaded] = useFonts({
     QuickSandBold: require('../../assets/fonts/Quicksand-Bold.ttf'),
@@ -100,7 +101,7 @@ const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser }) => {
           }
         }}
       >
-        {() => <ProfileScreen isLogged={isLogged} setIsLogged={setIsLogged} setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} /> }
+        {() => <ProfileScreen isLogged={isLogged} setIsLogged={setIsLogged} setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} schedulePushNotification= {schedulePushNotification}/> }
       </Tab.Screen>
     </Tab.Navigator>
   )
