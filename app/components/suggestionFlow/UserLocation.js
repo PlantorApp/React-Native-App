@@ -121,7 +121,7 @@ const UserLocation = ({ navigation, route }) => {
               <Box style={{flex: 1, height: 6, backgroundColor: '#E3DECE', marginLeft: 8, borderRadius: 7}}></Box>
             </HStack>
             <View style={{ flex: 1, height: '100%', alignItems: 'center', justifyContent: 'center', marginTop: 36}}>
-              <Text style={{fontFamily: 'DMSerifText', color: '#827344', fontSize: 32, textAlign: 'center', marginTop: 12 }}>You are currently Located in...</Text>
+              <Text style={{fontFamily: 'DMSerifText', color: '#827344', fontSize: 32, textAlign: 'center', marginTop: 12 }}>You are currently located in...</Text>
               <TextInput
                 style={{fontFamily: 'DMSerifText', color: '#666666', fontSize: 64, marginTop: 90, padding: 10, textAlign: 'center', borderBottomColor: '#BBBBBB', borderBottomWidth: 1 }}
                 onChangeText={setText}
@@ -131,7 +131,7 @@ const UserLocation = ({ navigation, route }) => {
             </View>
           </Box>
           <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', justifyContent: 'center', height: 48, width: 270, position: 'absolute', bottom: 88}} onPress={getLocation}>
-            <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', fontSize: 20, color: '#827344', textAlign: 'center'}}>Locate Me!</Text>
+            <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', fontSize: 20, lineHeight: 24, color: '#827344', textAlign: 'center'}}>Locate Me!</Text>
           </Pressable>
           <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', justifyContent: 'center', height: 48, width: 270, backgroundColor: bool ? '#E3DECE' : "#827344", position: 'absolute', bottom: 24}} disabled={bool} onPress={ async () => {
             if(!displayCurrentAddress) {
@@ -148,7 +148,7 @@ const UserLocation = ({ navigation, route }) => {
               })
             }
           }}>
-            <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>Next</Text>
+            <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', fontSize: 20, lineHeight: 24, color: '#FFFFFF', textAlign: 'center'}}>Next</Text>
           </Pressable>
         </View>
       </ScrollView>

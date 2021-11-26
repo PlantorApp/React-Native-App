@@ -251,7 +251,7 @@ const Home = ({ navigation, loggedInUser }) => {
       setLoop(false)
       shrink()
     }
-  }, [loop])
+  }, [])
 
   const [loaded] = useFonts({
     DMSerifText: require('../assets/fonts/DMSerifText-Regular.ttf'),

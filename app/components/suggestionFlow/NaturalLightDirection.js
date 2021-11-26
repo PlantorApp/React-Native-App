@@ -4,7 +4,7 @@ import { Dimensions, Pressable, ScrollView, Text, TouchableOpacity } from "react
 import { Magnetometer } from 'expo-sensors';
 import Svg, { Line } from 'react-native-svg';
 import { useFonts } from 'expo-font';
-
+// console.log("Magnetometer", Magnetometer);
 const round = (n) => {
   if (!n) {
     return 0;
@@ -13,8 +13,8 @@ const round = (n) => {
 }
 
 const NaturalLightDirection = ({ navigation, route }) => {
-  const [lightDirection, setLightDirection] = useState(" ");
-  const [captured, setCaptured] = useState(" ");
+  const [lightDirection, setLightDirection] = useState();
+  const [captured, setCaptured] = useState();
   const [data, setData] = useState({
     x: 0,
     y: 0,
@@ -26,9 +26,9 @@ const NaturalLightDirection = ({ navigation, route }) => {
   let timeout = false;
   let angle;
 
-  const _slow = () => {
-    Magnetometer.setUpdateInterval(500);
-  };
+  // const _slow = () => {
+  //   Magnetometer.setUpdateInterval(500);
+  // };
 
   const _direction = (degree) => {
     if (degree >= 22.5 && degree < 67.5) {
@@ -110,18 +110,23 @@ const NaturalLightDirection = ({ navigation, route }) => {
     }, 3000)
   }
 
-  const _subscribe = () => {
-    setSubscription(
-      Magnetometer.addListener(result => {
-        setData(result);
-        _angle(result);
-      })
-    );
+  const _subscribe = async () => {
+    const availability = await Magnetometer.isAvailableAsync()
+    if(availability) {
+      Magnetometer.removeAllListeners()
+      Magnetometer.setUpdateInterval(500); console.log(" available ", Magnetometer)
+      setSubscription(Magnetometer.addListener(result => { console.log(" available with result", result)
+          setData(result);
+          _angle(result);
+        })
+      );
+    }
   };
 
   const _unsubscribe = () => {
     subscription && subscription.remove();
     setSubscription(null);
+    Magnetometer.removeAllListeners();
   };
 
   const { x, y, z } = data;
@@ -129,9 +134,12 @@ const NaturalLightDirection = ({ navigation, route }) => {
   useEffect(() => {
     updateDirection();
     _subscribe();
-    _slow();
-    return () => _unsubscribe();
-  }, []);
+    // _slow();
+    return () => {
+      _unsubscribe();
+      Magnetometer.removeAllListeners();
+    }
+  }, [Magnetometer]);
 
   const [loaded] = useFonts({
     DMSerifText: require('../../assets/fonts/DMSerifText-Regular.ttf'),
@@ -146,7 +154,7 @@ const NaturalLightDirection = ({ navigation, route }) => {
   return (
     <View style={{backgroundColor: "#FCFAF7"}}>
       <Box style={{position: 'absolute', top: 40, right: 16, zIndex: 10}}>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Home') }>
           <Svg style={{alignSelf: 'flex-end'}} width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <Line x1="8" y1="22.8787" x2="22.8492" y2="8.02944" stroke="#B7A878" strokeWidth="3" strokeLinecap="round"/>
             <Line x1="8.12132" y1="8" x2="22.9706" y2="22.8492" stroke="#B7A878" strokeWidth="3" strokeLinecap="round"/>
@@ -169,7 +177,7 @@ const NaturalLightDirection = ({ navigation, route }) => {
             </View>
           </Box>
           <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', justifyContent: 'center', height: 48, width: 270, backgroundColor: bool ? '#E3DECE' : '#827344', position: 'absolute', bottom: 24}} disabled={bool} onPress={() => { navigation.navigate('PetFriendly', { outdoor: route.params.outdoor, city: route.params.city, temp: route.params.temp, date: route.params.date, lightDir: captured }) }} >
-            <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>Save Measurement</Text>
+            <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', fontSize: 20, lineHeight: 24, color: '#FFFFFF', textAlign: 'center'}}>Save Measurement</Text>
           </Pressable>
         </View>
       </ScrollView>

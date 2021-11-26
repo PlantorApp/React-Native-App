@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Box, HStack, Stack, VStack } from 'native-base';
 import { Text, Image, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 import Svg, { Circle, Line, Path, Rect } from 'react-native-svg';
@@ -34,6 +34,7 @@ const PlantDetail = ({ navigation, route }) => {
   //   "October"
   // ]
   let startSeason = plant.startSeason
+  let plantImage = plant.image
 
   if(lightingDurationMinimum === 0) {
     min = true;
@@ -80,8 +81,8 @@ const PlantDetail = ({ navigation, route }) => {
   }
 
   return (
-    <View style={{backgroundColor: "#FCFAF7"}}>
-      <Box style={{position: 'absolute', top: 40, right: 16, zIndex: 10}}>
+    <View style={{backgroundColor: "#FCFAF7", marginTop: 24}}>
+      <Box style={{position: 'absolute', top: 16, right: 16, zIndex: 10}}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Svg style={{alignSelf: 'flex-end'}} width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <Line x1="8" y1="22.8787" x2="22.8492" y2="8.02944" stroke="#B7A878" strokeWidth="3" strokeLinecap="round"/>
@@ -90,9 +91,9 @@ const PlantDetail = ({ navigation, route }) => {
         </TouchableOpacity>
       </Box>
       <ScrollView>
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FCFAF7', paddingTop: 60, paddingBottom: 28}}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FCFAF7', paddingTop: 12, paddingBottom: 28}}>
         <Box style={{width: Dimensions.get('window').width - 32}}>
-          <Image style={{alignSelf: 'center'}} source={require('../../assets/spiderPlant.png')} />
+          <Image source={{uri: plantImage}} style={{alignSelf: 'center', width: 360, height: 320}} alt={plantName} />
           <HStack style={{justifyContent: 'space-between', marginTop: 16, alignItems: 'center'}}>
             <Text style={{fontFamily: 'DMSerifText', color: '#827344', textAlign: 'center', fontSize: 32}}>{plantName}</Text>
             <TouchableOpacity onPress={() => navigation.navigate('InformationDescription')}>
@@ -105,7 +106,7 @@ const PlantDetail = ({ navigation, route }) => {
           </HStack>
           <Stack style={{marginTop: 18}}>
             <HStack style={{marginTop: 8}}>
-              <Svg width="22" height="22" viewBox="0 3 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <Svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <Path d="M6.53955 12.6523H3V18.9449H6.53955V12.6523Z" stroke="#B7A878" strokeWidth="1.25" strokeMiterlimit="10" strokeLinejoin="round"/>
                 <Path d="M12.7974 8.71875H9.25781V18.9441H12.7974V8.71875Z" stroke="#B7A878" strokeWidth="1.25" strokeMiterlimit="10" strokeLinejoin="round"/>
                 <Path d="M19.0005 4H15.4609V18.9435H19.0005V4Z" fill="white" stroke="#B7A878" strokeWidth="1.25" strokeMiterlimit="10" strokeLinejoin="round"/>
@@ -113,7 +114,7 @@ const PlantDetail = ({ navigation, route }) => {
               <Text style={{fontFamily: 'QuickSandRegular', color: '#666666', marginLeft: 4}}>
                 {plant.difficulty}
               </Text>
-              <Svg style={{marginLeft: 20}} width="22" height="22" viewBox="0 3 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <Svg style={{marginLeft: 20}} width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <Path d="M3.07076 11.7405C3.16654 11.285 3.32687 10.8712 3.68814 10.5769C4.2545 10.1172 5.204 9.96333 5.89633 9.73039C6.80731 9.41843 6.95827 8.62915 7.89527 8.41077C8.96865 8.16016 9.96708 8.54804 10.8937 9.00767C12.2471 9.67736 12.9155 10.6143 13.4964 12.0556C13.7786 12.7565 13.7047 13.7735 13.3143 14.4224C12.9748 14.9881 12.4543 15.4768 12.1492 16.0623C11.8931 16.5531 11.9108 17.3185 11.6547 17.8083C11.205 18.6662 10.0171 19.1144 9.05923 18.9729C8.10141 18.8315 7.44967 17.9466 6.97701 17.1011C6.72298 16.6553 6.43477 16.2297 6.11497 15.8283C5.4903 15.0578 4.54497 14.9912 3.83389 14.2966C2.90835 13.3991 2.93333 12.3936 3.07076 11.7405Z" fill="white" stroke="#B7A878" strokeWidth="1.25" strokeMiterlimit="10"/>
                 <Path d="M7.22491 3.31131C6.52274 2.73894 5.36574 2.99753 4.61961 3.74672C3.71915 4.64309 3.69156 6.09752 4.31299 6.61368C4.98654 7.17481 6.28561 7.32914 7.35574 6.04131C8.00477 5.26146 7.90358 3.86426 7.22491 3.31131Z" fill="white" stroke="#B7A878" strokeWidth="1.25" strokeMiterlimit="10"/>
                 <Path d="M14.5265 3.31083C13.8243 2.73846 12.6673 2.99909 11.9181 3.74522C11.0187 4.64261 10.99 6.09602 11.6115 6.6132C12.284 7.17432 13.5841 7.32866 14.6532 6.04083C15.3063 5.26098 15.2051 3.86276 14.5265 3.31083Z" fill="white" stroke="#B7A878" strokeWidth="1.25" strokeMiterlimit="10"/>
@@ -125,7 +126,7 @@ const PlantDetail = ({ navigation, route }) => {
               </Text>
             </HStack>
             <HStack style={{marginTop: 8}}>
-            <Svg width="22" height="22" viewBox="0 3 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <Svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
               <Path d="M11 12.7452V7.98438" stroke="#B7A878" strokeWidth="1.25" strokeLinecap="round"/>
               <Circle cx="10.8862" cy="11.7925" r="6.58152" stroke="#B7A878" strokeWidth="1.25"/>
               <Path d="M7.98828 3H13.4293" stroke="#B7A878" strokeWidth="1.25" strokeLinecap="round"/>
@@ -134,7 +135,7 @@ const PlantDetail = ({ navigation, route }) => {
               <Text style={{fontFamily: 'QuickSandRegular', color: '#666666', marginLeft: 4}}>
                 {plant.duration} Days
               </Text>
-              <Svg style={{marginLeft: 20}} width="22" height="22" viewBox="0 3 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <Svg style={{marginLeft: 20}} width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <Path d="M7 3V19" stroke="#B7A878" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 <Path d="M4.25 3.39844V7.73177C4.25 9.89844 7 9.89844 7 9.89844C7 9.89844 9.75 9.89844 9.75 7.73177V3.39844" stroke="#B7A878" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 <Path d="M15.4004 9.80078V19.0008" stroke="#B7A878" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -152,13 +153,13 @@ const PlantDetail = ({ navigation, route }) => {
             <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', color: '#827344', fontSize: 20}}>Lighting Duration</Text>
             <HStack style={{marginTop: 8}}>
               <Box style={{flex: 1, height: 31, justifyContent: 'center', backgroundColor: min ? "#7D9867" : '#E3DECE', borderTopLeftRadius: 38.25, borderBottomLeftRadius: 38.25}}>
-                <Text style={{textAlign: 'center', color: '#ffffff'}}>{minDuration} {minDuration ? "hours" : ""}</Text>
+                <Text style={{textAlign: 'center', color: '#ffffff'}}>{minDuration} {min ? "hours" : ""}</Text>
               </Box>
               <Box style={{flex: 1, height: 31, justifyContent: 'center', backgroundColor: mod ? "#7D9867" : '#E3DECE', marginLeft: 1}}>
-                <Text style={{textAlign: 'center', color: '#ffffff'}}>{modDuration} {modDuration ? "hours" : ""}</Text>
+                <Text style={{textAlign: 'center', color: '#ffffff'}}>{modDuration} {mod ? "hours" : ""}</Text>
               </Box>
               <Box style={{flex: 1, height: 31, justifyContent: 'center', backgroundColor: max ? "#7D9867" : '#E3DECE', marginLeft: 1, borderBottomRightRadius: 38.25, borderTopRightRadius: 38.25}}>
-                <Text style={{textAlign: 'center', color: '#ffffff'}}>{maxDuration} {maxDuration ? "hours" : ""}</Text>
+                <Text style={{textAlign: 'center', color: '#ffffff'}}>{maxDuration} {max ? "hours" : ""}</Text>
               </Box>
             </HStack>
           </VStack>
@@ -166,13 +167,13 @@ const PlantDetail = ({ navigation, route }) => {
             <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', color: '#827344', fontSize: 20}}>Lighting Intensity</Text>
             <HStack style={{marginTop: 8}}>
               <Box style={{flex: 1, height: 31, justifyContent: 'center', backgroundColor: low ? "#7D9867" : '#E3DECE', borderTopLeftRadius: 38.25, borderBottomLeftRadius: 38.25}}>
-                <Text style={{textAlign: 'center', color: '#ffffff'}}>{lowIntensity} {lowIntensity ? "LUX" : ""}</Text>
+                <Text style={{textAlign: 'center', color: '#ffffff'}}>{lowIntensity} {low ? "LUX" : ""}</Text>
               </Box>
               <Box style={{flex: 1, height: 31, justifyContent: 'center', backgroundColor: med ? "#7D9867" : '#E3DECE', marginLeft: 1}}>
-                <Text style={{textAlign: 'center', color: '#ffffff'}}>{medIntensity} {medIntensity ? "LUX" : ""}</Text>
+                <Text style={{textAlign: 'center', color: '#ffffff'}}>{medIntensity} {med ? "LUX" : ""}</Text>
               </Box>
               <Box style={{flex: 1, height: 31, justifyContent: 'center', backgroundColor: high ? "#7D9867" : '#E3DECE', marginLeft: 1, borderBottomRightRadius: 38.25, borderTopRightRadius: 38.25}}>
-                <Text style={{textAlign: 'center', color: '#ffffff'}}>{highIntensity} {highIntensity ? "LUX" : ""}</Text>
+                <Text style={{textAlign: 'center', color: '#ffffff'}}>{highIntensity} {high ? "LUX" : ""}</Text>
               </Box>
             </HStack>
           </VStack>

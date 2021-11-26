@@ -1,9 +1,7 @@
 import React from "react";
-import { View, Text, Button, StyleSheet, Pressable, ScrollView, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Pressable, ScrollView, Dimensions } from "react-native";
 import { useFonts } from "expo-font";
-
-import { Box, Heading, FlatList, Image, HStack, VStack } from "native-base";
-import { width } from "styled-system";
+import { Box, Heading, FlatList, Image, HStack } from "native-base";
 
 const NotificationScreen = ({ navigation }) => {
   const [loaded] = useFonts({
@@ -57,9 +55,9 @@ const NotificationScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, minHeight: Dimensions.get('window').height, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FCFAF7', paddingTop: 44, paddingBottom: 28}}>
-        <Box style={{width: Dimensions.get('window').width - 32}}>
-          <Heading style={styles.mainTitle} >Notifications</Heading>
+    <View style={{ flex: 1, minHeight: Dimensions.get('window').height, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FCFAF7', marginTop: 24, paddingBottom: 28}}>
+        <Box style={{width: Dimensions.get('window').width - 32, paddingTop: 20}}>
+          <Heading style={styles.mainTitle}>Notifications</Heading>
           <Box style={styles.border}>
             <HStack space={2} >
               <Pressable style={styles.firstButton}>
@@ -76,11 +74,10 @@ const NotificationScreen = ({ navigation }) => {
               </Pressable>
             </HStack>
           </Box>
-          <FlatList
-            data={data} style={{height: Dimensions.get('window').height, paddingBottom: 124}}
+          <FlatList data={data} style={{height: Dimensions.get('window').height - 226}}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              <Box style={{marginTop: 24}} >
+              <Box style={{marginVertical: 12}}>
                 <Text style={styles.titleText}>{item.title}</Text>
                 <HStack justifyContent="flex-start" style={{marginTop: 8}}>
                   <Image source={item.image} alt="notification illustration" width="70" height="70" />
@@ -94,9 +91,7 @@ const NotificationScreen = ({ navigation }) => {
                   </Box>
                 </HStack>
               </Box>
-            )}
-            keyExtractor={(item) => item.id}
-          />
+            )} />
         </Box>
     </View>
   )
@@ -136,11 +131,13 @@ const styles = StyleSheet.create({
   },
   firstButtonText: {
     fontSize: 14,
+    lineHeight: 18,
     fontFamily: 'QuickSandRegular',
     color: "#FCFAF7",
   },
   text: {
     fontSize: 14,
+    lineHeight: 18,
     fontFamily: 'QuickSandRegular',
     color: "#827344",
   },

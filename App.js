@@ -13,6 +13,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 export default function App() {
   const [isLogged, setIsLogged] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState();
+  const [mongoLoggedInUser, setMongoLoggedInUser] = useState();
   const [envList, setEnvList] = useState([]);
 
   const [expoPushToken, setExpoPushToken] = useState("");
@@ -58,18 +59,20 @@ export default function App() {
       `http://54.148.107.164/backend-users/users/${loggedInUser.sub}`
     );
     const data = await response.json();
-    setLoggedInUser(data);
+    setMongoLoggedInUser(data);
     // console.log("user from mongo", loggedInUser);
   };
   if (loggedInUser) {
-    getUser();
+    if(!mongoLoggedInUser) {
+      getUser();
+    }
   }
 
   async function schedulePushNotification() {
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: "Heavy Rainfall!",
-        body: "Floods in British Columbia",
+        title: "Rainfall Warning",
+        body: "Short description about alert & how it will impact the garden so that use...",
         data: { screen: "NotificationsScreen" },
       },
       trigger: { seconds: 2 },
@@ -143,12 +146,14 @@ export default function App() {
           isLogged={isLogged}
           setIsLogged={setIsLogged}
           setLoggedInUser={setLoggedInUser}
-          loggedInUser={loggedInUser}
+          loggedInUser={mongoLoggedInUser}
           setEnvList={setEnvList}
           envList={envList} />)}
         </Stack.Screen>
         <Stack.Screen
-          name="NotificationScreen"
+          name="NotificationScreen" options={{
+            headerShown: false
+          }}
           component={NotificationScreen}
         />
         </Stack.Navigator>

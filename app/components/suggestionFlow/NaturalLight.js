@@ -40,7 +40,7 @@ const NaturalLight = ({ navigation, route }) => {
             </View>
           </Box>
           <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', justifyContent: 'center', height: 48, width: 270, backgroundColor: '#827344', position: 'absolute', bottom: 24}} onPress={() => navigation.navigate('NaturalLightDirection', {outdoor: route.params.outdoor, city: route.params.city, temp: route.params.temp, date: route.params.date})}>
-            <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>OK, got it!</Text>
+            <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', fontSize: 20, lineHeight: 24, color: '#FFFFFF', textAlign: 'center'}}>OK, got it!</Text>
           </Pressable>
         </View>
       </ScrollView>
