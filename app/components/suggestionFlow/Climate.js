@@ -4,12 +4,11 @@ import { Text, Image, ScrollView, Dimensions, Pressable, TouchableOpacity } from
 import Svg, { Line } from 'react-native-svg';
 import { useFonts } from 'expo-font';
 
-// const images = {
-//   Clear: 'http://ayay.co.uk/mobiles/weather/strange/northern-lights.jpg',
-//   Clouds:
-//     'https://www.princeton.edu/sites/default/files/styles/full_2x/public/images/2018/01/clouds-19.jpg?itok=7jputHX1',
-//   Rain: 'https://i.pinimg.com/736x/54/59/d7/5459d741279e8d72661990f52774473f--cell-phone-wallpapers-gif-photos.jpg'
-// }
+const images = {
+  Clear: require('../../assets/clearSky.png'),
+  Clouds: require('../../assets/cloudy.png'),
+  Rain: require('../../assets/rainy.png'),
+}
 
 const Climate = ({ navigation, route }) => {
   const [temp, setTemp] = useState('')
@@ -80,8 +79,8 @@ const Climate = ({ navigation, route }) => {
               <Box style={{flex: 1, height: 6, backgroundColor: '#E3DECE', marginLeft: 8, borderRadius: 7}}></Box>
             </HStack>
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              {/* <Image source={{ uri: images[weather] }} style={{position: 'absolute', height: '100%', width: '100%'}} /> */}
-              <Text style={{fontFamily: 'DMSerifText', color: '#827344', fontSize: 32, textAlign: 'center', marginTop: 40 }}>Climate information of {city}</Text>
+              <Image source={ images[weather] } style={{position: 'absolute', height: '100%', width: '100%'}} />
+              <Text style={{fontFamily: 'DMSerifText', color: '#827344', fontSize: 32, textAlign: 'center', marginTop: 40 }}>{city}'s climate is {weather} today</Text>
               {/* <Text>{weather}</Text> */}
               <Text style={{fontFamily: 'DMSerifText', color: '#666666', fontSize: 64, marginTop: 96, textAlign: 'center'}}>{temp} °C</Text>
               <Text style={{fontFamily: 'DMSerifText', color: '#666666', fontSize: 32, textAlign: 'center', marginTop: 12 }}>{season.name}</Text>
