@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { View, Image, Text, StyleSheet, Switch, Pressable, Dimensions, ScrollView } from "react-native";
+import { View, Image, Text, StyleSheet, Switch, Pressable, Button, Dimensions, ScrollView } from "react-native";
 import { Box, Heading, HStack, VStack } from "native-base";
 import { useFonts } from "expo-font";
 import Login from "../components/login/Login";
 import Svg, { Path } from "react-native-svg";
 // import propic from "../assets/plantImage.png";
 
-const ProfileScreen = ({ navigation, isLogged, setIsLogged, setLoggedInUser, loggedInUser }) => {
+const ProfileScreen = ({ navigation, isLogged, setIsLogged, setLoggedInUser, loggedInUser, schedulePushNotification }) => {
   // console.log("props", setLoggedInUser)
   const [name, setName] = useState('user')
   const [email, setEmail] = useState('email@example.com')
@@ -26,7 +26,12 @@ const ProfileScreen = ({ navigation, isLogged, setIsLogged, setLoggedInUser, log
   });
 
   const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const toggleSwitch = async() => {
+    if(!isEnabled) {
+      await schedulePushNotification();
+    }
+    setIsEnabled((previousState) => !previousState);
+    };
 
   return (
     <View style={{backgroundColor: "#FCFAF7"}}>
@@ -71,7 +76,14 @@ const ProfileScreen = ({ navigation, isLogged, setIsLogged, setLoggedInUser, log
                     ios_backgroundColor={isEnabled ? "#B7A878" : "#DDDDDD"}
                     onValueChange={toggleSwitch}
                     value={isEnabled}
+                 
                   />
+        {/* <Button
+        title="Press to schedule a notification"
+        onPress={async () => {
+          await schedulePushNotification();
+        }}
+      /> */}
                 </HStack>
               </VStack>
 
