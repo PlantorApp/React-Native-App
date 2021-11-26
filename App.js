@@ -4,19 +4,16 @@ import React, { useEffect, useRef, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import * as Notifications from "expo-notifications";
 import NotificationScreen from "./app/screens/NotificationsScreen";
-// import * as Permissions from 'expo-permissions';
 import HomeScreen from "./app/screens/HomeScreen";
-
 import Constants from "expo-constants";
 import { navigationRef } from "./root";
 import * as navigation from "./root";
-// import AppLoading from "expo-app-loading";
-import NotificationsContainer from "./app/screens/NotificationsContainer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 export default function App() {
   const [isLogged, setIsLogged] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState();
+  const [mongoLoggedInUser, setMongoLoggedInUser] = useState();
   const [envList, setEnvList] = useState([]);
 
   const [expoPushToken, setExpoPushToken] = useState("");
@@ -45,7 +42,7 @@ export default function App() {
 
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log("clicked");
+        // console.log("clicked");
         navigation.navigate("NotificationScreen");
       });
 
@@ -62,18 +59,20 @@ export default function App() {
       `http://54.148.107.164/backend-users/users/${loggedInUser.sub}`
     );
     const data = await response.json();
-    setLoggedInUser(data);
-    console.log("user from mongo", loggedInUser);
+    setMongoLoggedInUser(data);
+    // console.log("user from mongo", loggedInUser);
   };
   if (loggedInUser) {
-    getUser();
+    if(!mongoLoggedInUser) {
+      getUser();
+    }
   }
 
   async function schedulePushNotification() {
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: "Heavy Rainfall!",
-        body: "Floods in British Columbia",
+        title: "Rainfall Warning",
+        body: "Short description about alert & how it will impact the garden so that use...",
         data: { screen: "NotificationsScreen" },
       },
       trigger: { seconds: 2 },
@@ -95,7 +94,7 @@ export default function App() {
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
+      // console.log(token);
     } else {
       alert("Must use physical device for Push Notifications");
     }
@@ -139,27 +138,24 @@ export default function App() {
     <NativeBaseProvider>
       <NavigationContainer ref={navigationRef}>
         <Stack.Navigator>
-        <Stack.Screen name="HomeScreen">
+        <Stack.Screen name="HomeScreen" options={{
+          headerShown: false
+        }}>
           {(props) => (<HomeScreen {...props}
-          schedulePushNotification={schedulePushNotification} /> )}
-          </Stack.Screen>
-          <Stack.Screen name="NotificationsContainer">
-            {(props) => (
-              <NotificationsContainer
-                {...props}
-                schedulePushNotification={schedulePushNotification}
-                notification={notification}
-                expoPushToken={expoPushToken}
-              />
-            )}
-          </Stack.Screen>
-      
-          <Stack.Screen
-            name="NotificationScreen"
-            component={NotificationScreen}
-          />
-          {/* <Stack.Screen name="Features" component={FeaturesScreen} /> */}
-          {/* <HomeScreen isLogged={isLogged} setIsLogged={setIsLogged} setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} setEnvList = {setEnvList} envList = {envList}/> */}
+          schedulePushNotification={schedulePushNotification}
+          isLogged={isLogged}
+          setIsLogged={setIsLogged}
+          setLoggedInUser={setLoggedInUser}
+          loggedInUser={mongoLoggedInUser}
+          setEnvList={setEnvList}
+          envList={envList} />)}
+        </Stack.Screen>
+        <Stack.Screen
+          name="NotificationScreen" options={{
+            headerShown: false
+          }}
+          component={NotificationScreen}
+        />
         </Stack.Navigator>
       </NavigationContainer>
       <StatusBar style="dark" />

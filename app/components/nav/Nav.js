@@ -10,7 +10,7 @@ import { useFonts } from 'expo-font';
 
 const Tab = createBottomTabNavigator();
 
-const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, schedulePushNotification }) => {
+const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, schedulePushNotification, envList }) => {
 
   const [loaded] = useFonts({
     QuickSandBold: require('../../assets/fonts/Quicksand-Bold.ttf'),
@@ -42,11 +42,11 @@ const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, schedulePus
             fontFamily: 'QuickSandBold',
             fontWeight: 'normal'
           }
-      }} />
-        {/* {() => <Home loggedInUser={loggedInUser} />}
-      </Tab.Screen> */}
+        }}
+      />
       <Tab.Screen
         name="Saved"
+        children={(props) => <SavedScreen {...props} envList={envList}/>}
         options={{
           headerShown: false,
           tabBarIcon: ({color}) => (<Svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -61,9 +61,7 @@ const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, schedulePus
             fontWeight: 'normal'
           }
         }}
-      >
-        {(props) => <SavedScreen {...props} envList={envList}/>}
-      </Tab.Screen>
+      />
       <Tab.Screen
         name="Notifications"
         component={NotificationsScreen}
@@ -85,6 +83,7 @@ const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, schedulePus
       />
       <Tab.Screen
         name="Profile"
+        children={(props) => <ProfileScreen {...props} isLogged={isLogged} setIsLogged={setIsLogged} setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} schedulePushNotification= {schedulePushNotification}/>}
         options={{
           headerShown: false,
           tabBarIcon: ({color}) => (<Svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -100,9 +99,7 @@ const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, schedulePus
             fontWeight: 'normal'
           }
         }}
-      >
-        {() => <ProfileScreen isLogged={isLogged} setIsLogged={setIsLogged} setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} schedulePushNotification= {schedulePushNotification}/> }
-      </Tab.Screen>
+      />
     </Tab.Navigator>
   )
 }
