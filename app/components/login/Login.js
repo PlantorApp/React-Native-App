@@ -79,7 +79,7 @@ const Login = (props) => {
   const logInGl = async () => {
     try {
       const result = await Google.logInAsync({
-        // iosClientId: '651674954421-5a6cadejpmdbnlam73hub6f4e12ll869.apps.googleusercontent.com',
+        iosClientId: '651674954421-5a6cadejpmdbnlam73hub6f4e12ll869.apps.googleusercontent.com',
         androidClientId: '651674954421-v6253d1hotla3scuqvt6mc65l5hi86kg.apps.googleusercontent.com',
         scopes: ['profile', 'email', 'openid'],
         });

@@ -35,7 +35,7 @@ const HomeScreen = (props) => {
         <Stack.Screen name="ArtificialLight" component={ArtificialLight} />
         <Stack.Screen name="PetFriendly" component={PetFriendly} />
         <Stack.Screen name="Suggestions">
-          {(props) => <Suggestions {...props} loggedInUser={props.loggedInUser} setEnvList={props.setEnvList}/>} 
+          {(pro) => <Suggestions {...pro} loggedInUser={props.loggedInUser} setEnvList={props.setEnvList}/>} 
         </Stack.Screen>
         <Stack.Screen name="PlantDetail" component={PlantDetail} options={{headerShown: false}} />
       </Stack.Group>

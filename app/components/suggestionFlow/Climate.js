@@ -88,7 +88,7 @@ const Climate = ({ navigation, route }) => {
             </View>
           </Box>
           <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', justifyContent: 'center', height: 48, width: 270, backgroundColor: '#827344', position: 'absolute', bottom: 24}} onPress={() => navigation.navigate('NaturalLight', {city: city, outdoor: route.params.outdoor, temp: temp, date: curMonth})}>
-            <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>Next</Text>
+            <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', fontSize: 20, lineHeight: 24, color: '#FFFFFF', textAlign: 'center'}}>Next</Text>
           </Pressable>
         </View>
       </ScrollView>
