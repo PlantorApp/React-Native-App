@@ -122,7 +122,7 @@ const InformationDescription = ({ navigation }) => {
       </ScrollView>
       <View style={{backgroundColor: "#FFFFFF", height: 80, width: '100%', position: 'absolute', bottom: 0, borderTopWidth: 1, borderTopColor: '#DDDDDD'}}>
         <Box style={{justifyContent: 'center', alignItems: 'center'}}>
-          <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', justifyContent: 'center', padding: 14, width: 270, height: 48, backgroundColor: '#827344', marginTop: 16}} onPress={() => navigation.goBack()}>
+          <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', justifyContent: 'center', padding: 14, width: 270, height: 48, backgroundColor: '#827344', marginTop: 16}} android_ripple={{color: '#DDDDDD', radius:4, foreground: true}} onPress={() => navigation.goBack()}>
             <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', fontSize: 20, lineHeight: 24, color: '#FFFFFF', textAlign: 'center'}}>OK, got it!</Text>
           </Pressable>
         </Box>

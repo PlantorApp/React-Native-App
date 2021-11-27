@@ -22,7 +22,7 @@ const Home = ({ navigation, loggedInUser }) => {
     let user = loggedInUser;
     // console.log(user);
     if(user) {
-      const response = await fetch(`http://54.148.107.164/backend-users/users/${user.sub}`);
+      const response = await fetch(`https://app.plantor.app/backend-users/users/${user.sub}`);
       // const response = await fetch(`http://192.168.0.18:3003/users/${user.sub}`);
       const data = await response.json();
       // console.log("user from db :", data)
@@ -41,7 +41,7 @@ const Home = ({ navigation, loggedInUser }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
           };
-          const response2 = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+          const response2 = await fetch(`https://app.plantor.app/backend-users/users/${data.sub}`,
           // const response2 = await fetch(`http://192.168.0.18:3003/users/${data.sub}`,
             requestOptions
           );
@@ -58,7 +58,7 @@ const Home = ({ navigation, loggedInUser }) => {
               body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
             };
 
-            const response = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+            const response = await fetch(`https://app.plantor.app/backend-users/users/${data.sub}`,
             // const response = await fetch(`http://192.168.0.18:3003/users/${data.sub}`,
               requestOptions
             );
@@ -78,7 +78,7 @@ const Home = ({ navigation, loggedInUser }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
           };
-          const response2 = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+          const response2 = await fetch(`https://app.plantor.app/backend-users/users/${data.sub}`,
           // const response2 = await fetch(`http://192.168.0.18:3003/users/${data.sub}`,
             requestOptions
           );
@@ -94,7 +94,7 @@ const Home = ({ navigation, loggedInUser }) => {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
             };
-            const response = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+            const response = await fetch(`https://app.plantor.app/backend-users/users/${data.sub}`,
             // const response = await fetch(`http://192.168.0.18:3003/users/${data.sub}`,
               requestOptions
             );
@@ -114,7 +114,7 @@ const Home = ({ navigation, loggedInUser }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
           };
-          const response2 = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+          const response2 = await fetch(`https://app.plantor.app/backend-users/users/${data.sub}`,
           // const response2 = await fetch(`http://192.168.0.18:3003/users/${data.sub}`,
             requestOptions
           );
@@ -130,7 +130,7 @@ const Home = ({ navigation, loggedInUser }) => {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
             };
-            const response = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+            const response = await fetch(`https://app.plantor.app/backend-users/users/${data.sub}`,
             // const response = await fetch(`http://192.168.0.18:3003/users/${data.sub}`,
               requestOptions
             );
@@ -150,7 +150,7 @@ const Home = ({ navigation, loggedInUser }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
           };
-          const response2 = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+          const response2 = await fetch(`https://app.plantor.app/backend-users/users/${data.sub}`,
           // const response2 = await fetch(`http://192.168.0.18:3003/users/${data.sub}`,
             requestOptions
           );
@@ -166,7 +166,7 @@ const Home = ({ navigation, loggedInUser }) => {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
             };
-            const response = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+            const response = await fetch(`https://app.plantor.app/backend-users/users/${data.sub}`,
             // const response = await fetch(`http://192.168.0.18:3003/users/${data.sub}`,
               requestOptions
             );
@@ -186,7 +186,7 @@ const Home = ({ navigation, loggedInUser }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
           };
-          const response2 = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+          const response2 = await fetch(`https://app.plantor.app/backend-users/users/${data.sub}`,
           // const response2 = await fetch(`http://192.168.0.18:3003/users/${data.sub}`,
             requestOptions
           );
@@ -202,7 +202,7 @@ const Home = ({ navigation, loggedInUser }) => {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
             };
-            const response = await fetch(`http://54.148.107.164/backend-users/users/${data.sub}`,
+            const response = await fetch(`https://app.plantor.app/backend-users/users/${data.sub}`,
             // const response = await fetch(`http://192.168.0.18:3003/users/${data.sub}`,
               requestOptions
             );

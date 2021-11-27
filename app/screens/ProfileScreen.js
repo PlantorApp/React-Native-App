@@ -1,24 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Image, Text, StyleSheet, Switch, Pressable, Dimensions, ScrollView } from "react-native";
 import { Box, Heading, HStack } from "native-base";
 import { useFonts } from "expo-font";
 import Login from "../components/login/Login";
 import Svg, { Path } from "react-native-svg";
 
-const ProfileScreen = ({ isLogged, setIsLogged, setLoggedInUser, schedulePushNotification }) => {
+const ProfileScreen = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, setMongoLoggedInUser, schedulePushNotification }) => {
   const [email, setEmail] = useState('email@example.com')
-  const [profilePictureUri, setProfilePictureUri] = useState()
-
-  const setUser = (name, email, profilePicture) => {
+  const [profilePicUri, setProfilePicUri] = useState()
+  const [userInfo, setUserInfo] = useState()
+  // console.log(userInfo)
+  const setUser = (name, email, profilePic) => {
     setEmail(email)
-    setProfilePictureUri(profilePicture)
+    setProfilePicUri(profilePic)
   }
-
-  const [loaded] = useFonts({
-    DMSerifText: require("../assets/fonts/DMSerifText-Regular.ttf"),
-    QuickSandBold: require("../assets/fonts/Quicksand-Bold.ttf"),
-    QuickSandRegular: require("../assets/fonts/Quicksand-Regular.ttf"),
-  });
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = async() => {
@@ -26,22 +21,28 @@ const ProfileScreen = ({ isLogged, setIsLogged, setLoggedInUser, schedulePushNot
       await schedulePushNotification();
     }
     setIsEnabled((previousState) => !previousState);
-    };
+  };
+
+  const [loaded] = useFonts({
+    DMSerifText: require("../assets/fonts/DMSerifText-Regular.ttf"),
+    QuickSandBold: require("../assets/fonts/Quicksand-Bold.ttf"),
+    QuickSandRegular: require("../assets/fonts/Quicksand-Regular.ttf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
 
   return (
+    <>
     <View style={{backgroundColor: "#FCFAF7", marginTop: 24}}>
       <ScrollView>
-        <View style={{ flex: 1, minHeight: Dimensions.get('window').height, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FCFAF7', paddingTop: 20, paddingBottom: 28}}>
+      <View style={{ flex: 1, minHeight: Dimensions.get('window').height - 88, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FCFAF7', paddingTop: 20, paddingBottom: 28}}>
           <Box style={{width: Dimensions.get('window').width - 32}}>
-            <Login setUser={setUser} isLogged={isLogged} setIsLogged={setIsLogged} setLoggedInUser={setLoggedInUser} />
-            <Heading 
-              style={styles.mainTitle} 
-            >
-              Profile
-            </Heading>
-            <View>
+            <Heading style={styles.mainTitle}>Profile</Heading>
+            {!isLogged ? (<Login setUser={setUser} isLogged={isLogged} setIsLogged={setIsLogged} setLoggedInUser={setLoggedInUser} setUserInfo={setUserInfo} setMongoLoggedInUser={setMongoLoggedInUser} />) : (<View>
               <Box mt={4}>
-                {profilePictureUri ? <Image source={{ uri: profilePictureUri }} alt="Profile Image" style={{width: 99, height: 99, borderRadius: 99}} />
+                {profilePicUri ? <Image source={{ uri: userInfo?.profilePicUri }} alt="Logged in user" style={{width: 99, height: 99, borderRadius: 99}} />
                 : <Image source={require('../assets/plantImage.png')} alt="Profile Image" style={{width: 99, height: 99, borderRadius: 99}} />}
               </Box>
               <HStack justifyContent="flex-start" space={2} style={styles.border} >
@@ -51,7 +52,7 @@ const ProfileScreen = ({ isLogged, setIsLogged, setLoggedInUser, schedulePushNot
                 <Path d="M3.44531 16.4181L8.44398 11.5391" stroke="#B7A878" strokeWidth="1.5" strokeMiterlimit="10" strokeLinejoin="round"/>
                 <Path d="M18.5567 16.4192L13.5195 11.4844" stroke="#B7A878" strokeWidth="1.5" strokeMiterlimit="10" strokeLinejoin="round"/>
               </Svg>
-                <Text style={styles.emailStyle}>{email}</Text>
+                <Text style={styles.emailStyle}>{userInfo?.email}</Text>
               </HStack>
               <HStack 
                 width="100%"
@@ -83,11 +84,12 @@ const ProfileScreen = ({ isLogged, setIsLogged, setLoggedInUser, schedulePushNot
                 <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', fontSize: 20, lineHeight: 24, color: '#827344'}}>Logout</Text>
               </Pressable> 
               </Box>            
-            </View>
+            </View>)}
           </Box>
         </View>
       </ScrollView>
     </View>
+    </>
   );
 };
 
