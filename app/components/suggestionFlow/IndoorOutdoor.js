@@ -1,22 +1,42 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, Dimensions, Image, TouchableOpacity, Animated } from 'react-native';
 import { Box, HStack } from 'native-base';
 import Svg, { Line } from 'react-native-svg';
 import { useFonts } from 'expo-font';
 
 const IndoorOutdoor = ({ navigation }) => {
-    const [indoor, setIndoor] = useState(false)
-    const [outdoor, setOutdoor] = useState(false)
+  const [indoor, setIndoor] = useState(false)
+  const [outdoor, setOutdoor] = useState(false)
+  const [animatedValue] = useState(new Animated.Value(1))
+  const animatedStyle = { transform: [{ scale: animatedValue }] }
 
-    const [loaded] = useFonts({
-      DMSerifText: require('../../assets/fonts/DMSerifText-Regular.ttf'),
-      QuickSandBold: require('../../assets/fonts/Quicksand-Bold.ttf'),
-      QuickSandRegular: require('../../assets/fonts/Quicksand-Regular.ttf')
-    });
+  const handlePressIn = () => {
+    Animated.spring(animatedValue, {
+      toValue: 0.8,
+      useNativeDriver: true
+    }).start()
+  }
   
-    if (!loaded) {
-      return null;
-    }
+  const handlePressOut = (obj) => {
+    console.log(obj)
+    Animated.spring(animatedValue, {
+      toValue: 1,
+      friction: 3,
+      tension: 70,
+      useNativeDriver: true
+    }).start(() => obj.indoor ? navigation.navigate('Temperature', obj) : navigation.navigate('UserLocation', obj))
+  }
+
+
+  const [loaded] = useFonts({
+    DMSerifText: require('../../assets/fonts/DMSerifText-Regular.ttf'),
+    QuickSandBold: require('../../assets/fonts/Quicksand-Bold.ttf'),
+    QuickSandRegular: require('../../assets/fonts/Quicksand-Regular.ttf')
+  });
+
+  if (!loaded) {
+    return null;
+  }
 
   return (
     <View style={{backgroundColor: "#FCFAF7"}}>
@@ -34,7 +54,7 @@ const IndoorOutdoor = ({ navigation }) => {
           <View style={{ flex: 1, height: '100%', alignItems: 'center', justifyContent: 'center'}}>
             <Text style={{fontFamily: 'DMSerifText', color: '#827344', fontSize: 32, textAlign: 'center', marginTop: 12 }}>Will the plant be growing indoor or outdoor?</Text>
             <HStack style={{marginTop: 78}}>
-              <TouchableOpacity style={{flex: 1, height: 204, backgroundColor: '#FFFFFF', borderRadius: 12, borderWidth: 1, marginRight: 8, borderColor: '#DDDDDD', shadowColor: '#000000', shadowOffset: { width: 2, height: 2}, shadowOpacity: 0.12, elevation: 8}} onPress={() => { setIndoor(true); setOutdoor(false); navigation.navigate('Temperature', { indoor: true }); }}>
+              <TouchableOpacity style={{flex: 1, height: 204, backgroundColor: '#FFFFFF', borderRadius: 12, borderWidth: 1, marginRight: 8, borderColor: '#DDDDDD', shadowColor: '#000000', shadowOffset: { width: 2, height: 2}, shadowOpacity: 0.12, elevation: 8}} onPressIn={() => handlePressIn()} onPressOut={() => { setIndoor(true); setOutdoor(false); handlePressOut({indoor: true}); }}>
                 <Box style={{justifyContent: 'center', alignItems: 'center', height: 156, backgroundColor: '#FCFAF7', borderTopLeftRadius: 12, borderTopRightRadius: 12}}>
                   <Image style={{width: 86, height: 86}} source={require('../../assets/illusIndoor.png')} />
                 </Box>
@@ -42,7 +62,8 @@ const IndoorOutdoor = ({ navigation }) => {
                   <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', textAlign: 'center', fontSize: 20, color: '#666666'}}>Indoor</Text>
                 </Box>
               </TouchableOpacity>
-              <TouchableOpacity style={{flex: 1, height: 204, backgroundColor: '#FFFFFF', borderRadius: 12, borderWidth: 1, marginLeft: 8, borderColor: '#DDDDDD', shadowColor: '#000000', shadowOffset: { width: 2, height: 2}, shadowOpacity: 0.12, elevation: 8}} onPress={() => { setIndoor(false); setOutdoor(true); navigation.navigate('UserLocation', { outdoor: true }); }}>
+              {/* <TouchableOpacity style={{flex: 1, height: 204, backgroundColor: '#FFFFFF', borderRadius: 12, borderWidth: 1, marginLeft: 8, borderColor: '#DDDDDD', shadowColor: '#000000', shadowOffset: { width: 2, height: 2}, shadowOpacity: 0.12, elevation: 8}} onPress={() => { setIndoor(false); setOutdoor(true); navigation.navigate('UserLocation', { outdoor: true }); }}> */}
+              <TouchableOpacity style={{flex: 1, height: 204, backgroundColor: '#FFFFFF', borderRadius: 12, borderWidth: 1, marginLeft: 8, borderColor: '#DDDDDD', shadowColor: '#000000', shadowOffset: { width: 2, height: 2}, shadowOpacity: 0.12, elevation: 8}} onPressIn={() => handlePressIn()} onPressOut={() => { setIndoor(false); setOutdoor(true);  handlePressOut({outdoor: true});}}>
                 <Box style={{justifyContent: 'center', alignItems: 'center', height: 156, backgroundColor: '#FCFAF7', borderTopLeftRadius: 12, borderTopRightRadius: 12}}>
                   <Image style={{width: 86, height: 86}} source={require('../../assets/illusOutdoor.png')} />
                 </Box>

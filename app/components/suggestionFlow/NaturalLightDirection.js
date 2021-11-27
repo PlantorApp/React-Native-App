@@ -176,7 +176,7 @@ const NaturalLightDirection = ({ navigation, route }) => {
               <Text style={{fontFamily: 'DMSerifText', color: '#666666', fontSize: 32, textAlign: 'center', marginTop: 12 }}>{captured}</Text>
             </View>
           </Box>
-          <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', justifyContent: 'center', height: 48, width: 270, backgroundColor: bool ? '#E3DECE' : '#827344', position: 'absolute', bottom: 24}} disabled={bool} onPress={() => { navigation.navigate('PetFriendly', { outdoor: route.params.outdoor, city: route.params.city, temp: route.params.temp, date: route.params.date, lightDir: captured }) }} >
+          <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', justifyContent: 'center', height: 48, width: 270, backgroundColor: bool ? '#E3DECE' : '#827344', position: 'absolute', bottom: 24}} android_ripple={{color: '#DDDDDD', radius:4, foreground: true}} disabled={bool} onPress={() => { navigation.navigate('PetFriendly', { outdoor: route.params.outdoor, city: route.params.city, temp: route.params.temp, date: route.params.date, lightDir: captured }) }} >
             <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', fontSize: 20, lineHeight: 24, color: '#FFFFFF', textAlign: 'center'}}>Save Measurement</Text>
           </Pressable>
         </View>

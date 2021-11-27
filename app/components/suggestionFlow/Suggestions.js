@@ -49,7 +49,7 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ savedEnvironments: environmentArray }),
     };
-    const response2 = await fetch(`http://54.148.107.164/backend-users/users/${loggedInUser.sub}`,
+    const response2 = await fetch(`https://app.plantor.app/backend-users/users/${loggedInUser.sub}`,
     // const response2 = await fetch(`http://192.168.0.18:3003/users/${loggedInUser.sub}`,
       requestOptions
     );
@@ -92,14 +92,14 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
   }
   
   const fetchCityDate = async () => {
-    const url = 'http://54.148.107.164/backend-cities/cities'
+    const url = 'https://app.plantor.app/backend-cities/cities'
     const api_call = await fetch(url);
     const response = await api_call.json();
     setCities(response);
   }
   
   const fetchPlantsData = async () => {
-    const url = 'http://54.148.107.164/backend-plants/plants'
+    const url = 'https://app.plantor.app/backend-plants/plants'
     const api_call = await fetch(url);
     const response = await api_call.json();
     setEntries(response);
@@ -200,7 +200,7 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
                 onSnapToItem = {(index) => { setActiveIndex(index) }} />}
               </View>
           </Box>
-          <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', padding: 14, width: 270, backgroundColor: '#827344', position: 'absolute', bottom: 24}} onPress={handlePress} >
+          <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', padding: 14, width: 270, backgroundColor: '#827344', position: 'absolute', bottom: 24}} android_ripple={{color: '#DDDDDD', radius:4, foreground: true}} onPress={handlePress} >
             <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, lineHeight: 24, color: '#FFFFFF', textAlign: 'center'}}>Save Environment</Text>
         </Pressable>
         </View>
