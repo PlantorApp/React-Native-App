@@ -13,6 +13,7 @@ const images = {
 const Climate = ({ navigation, route }) => {
   const [temp, setTemp] = useState('')
   const [weather, setWeather] = useState('')
+  const [headerText, setHeaderText] = useState('Climate information of')
 
   const city = route.params.address;
   const today = new Date();
@@ -43,6 +44,17 @@ const Climate = ({ navigation, route }) => {
 
     setTemp(parseInt(response.main.temp))
     setWeather(response.weather[0].main)
+    if(response.weather[0].main === "Clouds") {
+      setHeaderText("Sky is cloudy")
+    } else if(response.weather[0].main === "Rain") {
+      setHeaderText("Currently raining")
+    } else if(response.weather[0].main === "Clear") {
+      setHeaderText("Sky is clear")
+    } else if(response.weather[0].main === "Snow") {
+      setHeaderText("Currently snowing")
+    } else {
+      setHeaderText("Climate information of")
+    }
   }
 
   useEffect(() => {
@@ -79,8 +91,8 @@ const Climate = ({ navigation, route }) => {
               <Box style={{flex: 1, height: 6, backgroundColor: '#E3DECE', marginLeft: 8, borderRadius: 7}}></Box>
             </HStack>
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              <Image source={ images[weather] } style={{position: 'absolute', height: '100%', width: '100%'}} />
-              <Text style={{fontFamily: 'DMSerifText', color: '#827344', fontSize: 32, textAlign: 'center', marginTop: 40 }}>{city}'s climate is {weather} today</Text>
+              <Image source={ images[weather] } style={{position: 'absolute', top: 60, left: 0, height: '100%', width: '100%'}} />
+              <Text style={{fontFamily: 'DMSerifText', color: '#827344', fontSize: 32, textAlign: 'center', marginTop: 40 }}>{headerText} in {city}</Text>
               {/* <Text>{weather}</Text> */}
               <Text style={{fontFamily: 'DMSerifText', color: '#666666', fontSize: 64, marginTop: 96, textAlign: 'center'}}>{temp} °C</Text>
               <Text style={{fontFamily: 'DMSerifText', color: '#666666', fontSize: 32, textAlign: 'center', marginTop: 12 }}>{season.name}</Text>

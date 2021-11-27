@@ -1,7 +1,8 @@
-import { Box, Button } from 'native-base';
 import React, { useState, useEffect } from 'react';
 import * as Facebook from 'expo-facebook';
 import * as Google from 'expo-google-app-auth';
+import { Dimensions, Pressable, Text, View } from 'react-native';
+import { Box, Stack, VStack } from 'native-base';
  
 const Login = (props) => {
 
@@ -156,10 +157,18 @@ const Login = (props) => {
   });
  
   return (
-    <Box style={{display: props.isLogged ? 'none' : 'flex'}}>
-      <Button onPress={logInFb}>Login with facebook</Button>
-      <Button onPress={logInGl}>Login with google</Button>
-    </Box>
+    <View style={{minHeight: Dimensions.get('window').height - 174, justifyContent: 'center'}}>
+      <Box style={{justifyContent: 'center', alignItems: 'center'}}>
+        <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', padding: 14, width: 270, backgroundColor: '#827344'}} onPress={logInFb} >
+            <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, lineHeight: 24, color: '#FFFFFF', textAlign: 'center'}}>Login with Facebook</Text>
+        </Pressable>
+      </Box>
+      <Box style={{justifyContent: 'center', alignItems: 'center', marginTop: 24}}>
+        <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', padding: 14, width: 270, backgroundColor: '#827344'}} onPress={logInGl} >
+            <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, lineHeight: 24, color: '#FFFFFF', textAlign: 'center'}}>Login with Google</Text>
+        </Pressable>
+      </Box>
+    </View>
   )
 }
  

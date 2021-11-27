@@ -29,17 +29,13 @@ const ProfileScreen = ({ isLogged, setIsLogged, setLoggedInUser, schedulePushNot
     };
 
   return (
+    <>
     <View style={{backgroundColor: "#FCFAF7", marginTop: 24}}>
       <ScrollView>
-        <View style={{ flex: 1, minHeight: Dimensions.get('window').height, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FCFAF7', paddingTop: 20, paddingBottom: 28}}>
+      <View style={{ flex: 1, minHeight: Dimensions.get('window').height - 88, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FCFAF7', paddingTop: 20, paddingBottom: 28}}>
           <Box style={{width: Dimensions.get('window').width - 32}}>
-            <Login setUser={setUser} isLogged={isLogged} setIsLogged={setIsLogged} setLoggedInUser={setLoggedInUser} />
-            <Heading 
-              style={styles.mainTitle} 
-            >
-              Profile
-            </Heading>
-            <View>
+            <Heading style={styles.mainTitle}>Profile</Heading>
+            {!isLogged ? (<Login setUser={setUser} isLogged={isLogged} setIsLogged={setIsLogged} setLoggedInUser={setLoggedInUser} />) : (<View>
               <Box mt={4}>
                 {profilePictureUri ? <Image source={{ uri: profilePictureUri }} alt="Profile Image" style={{width: 99, height: 99, borderRadius: 99}} />
                 : <Image source={require('../assets/plantImage.png')} alt="Profile Image" style={{width: 99, height: 99, borderRadius: 99}} />}
@@ -83,11 +79,12 @@ const ProfileScreen = ({ isLogged, setIsLogged, setLoggedInUser, schedulePushNot
                 <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', fontSize: 20, lineHeight: 24, color: '#827344'}}>Logout</Text>
               </Pressable> 
               </Box>            
-            </View>
+            </View>)}
           </Box>
         </View>
       </ScrollView>
     </View>
+    </>
   );
 };
 
