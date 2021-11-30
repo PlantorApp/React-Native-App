@@ -60,7 +60,7 @@ export default function App() {
     );
     const data = await response.json();
     setMongoLoggedInUser(data);
-    // console.log("user from mongo", loggedInUser);
+    // console.log("user from mongo", mongoLoggedInUser);
   };
   if (loggedInUser) {
     if(!mongoLoggedInUser) {

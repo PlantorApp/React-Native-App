@@ -13,6 +13,9 @@ import Climate from "../components/suggestionFlow/Climate";
 import PlantDetail from "../components/suggestionFlow/PlantDetail";
 import InformationDescription from '../components/informationDescription/InformationDescription';
 import Nav from "../components/nav/Nav";
+import EnvironmentName from "../components/suggestionFlow/EnvironmentName";
+import SavedScreen from "./SavedScreen";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +39,12 @@ const HomeScreen = (props) => {
         <Stack.Screen name="PetFriendly" component={PetFriendly} />
         <Stack.Screen name="Suggestions">
           {(pro) => <Suggestions {...pro} loggedInUser={props.loggedInUser} setEnvList={props.setEnvList}/>} 
+        </Stack.Screen>
+        <Stack.Screen name="EnvironmentName">
+          { (pro) => <EnvironmentName {...pro} loggedInUser={props.loggedInUser}/>}
+          </Stack.Screen>
+        <Stack.Screen name="SavedScreen">
+          { () => <SavedScreen envList = {props.envList} setEnvList={props.setEnvList}/>}
         </Stack.Screen>
         <Stack.Screen name="PlantDetail" component={PlantDetail} options={{headerShown: false}} />
       </Stack.Group>

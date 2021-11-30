@@ -115,7 +115,8 @@ const NaturalLightDirection = ({ navigation, route }) => {
     if(availability) {
       Magnetometer.removeAllListeners()
       Magnetometer.setUpdateInterval(500); console.log(" available ", Magnetometer)
-      setSubscription(Magnetometer.addListener(result => { console.log(" available with result", result)
+      setSubscription(Magnetometer.addListener(result => { 
+        // console.log(" available with result", result)
           setData(result);
           _angle(result);
         })
