@@ -10,7 +10,7 @@ import { useFonts } from 'expo-font';
 
 const Tab = createBottomTabNavigator();
 
-const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, schedulePushNotification, setMongoLoggedInUser, envList }) => {
+const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, schedulePushNotification, setMongoLoggedInUser }) => {
 
   const [loaded] = useFonts({
     QuickSandBold: require('../../assets/fonts/Quicksand-Bold.ttf'),
@@ -46,7 +46,7 @@ const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, schedulePus
       />
       <Tab.Screen
         name="Saved"
-        children={(props) => <SavedScreen {...props} envList={envList}/>}
+        children={(props) => <SavedScreen {...props} loggedInUser={loggedInUser} setMongoLoggedInUser = {setMongoLoggedInUser}/>}
         options={{
           headerShown: false,
           tabBarIcon: ({color}) => (<Svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">

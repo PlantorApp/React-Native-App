@@ -1,23 +1,42 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import { Text, Box, FlatList, Image, Heading, HStack, View, Stack, } from 'native-base';
 import { useFonts } from 'expo-font';
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
 import EditEnv from "../components/dropDown/EditEnv";
 import { getUserIDAsync } from "expo-facebook";
 import Svg, { Ellipse, Path, Rect } from "react-native-svg";
+import Modal from 'react-native-modal';
+import ActionSheet from "../components/dropDown/ActionSheet";
+import { AntDesign} from '@expo/vector-icons';
 
 const SavedScreen = (props) => {
-  // const data = props.envList;
+
+  const loggedInUser = props.loggedInUser
+  // console.log("inside saved screen" , loggedInUser)
+  // const [environmentList, setEnvironmentList] = useState([])
+  const [currentId, setCurrentId] = useState('0')
+
+  const [showModal, setShowModal] = useState(false)
+  const [actionSheet, setActionSheet] = useState(false);
+  const closeActionSheet = () => setActionSheet(false);
+
+  const [loaded] = useFonts({
+    DMSerifText: require('../assets/fonts/DMSerifText-Regular.ttf'),
+    QuickSandBold: require('../assets/fonts/Quicksand-Bold.ttf'),
+    QuickSandRegular: require('../assets/fonts/Quicksand-Regular.ttf')
+  });
+
+
   const data = [
     {
       "id" : "1",
       "image": require("../assets/savedpage/illusOutdoorSaved.png"),
       "title" : "Home Balcony",
       "season" : "winter",
-      "location" : "Vancouver",
+      "locationField" : "Vancouver",
       "temperature": "20C",
       "light":"Artificial light",
-      "date":"12/09/2021",
+      "dateField":"12/09/2021",
       "outdoor" : true
     },
     {
@@ -25,65 +44,118 @@ const SavedScreen = (props) => {
       "image": require("../assets/savedpage/illusIndoorSaved.png"),
       "title" : "Home Living Room",  
       "season" : "winter",
-      "location" : "Vancouver",
+      "locationField" : "Vancouver",
       "temperature": "20C",
       "light":"Artificial light",
-      "date":"12/09/2021"
+      "dateField":"12/09/2021"
     },
     {
       "id" : "3",
       "image": require("../assets/savedpage/illusIndoorSaved.png"),
       "title" : "Office Desk",
       "season" : "winter",
-      "location" : "Vancouver",
+      "locationField" : "Vancouver",
       "temperature": "20C",
       "light":"Artificial light",
-      "date":"12/09/2021"
+      "dateField":"12/09/2021"
     },
     {
       "id" : "4",
       "image": require("../assets/savedpage/illusIndoorSaved.png"),
       "title" : "Dining Room",
       "season" : "winter",
-      "location" : "Vancouver",
+      "locationField" : "Vancouver",
       "temperature": "20C",
       "light":"Artificial light",
-      "date":"12/09/2021"
+      "dateField":"12/09/2021"
     },
     {
       "id" : "5",
       "image": require("../assets/savedpage/illusIndoorSaved.png"),
       "title" : "Bed Room",
       "season" : "winter",
-      "location" : "Vancouver",
+      "locationField" : "Vancouver",
       "temperature": "20C",
       "light":"Artificial light",
-      "date":"12/09/2021"
+      "dateField":"12/09/2021"
     }
   ]
-  const [showModal, setShowModal] = useState(false)
   
-  const [loaded] = useFonts({
-    DMSerifText: require('../assets/fonts/DMSerifText-Regular.ttf'),
-    QuickSandBold: require('../assets/fonts/Quicksand-Bold.ttf'),
-    QuickSandRegular: require('../assets/fonts/Quicksand-Regular.ttf')
-  });
-
   if (!loaded) {
     return null;
   }
+
+  // {
+  //   outdoorField : loggedInUser.savedEnvironments.outdoorField,
+  //   cityField : loggedInUser.savedEnvironments.cityField,
+  //   tempField : loggedInUser.savedEnvironments.tempField,
+  //   dateField : loggedInUser.savedEnvironments.dateField,
+  //   cityLightingDurationField : loggedInUser.savedEnvironments.cityLightingDurationField,
+  //   petFriendlyField : loggedInUser.savedEnvironments.petFriendlyField 
+  // }
+
+  const actionItems = [
+    {
+      id: 1,
+      label: 'Rename Environment',
+      onPress: () => {
+        setActionSheet(false);
+        const index = loggedInUser.savedEnvironments.findIndex( (el) => el.id === currentId );
+        //console.log(loggedInUser.savedEnvironments[index])
+        props.navigation.navigate('EnvironmentName',loggedInUser.savedEnvironments[index])
+      }
+    },
+    {
+      id: 2,
+      label: 'Delete Environment',
+      onPress: () => {
+        setActionSheet(false);
+        // console.log("delete pressed on element", currentId)
+
+        const resultList = loggedInUser.savedEnvironments.filter(el => el.id !== currentId);
+
+        const updateList = async () => {
+          const requestOptions = {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ savedEnvironments: resultList }),
+          };
+          const response2 = await fetch(`https://app.plantor.app/backend-users/users/${loggedInUser.sub}`,
+          // const response2 = await fetch(`http://192.168.0.18:3003/users/${loggedInUser.sub}`,
+            requestOptions
+          );
+          const data2 = await response2.json();
+          props.setMongoLoggedInUser(data2);
+          
+          console.log("after update: ", data2)
+        }
+        updateList()
+      }
+    }
+  ];
 
   const handlePress = (option) => {
     console.log('Pressed')
     setShowModal(option)
   }
 
+ 
+
+
   return (
     <View style={{ flex: 1, minHeight: Dimensions.get('window').height, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FCFAF7', marginTop: 24, paddingBottom: 28}}>
+         {/* <Box style={{position: 'absolute', top: 16, right: 16, zIndex: 10}}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Svg style={{alignSelf: 'flex-end'}} width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <Line x1="8" y1="22.8787" x2="22.8492" y2="8.02944" stroke="#B7A878" strokeWidth="3" strokeLinecap="round"/>
+            <Line x1="8.12132" y1="8" x2="22.9706" y2="22.8492" stroke="#B7A878" strokeWidth="3" strokeLinecap="round"/>
+          </Svg>
+        </TouchableOpacity>
+      </Box> */}
       <Box style={{width: Dimensions.get('window').width - 32, paddingTop: 20}}>
         <Heading style={styles.mainTitle}>Saved</Heading>
         <FlatList
-          data={data} style={{height: Dimensions.get('window').height, marginTop: 24}}
+          data={loggedInUser.savedEnvironments} style={{height: Dimensions.get('window').height, marginTop: 24}}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <Box style={{marginBottom: 36}}>
@@ -93,10 +165,14 @@ const SavedScreen = (props) => {
                   <Stack>
                     <HStack justifyContent="space-between">
                       <Text style={styles.titleStyle}>{item.title}</Text>
-                      <EditEnv />
+                      {/* <EditEnv /> */}
+                      <AntDesign name="ellipsis1" size={24} color="black" onPress={(id) => {
+                        setActionSheet(true); 
+                        setCurrentId(item.id)
+                      }}/>
                     </HStack>
                     <Text style={{fontFamily: 'QuickSandRegular', fontSize: 14, lineHeight: 22, color: '#AAAAAA'}}>
-                      {item.date} | {item.outdoor ? "Outdoor" : "Indoor"}
+                      {item.dateField} | {item.outdoorField ? "Outdoor" : "Indoor"}
                     </Text>
                     <HStack style={{marginTop: 8}}>
                       <Svg width="22" height="22" viewBox="0 -1 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -122,11 +198,23 @@ const SavedScreen = (props) => {
                         <Rect x="9.50781" y="16.5781" width="4.17755" height="0.751958" rx="0.375979" fill="#B7A878" stroke="#B7A878" strokeWidth="0.25"/>
                         <Rect x="10.1777" y="18.2461" width="2.84073" height="0.751958" rx="0.375979" fill="#B7A878" stroke="#B7A878" strokeWidth="0.25"/>
                       </Svg>
-                      <Text style={styles.descriptionText}> {item.location}</Text>
+                      <Text style={styles.descriptionText}> {item.locationField}</Text>
                     </HStack>
                   </Stack>
                 </Box>
               </HStack>
+              <Modal
+                isVisible={actionSheet}
+                style={{
+                  margin: 0,
+                  justifyContent: 'flex-end'
+                }}
+              >
+              <ActionSheet
+                  actionItems={actionItems}
+                  onCancel={closeActionSheet}
+              />
+            </Modal>
             </Box>
           )}
         />

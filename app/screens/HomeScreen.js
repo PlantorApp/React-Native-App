@@ -13,10 +13,14 @@ import Climate from "../components/suggestionFlow/Climate";
 import PlantDetail from "../components/suggestionFlow/PlantDetail";
 import InformationDescription from '../components/informationDescription/InformationDescription';
 import Nav from "../components/nav/Nav";
+import EnvironmentName from "../components/suggestionFlow/EnvironmentName";
+import SavedScreen from "./SavedScreen";
+
 
 const Stack = createNativeStackNavigator();
 
 const HomeScreen = (props) => {
+  // console.log("logged in user is : home ", props.loggedInUser);
   return (
     <Stack.Navigator initialRouteName="PlantsSuggestion" screenOptions={{ headerShown: false }}>
       <Stack.Group>
@@ -35,6 +39,9 @@ const HomeScreen = (props) => {
         <Stack.Screen name="Suggestions">
           {(pro) => <Suggestions {...pro} loggedInUser={props.loggedInUser} setEnvList={props.setEnvList}/>} 
         </Stack.Screen>
+        <Stack.Screen name="EnvironmentName">
+          { (pro) => <EnvironmentName {...pro} loggedInUser={props.loggedInUser} setMongoLoggedInUser={props.setMongoLoggedInUser}/>}
+          </Stack.Screen>
         <Stack.Screen name="PlantDetail" component={PlantDetail} options={{headerShown: false}} />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'modal'}}>

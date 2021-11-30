@@ -21,7 +21,7 @@ export default function App() {
   const responseListener = useRef();
   let targetScreen;
 
-  // console.log("logged in user is : ", loggedInUser);
+  // console.log("logged in user is : ", mongoLoggedInUser);
   // console.log("value of is logged is: ", isLogged);
   // console.log("App.js has setLoggedInUser ", setLoggedInUser)
   // useEffect(() => {
@@ -53,12 +53,21 @@ export default function App() {
     };
   }, [notification, mongoLoggedInUser]);
 
-  // const getUser = async (loggedInUser) => {
-  //   const response = await fetch(`https://app.plantor.app/backend-users/users/${loggedInUser.sub}`);
+
+  // const getUser = async () => {
+  //   const response = await fetch(
+  //     `https://app.plantor.app/backend-users/users/${loggedInUser.sub}`
+  //   );
   //   const data = await response.json();
   //   setMongoLoggedInUser(data);
-  //   console.log("user from mongo", data);
+  //   console.log("user from mongo", mongoLoggedInUser);
   // };
+  // if (loggedInUser) {
+  //   if(!mongoLoggedInUser) {
+  //     getUser();
+  //   }
+  // }
+
 
   async function schedulePushNotification() {
     await Notifications.scheduleNotificationAsync({
