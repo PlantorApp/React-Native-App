@@ -8,39 +8,46 @@ import uuid from 'react-native-uuid';
 
 
 const EnvironmentName = ({ navigation, route, loggedInUser}) => {
-    const [text, setText] = useState("");
+    // console.log("in env name", loggedInUser)
+    const currentEnvironment = route.params;
+    const [text, setText] = useState(currentEnvironment.title ? currentEnvironment.title : "garden...");
     const [bool, setBool] = useState(true);
-    const { outdoorField, cityField, tempField, dateField, cityLightingDurationField, petFriendlyField } = route.params;
-    
+    // console.log("env object ", currentEnvironment)
+    const [header,setHeader] = useState(currentEnvironment.title ? "Rename Environment" : "Name your new environment...")
     
     const handlePress = async () => {
 
+        
+
         const environmentToSave = {
-            id : uuid.v4(),
+            id: currentEnvironment.id ? currentEnvironment.id : uuid.v4(),
             title : text,
-            outdoor : outdoorField,
-            city : cityField,
-            temp : tempField,
-            date : dateField,
-            cityLightingDuration : cityLightingDurationField,
-            petFriendly : petFriendlyField
+            outdoor : currentEnvironment.outdoor,
+            city : currentEnvironment.city,
+            temp : currentEnvironment.temp,
+            date : currentEnvironment.date,
+            cityLightingDuration : currentEnvironment.cityLightingDuration,
+            petFriendly : currentEnvironment.petFriendly
         }
 
-        console.log("before uodate : ", loggedInUser)
-        let environmentArray = loggedInUser?.savedEnvironments;
-        environmentArray.push(environmentToSave)
+        // console.log("before uodate : ", loggedInUser)
+        
+        const index = loggedInUser.savedEnvironments.findIndex((el) => el.id === currentEnvironment.id)
+
+        loggedInUser.savedEnvironments.splice(index,1)
+        loggedInUser.savedEnvironments.push(environmentToSave)
     
         const requestOptions = {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ savedEnvironments: environmentArray }),
+          body: JSON.stringify({ savedEnvironments: loggedInUser.savedEnvironments }),
         };
-        const response2 = await fetch(`http://54.148.107.164/backend-users/users/${loggedInUser.sub}`,
+        const response2 = await fetch(`https://app.plantor.app/backend-users/users/${loggedInUser.sub}`,
         // const response2 = await fetch(`http://192.168.0.18:3003/users/${loggedInUser.sub}`,
           requestOptions
         );
         const data2 = await response2.json();
-        console.log("after update: ", data2)
+        // console.log("after update: ", data2)
         navigation.goBack()
       }
 
@@ -75,12 +82,12 @@ const EnvironmentName = ({ navigation, route, loggedInUser}) => {
               <Box style={{flex: 1, height: 6, backgroundColor: '#E3DECE', marginLeft: 8, borderRadius: 7}}></Box>
             </HStack>
             <View style={{ flex: 1, height: '100%', alignItems: 'center', justifyContent: 'center', marginTop: 36}}>
-              <Text style={{fontFamily: 'DMSerifText', color: '#827344', fontSize: 32, textAlign: 'center', marginTop: 12 }}>Please give a name to save the environment</Text>
+              <Text style={{fontFamily: 'DMSerifText', color: '#827344', fontSize: 32, textAlign: 'center', marginTop: 12 }}>{header}</Text>
               <TextInput
                 style={{fontFamily: 'DMSerifText', color: '#666666', fontSize: 50, marginTop: 90, padding: 10, textAlign: 'center', borderBottomColor: '#BBBBBB', borderBottomWidth: 1 }}
                 onChangeText={text => setText(text)}
                 placeholder="Name"
-                defaultValue="garden..."
+                value = {text}
               />
             </View>
           </Box>

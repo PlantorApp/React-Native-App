@@ -10,6 +10,7 @@ const UserLocation = ({ navigation, route }) => {
   const [bool, setBool] = useState(true);
   const [locationServiceEnabled, setLocationServiceEnabled] = useState(false);
   const [displayCurrentAddress, setDisplayCurrentAddress] = useState("");
+  const [displayCurrentAddressWithCountryCode, setDisplayCurrentAddressWithCountryCode] = useState("");
   // const outdoors = route.params.outdoor
   // console.log(outdoors)
 
@@ -66,9 +67,11 @@ const UserLocation = ({ navigation, route }) => {
       const { latitude, longitude } = coords;
       let response = await Location.reverseGeocodeAsync({ latitude, longitude });
       let postal;
+      // console.log(response)
       for (let item of response) {
         let address = `${item.name}, ${item.street}, ${item.postalCode}, ${item.city}`;
         setDisplayCurrentAddress(item.city);
+        setDisplayCurrentAddressWithCountryCode(item.city+","+item.isoCountryCode.toLowerCase());
         if (address.length > 0) {
           setTimeout(() => {
             if(item.postalCode) {
@@ -130,10 +133,10 @@ const UserLocation = ({ navigation, route }) => {
               />
             </View>
           </Box>
-          <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', justifyContent: 'center', height: 48, width: 270, position: 'absolute', bottom: 88}} onPress={getLocation}>
+          <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', justifyContent: 'center', height: 48, width: 270, position: 'absolute', bottom: 88}} android_ripple={{color: '#4d4d4d', radius:4, foreground: true}} onPress={getLocation}>
             <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', fontSize: 20, lineHeight: 24, color: '#827344', textAlign: 'center'}}>Locate Me!</Text>
           </Pressable>
-          <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', justifyContent: 'center', height: 48, width: 270, backgroundColor: bool ? '#E3DECE' : "#827344", position: 'absolute', bottom: 24}} disabled={bool} onPress={ async () => {
+          <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', justifyContent: 'center', height: 48, width: 270, backgroundColor: bool ? '#E3DECE' : "#827344", position: 'absolute', bottom: 24}} android_ripple={{color: '#DDDDDD', radius:4, foreground: true}} disabled={bool} onPress={ async () => {
             if(!displayCurrentAddress) {
               const cityName = await getCityFromPostal();
               // console.log(cityName);
@@ -144,6 +147,7 @@ const UserLocation = ({ navigation, route }) => {
             } else {
               navigation.navigate('Climate', {
                 address: displayCurrentAddress,
+                cityWithCountryCode: displayCurrentAddressWithCountryCode,
                 outdoor: route.params.outdoor
               })
             }

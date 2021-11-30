@@ -15,14 +15,13 @@ export default function App() {
   const [loggedInUser, setLoggedInUser] = useState();
   const [mongoLoggedInUser, setMongoLoggedInUser] = useState();
   const [envList, setEnvList] = useState([]);
-
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
   let targetScreen;
 
-  // console.log("logged in user is : ", loggedInUser);
+  // console.log("logged in user is : ", mongoLoggedInUser);
   // console.log("value of is logged is: ", isLogged);
   // console.log("App.js has setLoggedInUser ", setLoggedInUser)
   // useEffect(() => {
@@ -52,21 +51,23 @@ export default function App() {
       );
       Notifications.removeNotificationSubscription(responseListener.current);
     };
-  }, [notification]);
+  }, [notification, mongoLoggedInUser]);
 
-  const getUser = async () => {
-    const response = await fetch(
-      `http://54.148.107.164/backend-users/users/${loggedInUser.sub}`
-    );
-    const data = await response.json();
-    setMongoLoggedInUser(data);
-    // console.log("user from mongo", mongoLoggedInUser);
-  };
-  if (loggedInUser) {
-    if(!mongoLoggedInUser) {
-      getUser();
-    }
-  }
+
+  // const getUser = async () => {
+  //   const response = await fetch(
+  //     `https://app.plantor.app/backend-users/users/${loggedInUser.sub}`
+  //   );
+  //   const data = await response.json();
+  //   setMongoLoggedInUser(data);
+  //   console.log("user from mongo", mongoLoggedInUser);
+  // };
+  // if (loggedInUser) {
+  //   if(!mongoLoggedInUser) {
+  //     getUser();
+  //   }
+  // }
+
 
   async function schedulePushNotification() {
     await Notifications.scheduleNotificationAsync({
@@ -146,6 +147,7 @@ export default function App() {
           isLogged={isLogged}
           setIsLogged={setIsLogged}
           setLoggedInUser={setLoggedInUser}
+          setMongoLoggedInUser={setMongoLoggedInUser}
           loggedInUser={mongoLoggedInUser}
           setEnvList={setEnvList}
           envList={envList} />)}

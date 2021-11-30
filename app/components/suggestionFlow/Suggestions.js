@@ -30,12 +30,12 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
   // const petFriendly = true
 
   const envToSave = {
-    outdoorField : outdoor,
-    cityField : city,
-    tempField : temp,
-    dateField : date,
-    cityLightingDurationField : cityLightingDuration,
-    petFriendlyField : petFriendly 
+    outdoor : outdoor,
+    city : city,
+    temp : temp,
+    date : date,
+    cityLightingDuration : cityLightingDuration,
+    petFriendly : petFriendly 
   }
 
   // const handlePress = async () => {
@@ -92,14 +92,14 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
   }
   
   const fetchCityDate = async () => {
-    const url = 'http://54.148.107.164/backend-cities/cities'
+    const url = 'https://app.plantor.app/backend-cities/cities'
     const api_call = await fetch(url);
     const response = await api_call.json();
     setCities(response);
   }
   
   const fetchPlantsData = async () => {
-    const url = 'http://54.148.107.164/backend-plants/plants'
+    const url = 'https://app.plantor.app/backend-plants/plants'
     const api_call = await fetch(url);
     const response = await api_call.json();
     setEntries(response);
@@ -200,14 +200,16 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
                 onSnapToItem = {(index) => { setActiveIndex(index) }} />}
               </View>
           </Box>
-          <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', padding: 14, width: 270, backgroundColor: '#827344', position: 'absolute', bottom: 24}} onPress={ () => navigation.navigate('EnvironmentName',{
-            outdoorField : outdoor,
-            cityField : city,
-            tempField : temp,
-            dateField : date,
-            cityLightingDurationField : cityLightingDuration,
-            petFriendlyField : petFriendly 
+
+          <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', padding: 14, width: 270, backgroundColor: '#827344', position: 'absolute', bottom: 24}} android_ripple={{color: '#DDDDDD', radius:4, foreground: true}} onPress={ () => navigation.navigate('EnvironmentName',{
+            outdoor : outdoor,
+            city : city,
+            temp : temp,
+            date : date,
+            cityLightingDuration : cityLightingDuration,
+            petFriendly : petFriendly 
           })} >
+
             <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, lineHeight: 24, color: '#FFFFFF', textAlign: 'center'}}>Save Environment</Text>
         </Pressable>
         </View>

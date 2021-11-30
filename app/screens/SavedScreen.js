@@ -12,6 +12,7 @@ import { AntDesign} from '@expo/vector-icons';
 const SavedScreen = (props) => {
 
   const loggedInUser = props.loggedInUser
+  // console.log("inside saved screen" , loggedInUser)
   // const [environmentList, setEnvironmentList] = useState([])
   const [currentId, setCurrentId] = useState('0')
 
@@ -25,7 +26,6 @@ const SavedScreen = (props) => {
     QuickSandRegular: require('../assets/fonts/Quicksand-Regular.ttf')
   });
 
-  console.log("list of env", props.envList)
 
   const data = [
     {
@@ -99,22 +99,17 @@ const SavedScreen = (props) => {
       id: 1,
       label: 'Rename Environment',
       onPress: () => {
-        console.log("rename pressed")
-        props.navigation.navigate('EnvironmentName',{
-          outdoorField : true,
-          cityField : "richmond",
-          tempField : 11,
-          dateField : "November",
-          cityLightingDurationField : "9:50",
-          petFriendlyField : true 
-        })
+        setActionSheet(false);
+        const index = loggedInUser.savedEnvironments.findIndex( (el) => el.id === currentId );
+        //console.log(loggedInUser.savedEnvironments[index])
+        props.navigation.navigate('EnvironmentName',loggedInUser.savedEnvironments[index])
       }
     },
     {
       id: 2,
       label: 'Delete Environment',
       onPress: () => {
-        
+        setActionSheet(false);
         // console.log("delete pressed on element", currentId)
 
         const resultList = loggedInUser.savedEnvironments.filter(el => el.id !== currentId);
@@ -125,12 +120,13 @@ const SavedScreen = (props) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ savedEnvironments: resultList }),
           };
-          const response2 = await fetch(`http://54.148.107.164/backend-users/users/${loggedInUser.sub}`,
+          const response2 = await fetch(`https://app.plantor.app/backend-users/users/${loggedInUser.sub}`,
           // const response2 = await fetch(`http://192.168.0.18:3003/users/${loggedInUser.sub}`,
             requestOptions
           );
           const data2 = await response2.json();
-          props.setEnvList(data2.savedEnvironments);
+          props.setMongoLoggedInUser(data2);
+          
           console.log("after update: ", data2)
         }
         updateList()
@@ -159,7 +155,7 @@ const SavedScreen = (props) => {
       <Box style={{width: Dimensions.get('window').width - 32, paddingTop: 20}}>
         <Heading style={styles.mainTitle}>Saved</Heading>
         <FlatList
-          data={props.envList} style={{height: Dimensions.get('window').height, marginTop: 24}}
+          data={loggedInUser.savedEnvironments} style={{height: Dimensions.get('window').height, marginTop: 24}}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <Box style={{marginBottom: 36}}>
@@ -170,7 +166,7 @@ const SavedScreen = (props) => {
                     <HStack justifyContent="space-between">
                       <Text style={styles.titleStyle}>{item.title}</Text>
                       {/* <EditEnv /> */}
-                      <AntDesign name="ellipsis1" size={24} color="black" onPress={() => {
+                      <AntDesign name="ellipsis1" size={24} color="black" onPress={(id) => {
                         setActionSheet(true); 
                         setCurrentId(item.id)
                       }}/>
