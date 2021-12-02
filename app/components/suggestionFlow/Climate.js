@@ -5,9 +5,10 @@ import Svg, { Line } from 'react-native-svg';
 import { useFonts } from 'expo-font';
 
 const images = {
-  Clear: require('../../assets/clearSky.png'),
-  Clouds: require('../../assets/cloudy.png'),
-  Rain: require('../../assets/rainy.png'),
+  Clear: require('../../assets/clear.gif'),
+  Clouds: require('../../assets/cloud.gif'),
+  Rain: require('../../assets/rain.gif'),
+  Snow: require('../../assets/snow.gif')
 }
 
 const Climate = ({ navigation, route }) => {
@@ -84,6 +85,7 @@ const Climate = ({ navigation, route }) => {
       </Box>
       <ScrollView>
         <View style={{ flex: 1, minHeight: Dimensions.get('window').height, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FCFAF7', paddingTop: 88, paddingBottom: 28}}>
+          <Image source={ images[weather] } style={{position: 'absolute', top: 60, left: 0, height: '100%', width: '100%'}} />
           <Box style={{width: Dimensions.get('window').width - 32}}>
             <HStack style={{marginTop: 12}}>
               <Box style={{flex: 1, height: 6, backgroundColor: '#B7A878', borderRadius: 7}}></Box>
@@ -92,9 +94,7 @@ const Climate = ({ navigation, route }) => {
               <Box style={{flex: 1, height: 6, backgroundColor: '#E3DECE', marginLeft: 8, borderRadius: 7}}></Box>
             </HStack>
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              <Image source={ images[weather] } style={{position: 'absolute', top: 60, left: 0, height: '100%', width: '100%'}} />
               <Text style={{fontFamily: 'DMSerifText', color: '#827344', fontSize: 32, textAlign: 'center', marginTop: 40 }}>{headerText} in {city}</Text>
-              {/* <Text>{weather}</Text> */}
               <Text style={{fontFamily: 'DMSerifText', color: '#666666', fontSize: 64, marginTop: 96, textAlign: 'center'}}>{temp} °C</Text>
               <Text style={{fontFamily: 'DMSerifText', color: '#666666', fontSize: 32, textAlign: 'center', marginTop: 12 }}>{season.name}</Text>
             </View>

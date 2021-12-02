@@ -18,7 +18,7 @@ const IndoorOutdoor = ({ navigation }) => {
   }
   
   const handlePressOut = (obj) => {
-    console.log(obj)
+    // console.log(obj)
     Animated.spring(animatedValue, {
       toValue: 1,
       friction: 3,
