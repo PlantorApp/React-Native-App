@@ -15,6 +15,7 @@ import InformationDescription from '../components/informationDescription/Informa
 import Nav from "../components/nav/Nav";
 import EnvironmentName from "../components/suggestionFlow/EnvironmentName";
 import SavedScreen from "./SavedScreen";
+import Completion from "../components/suggestionFlow/Completion";
 
 
 const Stack = createNativeStackNavigator();
@@ -36,6 +37,7 @@ const HomeScreen = (props) => {
         <Stack.Screen name="NaturalLightDirection" component={NaturalLightDirection} />
         <Stack.Screen name="ArtificialLight" component={ArtificialLight} />
         <Stack.Screen name="PetFriendly" component={PetFriendly} />
+        <Stack.Screen name="Completion" component={Completion} />
         <Stack.Screen name="Suggestions">
           {(pro) => <Suggestions {...pro} loggedInUser={props.loggedInUser} setEnvList={props.setEnvList}/>} 
         </Stack.Screen>
