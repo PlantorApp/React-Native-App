@@ -61,7 +61,7 @@ const Climate = ({ navigation, route }) => {
 
   useEffect(() => {
     fetchData();
-  })
+  }, [])
 
   const [loaded] = useFonts({
     DMSerifText: require('../../assets/fonts/DMSerifText-Regular.ttf'),
