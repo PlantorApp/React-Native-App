@@ -79,7 +79,7 @@ const InformationDescription = ({ navigation }) => {
                       <Path d="M3 11.0625L19 10.9404M11.0611 3.00143L10.9389 19.0014" stroke="#B7A878" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                       <Circle cx="10.9984" cy="10.9086" r="5.79529" fill="#FCFAF7" stroke="#B7A878" strokeWidth="1.5"/>
                     </Svg>
-                    <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', color: '#827344', fontSize: 20}}> Lightning Duration</Text>
+                    <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', color: '#827344', fontSize: 20}}> Lighting Duration</Text>
                   </HStack>
                   <Text style={{fontFamily: 'QuickSandRegular', fontSize: 16, marginTop: 4}}>Indicates the illumination time required to grow the plant.</Text>
                 </Box>
@@ -90,7 +90,7 @@ const InformationDescription = ({ navigation }) => {
                       <Path d="M3 11.0625L19 10.9404M11.0611 3.00143L10.9389 19.0014" stroke="#B7A878" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                       <Circle cx="10.9984" cy="10.9086" r="5.79529" fill="#FCFAF7" stroke="#B7A878" strokeWidth="1.5"/>
                     </Svg>
-                    <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', color: '#827344', fontSize: 20}}> Lightning Intensity</Text>
+                    <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', color: '#827344', fontSize: 20}}> Lighting Intensity</Text>
                   </HStack>
                   <Text style={{fontFamily: 'QuickSandRegular', fontSize: 16, marginTop: 4}}>Indicates the illumination intensity required to grow the plant.</Text>
                 </Box>
