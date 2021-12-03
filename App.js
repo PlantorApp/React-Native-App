@@ -3,12 +3,13 @@ import { NativeBaseProvider } from "native-base";
 import React, { useEffect, useRef, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import * as Notifications from "expo-notifications";
-import NotificationScreen from "./app/screens/NotificationsScreen";
+// import NotificationScreen from "./app/screens/NotificationsScreen";
 import HomeScreen from "./app/screens/HomeScreen";
 import Constants from "expo-constants";
 import { navigationRef } from "./root";
 import * as navigation from "./root";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import PushNotifications from "./app/screens/PushNotifications";
 
 export default function App() {
   const [isLogged, setIsLogged] = useState(false);
@@ -42,7 +43,7 @@ export default function App() {
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
         // console.log("clicked");
-        navigation.navigate("NotificationScreen");
+        navigation.navigate('Notifications', { screen: 'NotificationScreen' });
       });
 
     return () => {
@@ -74,7 +75,7 @@ export default function App() {
       content: {
         title: "Rainfall Warning",
         body: "Short description about alert & how it will impact the garden so that use...",
-        data: { screen: "NotificationsScreen" },
+        data: { screen: "PushNotifications" },
       },
       trigger: { seconds: 2 },
     });
@@ -156,7 +157,7 @@ export default function App() {
           name="NotificationScreen" options={{
             headerShown: false
           }}
-          component={NotificationScreen}
+          component={PushNotifications}
         />
         </Stack.Navigator>
       </NavigationContainer>
