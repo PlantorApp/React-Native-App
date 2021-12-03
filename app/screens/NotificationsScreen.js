@@ -3,6 +3,11 @@ import { View, Text, StyleSheet, Pressable, ScrollView, Dimensions } from "react
 import { useFonts } from "expo-font";
 import { Box, Heading, FlatList, Image, HStack } from "native-base";
 
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+
+const Stack = createNativeStackNavigator();
+
 const NotificationScreen = ({ navigation }) => {
   const [loaded] = useFonts({
     DMSerifText: require("../assets/fonts/DMSerifText-Regular.ttf"),
@@ -55,7 +60,18 @@ const NotificationScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, minHeight: Dimensions.get('window').height, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FCFAF7', marginTop: 24, paddingBottom: 28}}>
+
+    // <Stack.Navigator screenOptions={{ headerShown: false }}>
+    // <Stack.Group>
+    //   <Stack.Screen name="Nav">
+    //     {() => <Nav isLogged={props.isLogged} setIsLogged={props.setIsLogged} setLoggedInUser={props.setLoggedInUser} loggedInUser={props.loggedInUser} setMongoLoggedInUser={props.setMongoLoggedInUser} envList={props.envList} schedulePushNotification={props.schedulePushNotification}/>} 
+    //   </Stack.Screen>
+    
+
+    // </Stack.Group>
+    // </Stack.Navigator>
+
+        <View style={{ flex: 1, minHeight: Dimensions.get('window').height, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FCFAF7', marginTop: 24, paddingBottom: 28}}>
         <Box style={{width: Dimensions.get('window').width - 32, paddingTop: 20}}>
           <Heading style={styles.mainTitle}>Notifications</Heading>
           <Box style={styles.border}>
@@ -94,6 +110,7 @@ const NotificationScreen = ({ navigation }) => {
             )} />
         </Box>
     </View>
+    
   )
 };
 
