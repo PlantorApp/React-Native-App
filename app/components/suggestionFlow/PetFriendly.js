@@ -47,7 +47,7 @@ const PetFriendly = ({ navigation, route }) => {
                     <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', textAlign: 'center', fontSize: 20, color: '#666666'}}>Yes please!</Text>
                   </Box>
                 </TouchableOpacity>
-                <TouchableOpacity style={{flex: 1, height: 204, backgroundColor: '#FFFFFF', borderRadius: 12, borderWidth: 1, marginLeft: 8, borderColor: '#DDDDDD', shadowColor: '#000000', shadowOffset: { width: 2, height: 2}, shadowOpacity: 0.12, elevation: 8}} onPress={() => { setFriendly(false); navigation.navigate('Suggestions', {outdoor: route.params.outdoor, city: route.params.city, temp: route.params.temp, date: route.params.date, lightDir: route.params.lightDir, petFriendly: false});}}>
+                <TouchableOpacity style={{flex: 1, height: 204, backgroundColor: '#FFFFFF', borderRadius: 12, borderWidth: 1, marginLeft: 8, borderColor: '#DDDDDD', shadowColor: '#000000', shadowOffset: { width: 2, height: 2}, shadowOpacity: 0.12, elevation: 8}} onPress={() => { setFriendly(false); navigation.navigate('Suggestions', {outdoor: route.params.outdoor, city: route.params.city, temp: route.params.temp, date: route.params.date, season: route.params.season ,lightDir: route.params.lightDir, petFriendly: false});}}>
                   <Box style={{justifyContent: 'center', alignItems: 'center', height: 156, backgroundColor: '#FCFAF7', borderTopLeftRadius: 12, borderTopRightRadius: 12}}>
                     <Image style={{width: 86, height: 86}} source={require('../../assets/illusNoPets.png')} />
                   </Box>

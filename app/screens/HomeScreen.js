@@ -15,6 +15,7 @@ import InformationDescription from '../components/informationDescription/Informa
 import Nav from "../components/nav/Nav";
 import EnvironmentName from "../components/suggestionFlow/EnvironmentName";
 import SavedScreen from "./SavedScreen";
+import ProfileScreen from "./ProfileScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -42,6 +43,8 @@ const HomeScreen = (props) => {
         <Stack.Screen name="EnvironmentName">
           { (pro) => <EnvironmentName {...pro} loggedInUser={props.loggedInUser} setMongoLoggedInUser={props.setMongoLoggedInUser}/>}
           </Stack.Screen>
+          <Stack.Screen name="SavedScreen" component={SavedScreen} />
+         
         <Stack.Screen name="PlantDetail" component={PlantDetail} options={{headerShown: false}} />
       </Stack.Group>
       <Stack.Group screenOptions={{ presentation: 'modal'}}>

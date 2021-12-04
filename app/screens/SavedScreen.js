@@ -127,7 +127,7 @@ const SavedScreen = (props) => {
           const data2 = await response2.json();
           props.setMongoLoggedInUser(data2);
           
-          console.log("after update: ", data2)
+          //console.log("after update: ", data2)
         }
         updateList()
       }
@@ -155,7 +155,7 @@ const SavedScreen = (props) => {
       <Box style={{width: Dimensions.get('window').width - 32, paddingTop: 20}}>
         <Heading style={styles.mainTitle}>Saved</Heading>
         <FlatList
-          data={loggedInUser.savedEnvironments} style={{height: Dimensions.get('window').height, marginTop: 24}}
+          data={loggedInUser?.savedEnvironments} style={{height: Dimensions.get('window').height, marginTop: 24}}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <Box style={{marginBottom: 36}}>
@@ -164,7 +164,14 @@ const SavedScreen = (props) => {
                 <Box style={{width: Dimensions.get('window').width - 134}}>
                   <Stack>
                     <HStack justifyContent="space-between">
-                      <Text style={styles.titleStyle}>{item.title}</Text>
+                    <Text onPress = { () => props.navigation.navigate('Suggestions',{
+                      outdoor : item.outdoor,
+                      city : item.city,
+                      temp : item.temp,
+                      date : item.date,
+                      cityLightingDuration : item.cityLightingDuration,
+                      petFriendly : item.petFriendly 
+                    })} style={styles.titleStyle}>{item.title}</Text>
                       {/* <EditEnv /> */}
                       <AntDesign name="ellipsis1" size={24} color="black" onPress={(id) => {
                         setActionSheet(true); 
@@ -172,7 +179,7 @@ const SavedScreen = (props) => {
                       }}/>
                     </HStack>
                     <Text style={{fontFamily: 'QuickSandRegular', fontSize: 14, lineHeight: 22, color: '#AAAAAA'}}>
-                      {item.dateField} | {item.outdoorField ? "Outdoor" : "Indoor"}
+                      {item.date} | {item.outdoor ? "Outdoor" : "Indoor"}
                     </Text>
                     <HStack style={{marginTop: 8}}>
                       <Svg width="22" height="22" viewBox="0 -1 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -183,7 +190,7 @@ const SavedScreen = (props) => {
                         <Ellipse rx="2.52632" ry="2.59649" transform="matrix(-1 0 0 1 11.0967 9.80743)" stroke="#B7A878" strokeWidth="1.5" strokeLinejoin="round"/>
                         <Path d="M11.0264 3C14.6308 3 17.5527 5.9222 17.5527 9.52691C17.5527 10.7914 17.1932 12.0625 16.5708 13.0623C15.6291 14.7092 12.1595 19 11.0264 19C10.0747 19 6.58991 15.2682 5.48204 13.0623C4.85963 12.0625 4.5001 10.7914 4.5001 9.52691C4.5001 5.9222 7.42203 3 11.0264 3Z" stroke="#B7A878" strokeWidth="1.5" strokeLinejoin="round"/>
                       </Svg>
-                      <Text style={styles.descriptionText}> {item.light}</Text>
+                      <Text style={styles.descriptionText}> {item.city}</Text>
                     </HStack>
                     <HStack style={{marginTop: 4}}>
                       <Svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -192,7 +199,7 @@ const SavedScreen = (props) => {
                         <Path fillRule="evenodd" clipRule="evenodd" d="M10.8134 3.5C9.77823 3.5 8.93906 4.33917 8.93906 5.37433L8.93906 11.996L8.67095 12.2208C7.9539 12.8221 7.5 13.7221 7.5 14.7288C7.5 16.5355 8.96455 18 10.7712 18C12.5778 18 14.0423 16.5355 14.0423 14.7288C14.0423 13.7546 13.6173 12.8805 12.9402 12.2802L12.6877 12.0563V5.37433C12.6877 4.33917 11.8486 3.5 10.8134 3.5ZM7.43906 5.37433C7.43906 3.51074 8.9498 2 10.8134 2C12.677 2 14.1877 3.51074 14.1877 5.37433V11.3986C15.0251 12.2576 15.5423 13.4332 15.5423 14.7288C15.5423 17.3639 13.4062 19.5 10.7712 19.5C8.13612 19.5 6 17.3639 6 14.7288C6 13.3901 6.55214 12.1797 7.43906 11.314V5.37433Z" fill="#B7A878"/>
                         <Path fillRule="evenodd" clipRule="evenodd" d="M11.3682 8.25145C11.3722 8.22381 11.3742 8.19555 11.3742 8.16681C11.3742 7.83953 11.1089 7.57422 10.7817 7.57422C10.4544 7.57422 10.1891 7.83953 10.1891 8.16681C10.1891 8.19555 10.1911 8.22381 10.1951 8.25145H10.1891V12.7414C9.35608 12.995 8.75 13.7694 8.75 14.6853C8.75 15.8074 9.65964 16.717 10.7817 16.717C11.9038 16.717 12.8135 15.8074 12.8135 14.6853C12.8135 13.7693 12.2073 12.9949 11.3742 12.7413V8.25145H11.3682Z" fill="#B7A878"/>
                       </Svg>
-                      <Text style={styles.descriptionText}> {item.temperature}</Text>
+                      <Text style={styles.descriptionText}> {item.temp}</Text>
                       <Svg style={{marginLeft: 20}} width="22" height="22" viewBox="0 -1 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <Path d="M16.4458 8.59791C16.4458 9.1237 16.2353 9.73235 15.8539 10.4174C15.4762 11.0961 14.9731 11.7773 14.4647 12.4476C14.0622 12.9782 13.9242 13.4729 13.8274 13.8202C13.8209 13.8433 13.8147 13.8658 13.8085 13.8876C13.7138 14.223 13.6569 14.3599 13.4879 14.5063C13.2308 14.7292 13.0304 14.7886 12.7969 14.8076C12.6592 14.8188 12.5057 14.8156 12.3004 14.8062C12.266 14.8047 12.23 14.8029 12.1926 14.8011C12.0186 14.7926 11.8139 14.7826 11.5979 14.7826C11.3891 14.7826 11.2164 14.7871 11.0651 14.791C10.8044 14.7977 10.6071 14.8028 10.3975 14.7806C10.1367 14.753 9.95058 14.6854 9.75775 14.5134C9.62747 14.3972 9.54707 14.2255 9.40328 13.8155C9.39683 13.7971 9.39025 13.7783 9.38353 13.759C9.25675 13.3956 9.07715 12.8808 8.68524 12.4168C8.09799 11.7216 7.60532 10.9952 7.26298 10.3149C6.91486 9.62304 6.75 9.03393 6.75 8.59791C6.75 5.92048 8.92048 3.75 11.5979 3.75C14.2753 3.75 16.4458 5.92048 16.4458 8.59791Z" stroke="#B7A878" strokeWidth="1.5"/>
                         <Rect x="9.50781" y="16.5781" width="4.17755" height="0.751958" rx="0.375979" fill="#B7A878" stroke="#B7A878" strokeWidth="0.25"/>
