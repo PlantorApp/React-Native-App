@@ -46,10 +46,7 @@ const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, schedulePus
       />
       <Tab.Screen
         name="Saved"
-        children={(props) => 
-          isLogged ?( <SavedScreen {...props} loggedInUser={loggedInUser} setMongoLoggedInUser = {setMongoLoggedInUser}/>) : (<ProfileScreen {...props} isLogged={isLogged} setIsLogged={setIsLogged} setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} setMongoLoggedInUser={setMongoLoggedInUser} schedulePushNotification= {schedulePushNotification}/>)
-        
-        
+        children={(props) => ( <SavedScreen {...props} loggedInUser={loggedInUser} setMongoLoggedInUser = {setMongoLoggedInUser}/>)
        }
         options={{
           headerShown: false,

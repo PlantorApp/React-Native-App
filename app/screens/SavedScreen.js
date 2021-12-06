@@ -8,6 +8,8 @@ import Svg, { Ellipse, Path, Rect } from "react-native-svg";
 import Modal from 'react-native-modal';
 import ActionSheet from "../components/dropDown/ActionSheet";
 import { AntDesign} from '@expo/vector-icons';
+import { useFocusEffect } from '@react-navigation/native';
+import { LogBox } from "react-native";
 
 const SavedScreen = (props) => {
 
@@ -20,11 +22,11 @@ const SavedScreen = (props) => {
   const [actionSheet, setActionSheet] = useState(false);
   const closeActionSheet = () => setActionSheet(false);
 
-  const [loaded] = useFonts({
-    DMSerifText: require('../assets/fonts/DMSerifText-Regular.ttf'),
-    QuickSandBold: require('../assets/fonts/Quicksand-Bold.ttf'),
-    QuickSandRegular: require('../assets/fonts/Quicksand-Regular.ttf')
-  });
+  // const [loaded] = useFonts({
+  //   DMSerifText: require('../assets/fonts/DMSerifText-Regular.ttf'),
+  //   QuickSandBold: require('../assets/fonts/Quicksand-Bold.ttf'),
+  //   QuickSandRegular: require('../assets/fonts/Quicksand-Regular.ttf')
+  // });
 
 
   const data = [
@@ -81,9 +83,9 @@ const SavedScreen = (props) => {
     }
   ]
   
-  if (!loaded) {
-    return null;
-  }
+  // if (!loaded) {
+  //   return null;
+  // }
 
   // {
   //   outdoorField : loggedInUser.savedEnvironments.outdoorField,
@@ -93,6 +95,25 @@ const SavedScreen = (props) => {
   //   cityLightingDurationField : loggedInUser.savedEnvironments.cityLightingDurationField,
   //   petFriendlyField : loggedInUser.savedEnvironments.petFriendlyField 
   // }
+
+  // useFocusEffect(() => {
+  //     if(!loggedInUser){
+  //       props.navigation.navigate('Profile');
+  //     }
+  // },[props.navigation,loggedInUser])
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if(!loggedInUser){
+              props.navigation.navigate('Profile');
+            }
+    }, [props.navigation,loggedInUser])
+  );
+
+  useEffect(() => {
+    LogBox.ignoreLogs(["Warning: Can't perform a React state update on an unmounted component."]);
+  }, []);
+
 
   const actionItems = [
     {
@@ -160,7 +181,7 @@ const SavedScreen = (props) => {
           renderItem={({ item }) => (
             <Box style={{marginBottom: 36}}>
               <HStack justifyContent="space-between">
-                <Image source={item.image} alt="Saved environment indoor or outdoor illustration" style={{width: 86, height: 110}} />
+                <Image source={item.outdoor ? require("../assets/savedpage/illusOutdoorSaved.png") : require("../assets/savedpage/illusIndoorSaved.png")} alt="Saved environment indoor or outdoor illustration" style={{width: 86, height: 110}} />
                 <Box style={{width: Dimensions.get('window').width - 134}}>
                   <Stack>
                     <HStack justifyContent="space-between">
