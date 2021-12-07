@@ -54,22 +54,6 @@ export default function App() {
     };
   }, [notification, mongoLoggedInUser]);
 
-
-  // const getUser = async () => {
-  //   const response = await fetch(
-  //     `https://app.plantor.app/backend-users/users/${loggedInUser.sub}`
-  //   );
-  //   const data = await response.json();
-  //   setMongoLoggedInUser(data);
-  //   console.log("user from mongo", mongoLoggedInUser);
-  // };
-  // if (loggedInUser) {
-  //   if(!mongoLoggedInUser) {
-  //     getUser();
-  //   }
-  // }
-
-
   async function schedulePushNotification() {
     await Notifications.scheduleNotificationAsync({
       content: {
@@ -122,19 +106,6 @@ export default function App() {
       shouldSetBadge: false,
     }),
   });
-
-  // async function registerForPushNotification() {
-  //   const {status} = await Permissions.getAsync(Permissions.NOTIFICATIONS);
-  //   if (status!='granted') {
-  //     const {status} = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-  //   }
-  //   if (status !='granted') {
-  //     alert('Fail to get the push token');
-  //     return;
-  //   }
-  //   token = (await Notifications.getExpoPushTokenAsync()).data;
-  //   return token;
-  // }
 
   return (
     <NativeBaseProvider>

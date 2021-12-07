@@ -40,7 +40,7 @@ const ProfileScreen = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, s
       <View style={{ flex: 1, minHeight: Dimensions.get('window').height - 88, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FCFAF7', paddingTop: 20, paddingBottom: 28}}>
           <Box style={{width: Dimensions.get('window').width - 32}}>
             <Heading style={styles.mainTitle}>Profile</Heading>
-            {!isLogged ? (<Login setUser={setUser} isLogged={isLogged} setIsLogged={setIsLogged} setLoggedInUser={setLoggedInUser} setUserInfo={setUserInfo} setMongoLoggedInUser={setMongoLoggedInUser} />) : (<View>
+            {!isLogged ? (<Login setUser={setUser} isLogged={isLogged} setIsLogged={setIsLogged} setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} setUserInfo={setUserInfo} setMongoLoggedInUser={setMongoLoggedInUser} />) : (<View>
               <Box mt={4}>
                 {profilePicUri ? <Image source={{ uri: userInfo?.profilePicUri }} alt="Logged in user" style={{width: 99, height: 99, borderRadius: 99}} />
                 : <Image source={require('../assets/plantImage.png')} alt="Profile Image" style={{width: 99, height: 99, borderRadius: 99}} />}
