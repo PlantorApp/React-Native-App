@@ -36,7 +36,7 @@ const NaturalLight = ({ navigation, route }) => {
             </HStack>
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
               <Text style={{fontFamily: 'DMSerifText', color: '#827344', fontSize: 32, textAlign: 'center', marginTop: 40 }}>Please orient your phone towards the natural light source</Text>
-              <Image source={require('../../assets/phoneOrientOne.png')} style={{marginTop: 24}} alt="phone orient" />
+              <Image source={require('../../assets/phoneOrient.gif')} style={{marginTop: 24}} alt="phone orient" />
             </View>
           </Box>
           <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', justifyContent: 'center', height: 48, width: 270, backgroundColor: '#827344', position: 'absolute', bottom: 24}} android_ripple={{color: '#DDDDDD', radius:4, foreground: true}} onPress={() => navigation.navigate('NaturalLightDirection', {outdoor: route.params.outdoor, city: route.params.city, temp: route.params.temp, date: route.params.date, season:route.params.season})}>

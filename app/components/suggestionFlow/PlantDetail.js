@@ -82,14 +82,14 @@ const PlantDetail = ({ navigation, route }) => {
 
   return (
     <View style={{backgroundColor: "#FCFAF7", marginTop: 24}}>
-      {/* <Box style={{position: 'absolute', top: 16, right: 16, zIndex: 10}}>
+      <Box style={{position: 'absolute', top: 16, right: 16, zIndex: 10}}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Svg style={{alignSelf: 'flex-end'}} width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <Line x1="8" y1="22.8787" x2="22.8492" y2="8.02944" stroke="#B7A878" strokeWidth="3" strokeLinecap="round"/>
             <Line x1="8.12132" y1="8" x2="22.9706" y2="22.8492" stroke="#B7A878" strokeWidth="3" strokeLinecap="round"/>
           </Svg>
         </TouchableOpacity>
-      </Box> */}
+      </Box>
       <ScrollView>
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FCFAF7', paddingTop: 12, paddingBottom: 28}}>
         <Box style={{width: Dimensions.get('window').width - 32}}>

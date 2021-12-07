@@ -175,7 +175,7 @@ const SavedScreen = (props) => {
       </Box> */}
       <Box style={{width: Dimensions.get('window').width - 32, paddingTop: 20}}>
         <Heading style={styles.mainTitle}>Saved</Heading>
-        <FlatList
+        {loggedInUser?.savedEnvironments[0] ? <FlatList
           data={loggedInUser?.savedEnvironments} style={{height: Dimensions.get('window').height, marginTop: 24}}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
@@ -245,7 +245,7 @@ const SavedScreen = (props) => {
             </Modal>
             </Box>
           )}
-        />
+        /> : <Text style={{marginTop: 24}}>Looks like there isn't any saved environment. If not logged in, try logging in.</Text>}
       </Box>
     </View>
   )
