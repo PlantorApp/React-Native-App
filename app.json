@@ -29,6 +29,7 @@
     "web": {
       "favicon": "./app/assets/favicon.png"
     },
-    "description": ""
+    "description": "WMDD Term 4 Capstone Project at Langara College, Vancouver, Fall 2021.",
+    "githubUrl": "https://github.com/PlantorApp/React-Native-App"
   }
 }

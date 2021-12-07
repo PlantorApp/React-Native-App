@@ -11,7 +11,7 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
   const [Cities, setCities] = useState([])
   const [callFetch, setCallFetch] = useState(true);
   let carousel;
-
+  const alreadySaved = route.params.alreadySaved ? route.params.alreadySaved : false;
   const outdoor = route.params.outdoor;
   const city = route.params.city;
   const temp = route.params.temp;
@@ -189,7 +189,7 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
       <ScrollView>
         <View style={{ flex: 1, minHeight: Dimensions.get('window').height, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FCFAF7', paddingTop: 88, paddingBottom: 28}}>
           <Box style={{width: Dimensions.get('window').width}}>
-            <Text style={{fontFamily: 'DMSerifText', color: '#827344', fontSize: 32, textAlign: 'center' }}>New Environment</Text>
+            <Text style={{fontFamily: 'DMSerifText', color: '#827344', fontSize: 32, textAlign: 'center' }}>{alreadySaved ? "Saved" : "New"} Environment</Text>
             <View style={{flex: 1, flexDirection:'row', justifyContent: 'center', paddingBottom: 8}}>
               {yourPlants && <Carousel
                 layout={"default"}

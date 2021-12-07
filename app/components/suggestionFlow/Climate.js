@@ -45,15 +45,17 @@ const Climate = ({ navigation, route }) => {
     console.log('response', response)
 
     setTemp(parseInt(response.main.temp))
-    if(response.weather[0].main === "Mist") {
-      setWeather("Clouds")
+    if(response.weather[0].main === "Drizzle") {
+      setWeather("Rain")
     } else {
       setWeather(response.weather[0].main)
     }
-    if(response.weather[0].main === "Clouds" || response.weather[0].main === "Mist") {
+    if(response.weather[0].main === "Clouds") {
       setHeaderText("Sky is cloudy")
     } else if(response.weather[0].main === "Rain") {
       setHeaderText("Currently raining")
+    } else if(response.weather[0].main === "Drizzle") {
+      setHeaderText("Currently drizzling")
     } else if(response.weather[0].main === "Clear") {
       setHeaderText("Sky is clear")
     } else if(response.weather[0].main === "Snow") {
