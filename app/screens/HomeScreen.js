@@ -36,7 +36,7 @@ const HomeScreen = (props) => {
         <Stack.Screen name="NaturalLightDirection" component={NaturalLightDirection} />
         <Stack.Screen name="ArtificialLight" component={ArtificialLight} />
         <Stack.Screen name="PetFriendly" component={PetFriendly} />
-        <Stack.Screen name="Completion" component={Completion} />
+        {/* <Stack.Screen name="Completion" component={Completion} /> */}
         <Stack.Screen name="Suggestions">
           {(pro) => <Suggestions {...pro} loggedInUser={props.loggedInUser} setEnvList={props.setEnvList}/>} 
         </Stack.Screen>

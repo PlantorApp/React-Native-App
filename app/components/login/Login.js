@@ -103,7 +103,7 @@ const Login = (props) => {
         props.setIsLogged(true)
         props.setLoggedInUser(user)
 
-        const curUser = await fetchUser();
+        const curUser = await fetchUser(result.idToken);
         //console.log("inside useeffect :", curUser)
         if(curUser) {
           props.setMongoLoggedInUser(curUser);
@@ -112,7 +112,8 @@ const Login = (props) => {
           // console.log("user is being created")
           const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            // headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': result.idToken },
             body: JSON.stringify(user)
           };
           const response = await fetch('https://app.plantor.app/backend-users/users', requestOptions);
@@ -128,37 +129,19 @@ const Login = (props) => {
     }
   }
 
-  const fetchUser = async () => {
-    const res = await fetch(`https://app.plantor.app/backend-users/users/${user?.sub}`)
-    // const res = await fetch(`http://192.168.0.18:3003/users/${user?.sub}`)
+  const fetchUser = async (idToken) => {
+    // console.log("token from google", idToken);
+    const requestOptions = {
+      method: 'GET',
+      // headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Authorization': idToken },
+    };
+    const res = await fetch(`https://app.plantor.app/backend-users/users/${user?.sub}`, requestOptions);
+    // const res = await fetch(`http://192.168.0.18:3003/users/${user?.sub}`, requestOptions);
     const data = await res.json();
+    // console.log(data)
     return data
   }
-
-  useEffect(() => {
-    const getUser = async () => {
-      if(callFetch) {
-        const curUser = await fetchUser();
-        setCallFetch(false);
-        if(curUser) {
-          // console.log("User exist")
-        } else {
-          // console.log("user is being created")
-          const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(user)
-          };
-          const response = await fetch('https://app.plantor.app/backend-users/users', requestOptions);
-          // const response = await fetch('http://192.168.0.18:3003/users', requestOptions);
-          const data = await response.json();
-          // console.log("replied with :" , data)
-        }
-      }
-      // console.log("inside useeffect :", curUser)
-    }
-    getUser();    
-  });
   
   const [loaded] = useFonts({
     DMSerifText: require("../../assets/fonts/DMSerifText-Regular.ttf"),
