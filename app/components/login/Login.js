@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import * as Facebook from 'expo-facebook';
 import * as Google from 'expo-google-app-auth';
 import { Dimensions, Pressable, Text, View } from 'react-native';
@@ -10,8 +10,6 @@ const Login = (props) => {
   let user = {
     sub: "111"
   };
-  const [callFetch, setCallFetch] = useState(true);
-
   const [name, setName] = useState('user')
   const [email, setEmail] = useState('email Id')
   const [profilePicUri, setProfilePicUri] = useState('')
@@ -33,10 +31,8 @@ const Login = (props) => {
       if (type === 'success') {
         // Get the user's name using Facebook's Graph API
         const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,about,picture`);
-        // console.log('Logged in!', `Hi ${JSON.stringify((await response.json()))}!`);
         const data = await response.json();
 
-        //console.log("user data", data)
         setName(data.name);
         setEmail(data.email);
         setProfilePicUri(data.picture.data.url);
@@ -51,14 +47,11 @@ const Login = (props) => {
           given_name: data.name
         }
         props.setIsLogged(true)
-        // console.log(user)
         props.setLoggedInUser(user)
         const curUser = await fetchUser();
-        //console.log("inside useeffect :", curUser)
         if(curUser){
           props.setUserInfo(curUser);
         }else{
-          // console.log("user is being created")
           const requestOptions = {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -68,7 +61,6 @@ const Login = (props) => {
           const response = await fetch('https://app.plantor.app/backend-users/users', requestOptions);
           // const response = await fetch('http://192.168.0.18:3003/users', requestOptions);
           const data = await response.json();
-          //console.log("replied with :" , data)
         }
 
       } else {
@@ -86,9 +78,7 @@ const Login = (props) => {
         androidClientId: '651674954421-v6253d1hotla3scuqvt6mc65l5hi86kg.apps.googleusercontent.com',
         scopes: ['profile', 'email', 'openid'],
         });
-        // console.log(result)
       if (result.type === 'success') {      
-        // console.log("google", result.user)
         setEmail(result.user.email);
         setProfilePicUri(result.user.photoUrl);
         props.setUser(result.user.name, result.user.email, result.user.photoUrl)
@@ -99,27 +89,26 @@ const Login = (props) => {
           family_name: result.user.familyName,
           given_name: result.user.givenName
         }
-        // console.log("user", props)
+        
+        //Do not do this in production or live projects - Temporary work around
+        props.setVerify(result.idToken)
+
         props.setIsLogged(true)
         props.setLoggedInUser(user)
 
         const curUser = await fetchUser(result.idToken);
-        //console.log("inside useeffect :", curUser)
         if(curUser) {
           props.setMongoLoggedInUser(curUser);
           props.setUserInfo(curUser);
         } else {
-          // console.log("user is being created")
           const requestOptions = {
             method: 'POST',
-            // headers: { 'Content-Type': 'application/json' },
             headers: { 'Content-Type': 'application/json', 'Authorization': result.idToken },
             body: JSON.stringify(user)
           };
           const response = await fetch('https://app.plantor.app/backend-users/users', requestOptions);
           // const response = await fetch('http://localhost:3003/users', requestOptions);
           const data = await response.json();
-          //console.log("replied with :" , data)
         }
       } else {
         return { cancelled: true };
@@ -130,16 +119,13 @@ const Login = (props) => {
   }
 
   const fetchUser = async (idToken) => {
-    // console.log("token from google", idToken);
     const requestOptions = {
       method: 'GET',
-      // headers: { 'Content-Type': 'application/json' },
       headers: { 'Content-Type': 'application/json', 'Authorization': idToken },
     };
     const res = await fetch(`https://app.plantor.app/backend-users/users/${user?.sub}`, requestOptions);
     // const res = await fetch(`http://192.168.0.18:3003/users/${user?.sub}`, requestOptions);
     const data = await res.json();
-    // console.log(data)
     return data
   }
   

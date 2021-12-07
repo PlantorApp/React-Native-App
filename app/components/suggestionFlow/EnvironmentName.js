@@ -7,7 +7,7 @@ import { useFonts } from 'expo-font';
 import uuid from 'react-native-uuid';
 
 
-const EnvironmentName = ({ navigation, route, loggedInUser}) => {
+const EnvironmentName = ({ navigation, route, loggedInUser, verify }) => {
     // console.log("in env name", loggedInUser)
     const currentEnvironment = route.params;
     const [text, setText] = useState(currentEnvironment.title ? currentEnvironment.title : "garden...");
@@ -43,7 +43,7 @@ const EnvironmentName = ({ navigation, route, loggedInUser}) => {
 
         const requestOptions = {
           method: "PUT",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", "Authorization" : verify },
           body: JSON.stringify({ savedEnvironments: loggedInUser.savedEnvironments }),
         };
         const response2 = await fetch(`https://app.plantor.app/backend-users/users/${loggedInUser.sub}`,

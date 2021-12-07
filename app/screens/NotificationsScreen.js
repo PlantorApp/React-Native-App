@@ -34,7 +34,7 @@ const NotificationScreen = ({ navigation }) => {
       title: "Heat Wave Warning",
       description:
         "Short description about alert & how it will impact the garden so that use...",
-      date: "12/09/2021",
+      date: "19/06/2021",
     },
     {
       id: "3",
@@ -42,7 +42,7 @@ const NotificationScreen = ({ navigation }) => {
       title: "Winter is coming!",
       description:
         "Short description about alert & how it will impact the garden so that use...",
-      date: "12/09/2021",
+      date: "22/08/2021",
     },
     {
       id: "4",
@@ -50,67 +50,50 @@ const NotificationScreen = ({ navigation }) => {
       title: "Fall is coming!",
       description:
         "Short description about alert & how it will impact the garden so that use...",
-      date: "12/09/2021",
+      date: "24/06/2021",
     },
   ];
 
-  const handlePress = (option) => {
-    console.log("Pressed");
-    setShowModal(option);
-  };
-
   return (
-
-    // <Stack.Navigator screenOptions={{ headerShown: false }}>
-    // <Stack.Group>
-    //   <Stack.Screen name="Nav">
-    //     {() => <Nav isLogged={props.isLogged} setIsLogged={props.setIsLogged} setLoggedInUser={props.setLoggedInUser} loggedInUser={props.loggedInUser} setMongoLoggedInUser={props.setMongoLoggedInUser} envList={props.envList} schedulePushNotification={props.schedulePushNotification}/>} 
-    //   </Stack.Screen>
-    
-
-    // </Stack.Group>
-    // </Stack.Navigator>
-
-        <View style={{ flex: 1, minHeight: Dimensions.get('window').height, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FCFAF7', marginTop: 24, paddingBottom: 28}}>
-        <Box style={{width: Dimensions.get('window').width - 32, paddingTop: 20}}>
-          <Heading style={styles.mainTitle}>Notifications</Heading>
-          <Box style={styles.border}>
-            <HStack space={2} >
-              <Pressable style={styles.firstButton}>
-                <Text style={styles.firstButtonText}>All</Text>
-              </Pressable>
-              <Pressable style={styles.button}>
-                <Text style={styles.text}>Seasonal</Text>
-              </Pressable>
-              <Pressable style={styles.button}>
-                <Text style={styles.text}>Warnings</Text>
-              </Pressable>
-              <Pressable style={styles.button}>
-                <Text style={styles.text}>Hazards</Text>
-              </Pressable>
-            </HStack>
-          </Box>
-          <FlatList data={data} style={{height: Dimensions.get('window').height - 226}}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <Box style={{marginVertical: 12}}>
-                <Text style={styles.titleText}>{item.title}</Text>
-                <HStack justifyContent="flex-start" style={{marginTop: 8}}>
-                  <Image source={item.image} alt="notification illustration" width="70" height="70" />
-                  <Box style={{marginLeft: 16, width: Dimensions.get('window').width - 118}}>
-                    <Text style={styles.descriptionText}>
-                      {item.description}
-                    </Text>
-                    <Text style={styles.descriptiondateText}>
-                    {item.date}
-                    </Text>
-                  </Box>
-                </HStack>
-              </Box>
-            )} />
+    <View style={{ flex: 1, minHeight: Dimensions.get('window').height, alignItems: 'center', justifyContent: 'flex-start', backgroundColor: '#FCFAF7', marginTop: 24, paddingBottom: 28}}>
+      <Box style={{width: Dimensions.get('window').width - 32, paddingTop: 20}}>
+        <Heading style={styles.mainTitle}>Notifications</Heading>
+        <Box style={styles.border}>
+          <HStack space={2} >
+            <Pressable style={styles.firstButton}>
+              <Text style={styles.firstButtonText}>All</Text>
+            </Pressable>
+            <Pressable style={styles.button}>
+              <Text style={styles.text}>Seasonal</Text>
+            </Pressable>
+            <Pressable style={styles.button}>
+              <Text style={styles.text}>Warnings</Text>
+            </Pressable>
+            <Pressable style={styles.button}>
+              <Text style={styles.text}>Hazards</Text>
+            </Pressable>
+          </HStack>
         </Box>
-    </View>
-    
+        <FlatList data={data} style={{height: Dimensions.get('window').height - 226}}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <Box style={{marginVertical: 12}}>
+              <Text style={styles.titleText}>{item.title}</Text>
+              <HStack justifyContent="flex-start" style={{marginTop: 8}}>
+                <Image source={item.image} alt="notification illustration" width="70" height="70" />
+                <Box style={{marginLeft: 16, width: Dimensions.get('window').width - 118}}>
+                  <Text style={styles.descriptionText}>
+                    {item.description}
+                  </Text>
+                  <Text style={styles.descriptiondateText}>
+                  {item.date}
+                  </Text>
+                </Box>
+              </HStack>
+            </Box>
+          )} />
+      </Box>
+    </View>    
   )
 };
 

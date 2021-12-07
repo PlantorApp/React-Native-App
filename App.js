@@ -20,6 +20,7 @@ export default function App() {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
+  const [verify, setVerify] = useState("");
   let targetScreen;
 
   // console.log("logged in user is : ", mongoLoggedInUser);
@@ -120,6 +121,9 @@ export default function App() {
           setIsLogged={setIsLogged}
           setLoggedInUser={setLoggedInUser}
           setMongoLoggedInUser={setMongoLoggedInUser}
+          userVerify={loggedInUser}
+          verify={verify}
+          setVerify={setVerify}
           loggedInUser={mongoLoggedInUser}
           setEnvList={setEnvList}
           envList={envList} />)}

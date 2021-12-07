@@ -1,20 +1,10 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  ScrollView,
-  Dimensions,
-  
-} from "react-native";
+import { StyleSheet } from "react-native";
 import { useFonts } from "expo-font";
-import { Box, Heading, FlatList, Image, HStack } from "native-base";
 import NotificationsScreen from "./NotificationsScreen";
 import Home from "./Home";
 import SavedScreen from "./SavedScreen";
 import ProfileScreen from "./ProfileScreen";
-
 import Svg, { Circle, Path } from "react-native-svg";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -46,7 +36,7 @@ const PushNotifications = ({ navigation }) => {
       title: "Heat Wave Warning",
       description:
         "Short description about alert & how it will impact the garden so that use...",
-      date: "12/09/2021",
+      date: "19/06/2021",
     },
     {
       id: "3",
@@ -54,7 +44,7 @@ const PushNotifications = ({ navigation }) => {
       title: "Winter is coming!",
       description:
         "Short description about alert & how it will impact the garden so that use...",
-      date: "12/09/2021",
+      date: "22/08/2021",
     },
     {
       id: "4",
@@ -62,14 +52,9 @@ const PushNotifications = ({ navigation }) => {
       title: "Fall is coming!",
       description:
         "Short description about alert & how it will impact the garden so that use...",
-      date: "12/09/2021",
+      date: "24/06/2021",
     },
   ];
-
-  const handlePress = (option) => {
-    console.log("Pressed");
-    setShowModal(option);
-  };
 
   return (
     <Tab.Navigator

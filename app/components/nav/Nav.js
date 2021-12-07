@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Home from '../../screens/Home';
 import SavedScreen from '../../screens/SavedScreen';
 import NotificationsScreen from '../../screens/NotificationsScreen';
@@ -7,11 +7,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Svg, { Circle, Path } from 'react-native-svg';
 import { useFonts } from 'expo-font';
 
-
 const Tab = createBottomTabNavigator();
 
-const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, schedulePushNotification, setMongoLoggedInUser }) => {
-
+const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, schedulePushNotification, setMongoLoggedInUser, userVerify, verify, setVerify }) => {
   const [loaded] = useFonts({
     QuickSandBold: require('../../assets/fonts/Quicksand-Bold.ttf'),
     QuickSandRegular: require('../../assets/fonts/Quicksand-Regular.ttf')
@@ -28,7 +26,7 @@ const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, schedulePus
       <Tab.Screen
         name="Home"
         // component={Home}
-        children={(props) => <Home {...props} loggedInUser={loggedInUser} />}
+        children={(props) => <Home {...props} loggedInUser={loggedInUser} verify={verify} />}
         options={{
           headerShown: false,
           tabBarIcon: ({color}) => (<Svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -46,7 +44,7 @@ const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, schedulePus
       />
       <Tab.Screen
         name="Saved"
-        children={(props) => ( <SavedScreen {...props} loggedInUser={loggedInUser} setMongoLoggedInUser = {setMongoLoggedInUser}/>)
+        children={(props) => ( <SavedScreen {...props} loggedInUser={loggedInUser} userVerify={userVerify} setMongoLoggedInUser = {setMongoLoggedInUser}/>)
        }
         options={{
           headerShown: false,
@@ -84,7 +82,7 @@ const Nav = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, schedulePus
       />
       <Tab.Screen
         name="Profile"
-        children={(props) => <ProfileScreen {...props} isLogged={isLogged} setIsLogged={setIsLogged} setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} setMongoLoggedInUser={setMongoLoggedInUser} schedulePushNotification= {schedulePushNotification}/>}
+        children={(props) => <ProfileScreen {...props} isLogged={isLogged} setVerify={setVerify} setIsLogged={setIsLogged} setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} setMongoLoggedInUser={setMongoLoggedInUser} schedulePushNotification= {schedulePushNotification}/>}
         options={{
           headerShown: false,
           tabBarIcon: ({color}) => (<Svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">

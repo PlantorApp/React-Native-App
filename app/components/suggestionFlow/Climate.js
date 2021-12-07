@@ -42,11 +42,15 @@ const Climate = ({ navigation, route }) => {
     const api_call = await fetch(url)
 
     const response = await api_call.json()
-    // console.log('response', response)
+    console.log('response', response)
 
     setTemp(parseInt(response.main.temp))
-    setWeather(response.weather[0].main)
-    if(response.weather[0].main === "Clouds") {
+    if(response.weather[0].main === "Mist") {
+      setWeather("Clouds")
+    } else {
+      setWeather(response.weather[0].main)
+    }
+    if(response.weather[0].main === "Clouds" || response.weather[0].main === "Mist") {
       setHeaderText("Sky is cloudy")
     } else if(response.weather[0].main === "Rain") {
       setHeaderText("Currently raining")

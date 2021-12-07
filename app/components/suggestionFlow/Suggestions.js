@@ -13,59 +13,51 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
   let carousel;
 
   const outdoor = route.params.outdoor;
-  // const outdoor = true;
   const city = route.params.city;
-  // const city = "Vancouver"
   const temp = route.params.temp;
-  // const temp = 22;
   const date = route.params.date;
-  // const date = "April";
   const season = route.params.season;
   const cityLightingDuration = Cities.length > 0 && Cities.filter(el => el.location === city).filter(el => el.month === date)[0].dayLight;
-  // console.log(cityLightingDuration);
-  let lightDirLighting;
-  if(route?.params?.lightDir === "South") {
-    lightDirLighting = route.params.lightDir;
-  } 
-  // const cityLightingDuration = "South"
   const petFriendly = route.params.petFriendly;
-  // const petFriendly = true
+  let lightDirLighting;
 
-  const envToSave = {
-    outdoor : outdoor,
-    city : city,
-    temp : temp,
-    date : date,
-    cityLightingDuration : cityLightingDuration,
-    petFriendly : petFriendly 
-  }
+  switch(route.params.lightDir) {
+    case "North":
+      lightDirLighting = "North"
+      break;
+    case "North West":
+      lightDirLighting = "North West"
+      break;
+    case "West":
+      lightDirLighting = "West"
+      break;
+    case "South West":
+      lightDirLighting = "South West"
+      break;
+    case "South":
+      lightDirLighting = "South"
+      break;
+    case "South East":
+      lightDirLighting = "South East"
+      break;
+    case "East":
+      lightDirLighting = "East"
+      break;
+    case "North East":
+      lightDirLighting = "North East"
+      break;
+    default :
+      lightDirLighting = "No Magnetometer"
+      break;
+  } 
 
-  // const handlePress = async () => {
-  //   // console.log("pressssssd")
-
-  //   const environmentArray = loggedInUser.savedEnvironments;
-  //   environmentArray.push(envToSave)
-
-  //   const requestOptions = {
-  //     method: "PUT",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ savedEnvironments: environmentArray }),
-  //   };
-  //   const response2 = await fetch(`http://54.148.107.164/backend-users/users/${loggedInUser.sub}`,
-  //   // const response2 = await fetch(`http://192.168.0.18:3003/users/${loggedInUser.sub}`,
-  //     requestOptions
-  //   );
-  //   const data2 = await response2.json();
-  //   setEnvList(data2.savedEnvironments)
-  // }
-  
   let yourPlants = [];
   if(outdoor) {
     entries.forEach((plant) => {
       if(plant.startSeason.includes(date)) {
         if(plant.temperatureMinimum < temp && plant.temperatureMaximum > temp) {
           if(parseInt(plant.lightingDurationMaximum) < parseInt(cityLightingDuration)) {
-            if(plant.petFriendly === petFriendly) {//console.log(plant.image)
+            if(plant.petFriendly === petFriendly) {
               // if(plant.lightingRequirement === lightDirLighting) {
                 yourPlants.push(plant)
               // }
@@ -80,15 +72,23 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
     breaks into 2 cases again natural light or artificial light
     */
   }
-  //console.log(yourPlants.length);
 
+  const envToSave = {
+    outdoor : outdoor,
+    city : city,
+    temp : temp,
+    date : date,
+    cityLightingDuration : cityLightingDuration,
+    petFriendly : petFriendly,
+    lightDirLighting : lightDirLighting
+  }
+  
   const [activeIndex, setActiveIndex] = useState(0)
 
   const fetchData = () => {
     if(callFetch) {
       fetchCityDate();
       fetchPlantsData();
-      // console.log("callFetch is true: ", callFetch)
       setCallFetch(false);
     }
   }
@@ -121,13 +121,12 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
     return null;
   }
 
-  const _renderItem = ({item, index}) => {
+  const _renderItem = ({item}) => {
     return (
       <TouchableOpacity style={{paddingBottom: 16}} onPress={() => {navigation.navigate('PlantDetail', {plant: item})}}>
         <View style={{borderRadius: 20, height: 356, width: 270, marginLeft: 32, marginRight: 32, marginTop: 18, backgroundColor: '#FFFFFF', shadowColor: '#000000', shadowOffset: { width: 2, height: 2}, shadowOpacity: 0.12, elevation: 8}}>
           <Box style={{backgroundColor: '#FCFAF7', borderTopLeftRadius: 20, borderTopRightRadius: 20}}>
             <Image source={{uri: item.image}} style={{width: 230, height: 199, margin: 20}} alt={item.plantName} />
-          {/* <Image source={require('../../assets/spiderPlant.png')} style={{width: 230, height: 199, margin: 20}} alt={item.plantName} /> */}
           </Box>
           <Text style={{fontFamily: 'QuickSandBold', fontWeight: 'normal', fontSize: 20, marginLeft: 20, lineHeight: 28, marginTop: 12, color: '#827344'}}>{item.plantName}</Text>
           <Stack style={{marginLeft: 20}}>
@@ -202,7 +201,6 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
                 onSnapToItem = {(index) => { setActiveIndex(index) }} />}
               </View>
           </Box>
-
           <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', padding: 14, width: 270, backgroundColor: '#827344', position: 'absolute', bottom: 24}} android_ripple={{color: '#DDDDDD', radius:4, foreground: true}} onPress={ () => navigation.navigate('EnvironmentName',{
             id : uuid.v4(),
             outdoor : outdoor,
@@ -211,9 +209,9 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
             date : date,
             season : season,
             cityLightingDuration : cityLightingDuration,
-            petFriendly : petFriendly 
+            petFriendly : petFriendly,
+            lightDirLighting : lightDirLighting
           })} >
-
             <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, lineHeight: 24, color: '#FFFFFF', textAlign: 'center'}}>Save Environment</Text>
         </Pressable>
         </View>
@@ -223,943 +221,3 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
 }
 
 export default Suggestions
-
-// const plants = [
-//   {
-//       "startSeason": [
-//           "March",
-//           "April",
-//           "May",
-//           "June",
-//           "July",
-//           "August",
-//           "September",
-//           "October"
-//       ],
-//       "_id": "618f1174f46ad6044adf08ca",
-//       "sub": 1,
-//       "plantName": "Astro Arugula",
-//       "rootVegetable": false,
-//       "lightingRequirement": "Partial Shade",
-//       "lightingDurationMinimum": 3,
-//       "lightingDurationMaximum": 6,
-//       "lightingIntensityMinimum": 10000,
-//       "lightingIntensityMaximum": 35000,
-//       "hardinessZoneMinimum": 3,
-//       "hardinessZoneMaximum": 11,
-//       "temperatureMinimum": 10,
-//       "temperatureMaximum": 20,
-//       "difficulty": "Easy",
-//       "duration": 40,
-//       "petFriendly": true,
-//       "edible": true,
-//       "potSize": 5,
-//       "createdDate": "2021-11-18T01:07:50.304Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "April",
-//           "May",
-//           "June",
-//           "July",
-//           "August"
-//       ],
-//       "_id": "618f1174f46ad6044adf08cb",
-//       "sub": 2,
-//       "plantName": "Beets",
-//       "rootVegetable": true,
-//       "lightingRequirement": "Partial Shade",
-//       "lightingDurationMinimum": 3,
-//       "lightingDurationMaximum": 6,
-//       "lightingIntensityMinimum": 10000,
-//       "lightingIntensityMaximum": 35000,
-//       "temperatureMinimum": 10,
-//       "temperatureMaximum": 21,
-//       "difficulty": "Easy",
-//       "duration": 50,
-//       "petFriendly": true,
-//       "createdDate": "2021-11-18T01:07:50.304Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "March",
-//           "April",
-//           "May",
-//           "June",
-//           "July"
-//       ],
-//       "_id": "618f1174f46ad6044adf08cc",
-//       "sub": 3,
-//       "plantName": "Broccoli",
-//       "rootVegetable": false,
-//       "lightingRequirement": "Full Sun",
-//       "lightingDurationMinimum": 6,
-//       "lightingDurationMaximum": 10,
-//       "lightingIntensityMinimum": 35000,
-//       "lightingIntensityMaximum": 50000,
-//       "temperatureMinimum": 18,
-//       "temperatureMaximum": 26,
-//       "difficulty": "Hard",
-//       "duration": 70,
-//       "petFriendly": true,
-//       "createdDate": "2021-11-18T01:07:50.304Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "March",
-//           "April",
-//           "May",
-//           "June",
-//           "July"
-//       ],
-//       "_id": "618f1174f46ad6044adf08cd",
-//       "sub": 4,
-//       "plantName": "Cabbage",
-//       "rootVegetable": false,
-//       "lightingRequirement": "Full Sun",
-//       "lightingDurationMinimum": 6,
-//       "lightingDurationMaximum": 10,
-//       "lightingIntensityMinimum": 35000,
-//       "lightingIntensityMaximum": 50000,
-//       "temperatureMinimum": 10,
-//       "temperatureMaximum": 24,
-//       "difficulty": "Medium",
-//       "duration": 80,
-//       "petFriendly": true,
-//       "createdDate": "2021-11-18T01:07:50.304Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "April",
-//           "May",
-//           "June",
-//           "July",
-//           "August"
-//       ],
-//       "_id": "618f1174f46ad6044adf08ce",
-//       "sub": 5,
-//       "plantName": "Carrots",
-//       "rootVegetable": true,
-//       "lightingRequirement": "Full Sun",
-//       "lightingDurationMinimum": 6,
-//       "lightingDurationMaximum": 10,
-//       "lightingIntensityMinimum": 35000,
-//       "lightingIntensityMaximum": 50000,
-//       "temperatureMinimum": 4,
-//       "temperatureMaximum": 26,
-//       "difficulty": "Medium",
-//       "duration": 70,
-//       "petFriendly": true,
-//       "createdDate": "2021-11-18T01:07:50.304Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "March",
-//           "April",
-//           "May",
-//           "June",
-//           "July"
-//       ],
-//       "_id": "618f1174f46ad6044adf08cf",
-//       "sub": 6,
-//       "plantName": "Cauliflower",
-//       "rootVegetable": false,
-//       "lightingRequirement": "Full Sun",
-//       "lightingDurationMinimum": 6,
-//       "lightingDurationMaximum": 10,
-//       "lightingIntensityMinimum": 35000,
-//       "lightingIntensityMaximum": 50000,
-//       "temperatureMinimum": 15,
-//       "temperatureMaximum": 24,
-//       "difficulty": "Medium",
-//       "duration": 75,
-//       "petFriendly": false,
-//       "createdDate": "2021-11-18T01:07:50.305Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "March",
-//           "April",
-//           "May",
-//           "June"
-//       ],
-//       "_id": "618f1174f46ad6044adf08d0",
-//       "sub": 7,
-//       "plantName": "Celery",
-//       "rootVegetable": false,
-//       "lightingRequirement": "Full Sun",
-//       "lightingDurationMinimum": 6,
-//       "lightingDurationMaximum": 10,
-//       "lightingIntensityMinimum": 35000,
-//       "lightingIntensityMaximum": 50000,
-//       "temperatureMinimum": 4,
-//       "temperatureMaximum": 21,
-//       "difficulty": "Hard",
-//       "duration": 100,
-//       "petFriendly": true,
-//       "createdDate": "2021-11-18T01:07:50.305Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "April",
-//           "May",
-//           "June",
-//           "July",
-//           "August",
-//           "September"
-//       ],
-//       "_id": "618f1174f46ad6044adf08d1",
-//       "sub": 8,
-//       "plantName": "Collards",
-//       "rootVegetable": false,
-//       "lightingRequirement": "Full Sun",
-//       "lightingDurationMinimum": 6,
-//       "lightingDurationMaximum": 10,
-//       "lightingIntensityMinimum": 35000,
-//       "lightingIntensityMaximum": 50000,
-//       "temperatureMinimum": 3,
-//       "temperatureMaximum": 24,
-//       "difficulty": "Easy",
-//       "duration": 85,
-//       "petFriendly": true,
-//       "createdDate": "2021-11-18T01:07:50.305Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "April",
-//           "May",
-//           "June"
-//       ],
-//       "_id": "618f1174f46ad6044adf08d2",
-//       "sub": 9,
-//       "plantName": "Eggplant",
-//       "rootVegetable": false,
-//       "lightingRequirement": "Full Sun",
-//       "lightingDurationMinimum": 6,
-//       "lightingDurationMaximum": 10,
-//       "lightingIntensityMinimum": 35000,
-//       "lightingIntensityMaximum": 50000,
-//       "temperatureMinimum": 15,
-//       "temperatureMaximum": 29,
-//       "difficulty": "Easy",
-//       "duration": 100,
-//       "petFriendly": false,
-//       "createdDate": "2021-11-18T01:07:50.305Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "March",
-//           "April",
-//           "May",
-//           "June",
-//           "July",
-//           "August",
-//           "September"
-//       ],
-//       "_id": "618f1174f46ad6044adf08d3",
-//       "sub": 10,
-//       "plantName": "Lettuce",
-//       "rootVegetable": false,
-//       "lightingRequirement": "Partial Shade",
-//       "lightingDurationMinimum": 3,
-//       "lightingDurationMaximum": 6,
-//       "lightingIntensityMinimum": 10000,
-//       "lightingIntensityMaximum": 35000,
-//       "temperatureMinimum": 0,
-//       "temperatureMaximum": 30,
-//       "difficulty": "Easy",
-//       "duration": 30,
-//       "petFriendly": true,
-//       "createdDate": "2021-11-18T01:07:50.305Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "January",
-//           "February",
-//           "March",
-//           "April",
-//           "May"
-//       ],
-//       "_id": "618f1174f46ad6044adf08d4",
-//       "sub": 11,
-//       "plantName": "Sweet Onions",
-//       "rootVegetable": false,
-//       "lightingRequirement": "Full Sun",
-//       "lightingDurationMinimum": 6,
-//       "lightingDurationMaximum": 10,
-//       "lightingIntensityMinimum": 35000,
-//       "lightingIntensityMaximum": 50000,
-//       "temperatureMinimum": 12,
-//       "temperatureMaximum": 23,
-//       "difficulty": "Easy",
-//       "duration": 90,
-//       "petFriendly": false,
-//       "createdDate": "2021-11-18T01:07:50.305Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "April",
-//           "May",
-//           "June",
-//           "July",
-//           "August",
-//           "September"
-//       ],
-//       "_id": "618f1174f46ad6044adf08d5",
-//       "sub": 12,
-//       "plantName": "Scallions",
-//       "rootVegetable": false,
-//       "lightingRequirement": "Partial Shade",
-//       "lightingDurationMinimum": 3,
-//       "lightingDurationMaximum": 6,
-//       "lightingIntensityMinimum": 10000,
-//       "lightingIntensityMaximum": 35000,
-//       "temperatureMinimum": 7,
-//       "temperatureMaximum": 26,
-//       "difficulty": "Easy",
-//       "duration": 80,
-//       "petFriendly": false,
-//       "createdDate": "2021-11-18T01:07:50.306Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "May",
-//           "June"
-//       ],
-//       "_id": "618f1174f46ad6044adf08d6",
-//       "sub": 13,
-//       "plantName": "Parsley",
-//       "rootVegetable": false,
-//       "lightingRequirement": "Partial Shade",
-//       "lightingDurationMinimum": 3,
-//       "lightingDurationMaximum": 6,
-//       "lightingIntensityMinimum": 10000,
-//       "lightingIntensityMaximum": 35000,
-//       "temperatureMinimum": 7,
-//       "temperatureMaximum": 26,
-//       "difficulty": "Easy",
-//       "duration": 80,
-//       "petFriendly": true,
-//       "createdDate": "2021-11-18T01:07:50.306Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "March",
-//           "April",
-//           "May",
-//           "June"
-//       ],
-//       "_id": "618f1174f46ad6044adf08d7",
-//       "sub": 14,
-//       "plantName": "Peppers",
-//       "rootVegetable": false,
-//       "lightingRequirement": "Full Sun",
-//       "lightingDurationMinimum": 6,
-//       "lightingDurationMaximum": 10,
-//       "lightingIntensityMinimum": 35000,
-//       "lightingIntensityMaximum": 50000,
-//       "temperatureMinimum": 16,
-//       "temperatureMaximum": 35,
-//       "difficulty": "Easy",
-//       "duration": 75,
-//       "petFriendly": true,
-//       "createdDate": "2021-11-18T01:07:50.306Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "April",
-//           "May",
-//           "June",
-//           "July",
-//           "August",
-//           "September"
-//       ],
-//       "_id": "618f1174f46ad6044adf08d8",
-//       "sub": 15,
-//       "plantName": "Radish",
-//       "rootVegetable": true,
-//       "lightingRequirement": "Full Sun",
-//       "lightingDurationMinimum": 6,
-//       "lightingDurationMaximum": 10,
-//       "lightingIntensityMinimum": 35000,
-//       "lightingIntensityMaximum": 50000,
-//       "temperatureMinimum": 4,
-//       "temperatureMaximum": 29,
-//       "difficulty": "Easy",
-//       "duration": 45,
-//       "petFriendly": true,
-//       "createdDate": "2021-11-18T01:07:50.306Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "April",
-//           "May",
-//           "June",
-//           "September",
-//           "October"
-//       ],
-//       "_id": "618f1174f46ad6044adf08d9",
-//       "sub": 16,
-//       "plantName": "Spinach",
-//       "rootVegetable": false,
-//       "lightingRequirement": "Partial Shade",
-//       "lightingDurationMinimum": 3,
-//       "lightingDurationMaximum": 6,
-//       "lightingIntensityMinimum": 10000,
-//       "lightingIntensityMaximum": 35000,
-//       "temperatureMinimum": 1,
-//       "temperatureMaximum": 24,
-//       "difficulty": "Easy",
-//       "duration": 45,
-//       "petFriendly": true,
-//       "createdDate": "2021-11-18T01:07:50.306Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "April",
-//           "May",
-//           "June"
-//       ],
-//       "_id": "618f1174f46ad6044adf08da",
-//       "sub": 17,
-//       "plantName": "Tomatoes",
-//       "rootVegetable": false,
-//       "lightingRequirement": "Full Sun",
-//       "lightingDurationMinimum": 6,
-//       "lightingDurationMaximum": 10,
-//       "lightingIntensityMinimum": 35000,
-//       "lightingIntensityMaximum": 50000,
-//       "temperatureMinimum": 13,
-//       "temperatureMaximum": 27,
-//       "difficulty": "Easy",
-//       "duration": 80,
-//       "petFriendly": false,
-//       "createdDate": "2021-11-18T01:07:50.307Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "April",
-//           "May",
-//           "June",
-//           "July",
-//           "August"
-//       ],
-//       "_id": "618f1174f46ad6044adf08db",
-//       "sub": 18,
-//       "plantName": "Turnips",
-//       "rootVegetable": true,
-//       "lightingRequirement": "Full Sun",
-//       "lightingDurationMinimum": 6,
-//       "lightingDurationMaximum": 10,
-//       "lightingIntensityMinimum": 35000,
-//       "lightingIntensityMaximum": 50000,
-//       "temperatureMinimum": 4,
-//       "temperatureMaximum": 24,
-//       "difficulty": "Easy",
-//       "duration": 45,
-//       "petFriendly": true,
-//       "createdDate": "2021-11-18T01:07:50.307Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "April",
-//           "May",
-//           "June",
-//           "July",
-//           "August",
-//           "September",
-//           "October",
-//           "November",
-//           "December"
-//       ],
-//       "_id": "618f1174f46ad6044adf08dc",
-//       "sub": 19,
-//       "plantName": "Spider Plants",
-//       "rootVegetable": false,
-//       "lightingRequirement": "Low Sun",
-//       "lightingDurationMinimum": 0,
-//       "lightingDurationMaximum": 3,
-//       "lightingIntensityMinimum": 0,
-//       "lightingIntensityMaximum": 10000,
-//       "temperatureMinimum": 13,
-//       "temperatureMaximum": 27,
-//       "difficulty": "Easy",
-//       "duration": 100,
-//       "petFriendly": true,
-//       "createdDate": "2021-11-18T01:07:50.307Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "April",
-//           "May",
-//           "June",
-//           "July"
-//       ],
-//       "_id": "618f1174f46ad6044adf08dd",
-//       "sub": 20,
-//       "plantName": "Peace Lily",
-//       "rootVegetable": false,
-//       "lightingRequirement": "Low Sun",
-//       "lightingDurationMinimum": 0,
-//       "lightingDurationMaximum": 3,
-//       "lightingIntensityMinimum": 0,
-//       "lightingIntensityMaximum": 10000,
-//       "temperatureMinimum": 14,
-//       "temperatureMaximum": 29,
-//       "difficulty": "Easy",
-//       "duration": 180,
-//       "petFriendly": false,
-//       "createdDate": "2021-11-18T01:07:50.307Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "April",
-//           "May",
-//           "June",
-//           "July",
-//           "August",
-//           "September"
-//       ],
-//       "_id": "618f1174f46ad6044adf08de",
-//       "sub": 21,
-//       "plantName": "Bromeliad",
-//       "rootVegetable": false,
-//       "lightingRequirement": "Low Sun",
-//       "lightingDurationMinimum": 0,
-//       "lightingDurationMaximum": 3,
-//       "lightingIntensityMinimum": 0,
-//       "lightingIntensityMaximum": 10000,
-//       "temperatureMinimum": 10,
-//       "temperatureMaximum": 32,
-//       "difficulty": "Easy",
-//       "duration": 720,
-//       "petFriendly": true,
-//       "createdDate": "2021-11-18T01:07:50.307Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "April",
-//           "May",
-//           "June",
-//           "July",
-//           "August",
-//           "September"
-//       ],
-//       "_id": "618f1174f46ad6044adf08df",
-//       "sub": 22,
-//       "plantName": "Chinese Evergreen",
-//       "rootVegetable": false,
-//       "lightingRequirement": "Low Sun",
-//       "lightingDurationMinimum": 0,
-//       "lightingDurationMaximum": 3,
-//       "lightingIntensityMinimum": 0,
-//       "lightingIntensityMaximum": 10000,
-//       "temperatureMinimum": 13,
-//       "temperatureMaximum": 25,
-//       "difficulty": "Easy",
-//       "duration": 720,
-//       "petFriendly": false,
-//       "createdDate": "2021-11-18T01:07:50.308Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "April",
-//           "May",
-//           "June",
-//           "July",
-//           "August",
-//           "September"
-//       ],
-//       "_id": "618f1174f46ad6044adf08e0",
-//       "sub": 23,
-//       "plantName": "Cast Iron Plant",
-//       "rootVegetable": false,
-//       "lightingRequirement": "Low Sun",
-//       "lightingDurationMinimum": 0,
-//       "lightingDurationMaximum": 3,
-//       "lightingIntensityMinimum": 0,
-//       "lightingIntensityMaximum": 10000,
-//       "temperatureMinimum": 7,
-//       "temperatureMaximum": 29,
-//       "difficulty": "Easy",
-//       "duration": 720,
-//       "petFriendly": true,
-//       "createdDate": "2021-11-18T01:07:50.308Z",
-//       "image": "../../assets/spiderPlant.png"
-//   },
-//   {
-//       "startSeason": [
-//           "April",
-//           "May",
-//           "June",
-//           "July",
-//           "August",
-//           "September"
-//       ],
-//       "_id": "618f1174f46ad6044adf08e1",
-//       "sub": 24,
-//       "plantName": "Peacock Plant",
-//       "rootVegetable": false,
-//       "lightingRequirement": "Low Sun",
-//       "lightingDurationMinimum": 0,
-//       "lightingDurationMaximum": 3,
-//       "lightingIntensityMinimum": 0,
-//       "lightingIntensityMaximum": 10000,
-//       "temperatureMinimum": 16,
-//       "temperatureMaximum": 24,
-//       "difficulty": "Easy",
-//       "duration": 720,
-//       "petFriendly": true,
-//       "createdDate": "2021-11-18T01:07:50.308Z",
-//       "image": "../../assets/spiderPlant.png"
-//   }
-// ]
-
-// const cities = [
-//   {
-//       "_id": "618f0d859df1faa2f95ec9ea",
-//       "sub": 1,
-//       "location": "Vancouver",
-//       "month": "January",
-//       "dayLight": "9:22",
-//       "hourlyMeanTemperature": "5.4",
-//       "createdDate": "2021-11-18T08:42:17.796Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95ec9eb",
-//       "sub": 2,
-//       "location": "Vancouver",
-//       "month": "February",
-//       "dayLight": "10:57",
-//       "hourlyMeanTemperature": "3.5",
-//       "createdDate": "2021-11-18T08:42:17.796Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95ec9ec",
-//       "sub": 3,
-//       "location": "Vancouver",
-//       "month": "March",
-//       "dayLight": "13:11",
-//       "hourlyMeanTemperature": "6.5",
-//       "createdDate": "2021-11-18T08:42:17.796Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95ec9ed",
-//       "sub": 4,
-//       "location": "Vancouver",
-//       "month": "April",
-//       "dayLight": "14:35",
-//       "hourlyMeanTemperature": "9.8",
-//       "createdDate": "2021-11-18T08:42:17.796Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95ec9ee",
-//       "sub": 5,
-//       "location": "Vancouver",
-//       "month": "May",
-//       "dayLight": "15:56",
-//       "hourlyMeanTemperature": "12.7",
-//       "createdDate": "2021-11-18T08:42:17.796Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95ec9ef",
-//       "sub": 6,
-//       "location": "Vancouver",
-//       "month": "June",
-//       "dayLight": "16:16",
-//       "hourlyMeanTemperature": "17.7",
-//       "createdDate": "2021-11-18T08:42:17.796Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95ec9f0",
-//       "sub": 7,
-//       "location": "Vancouver",
-//       "month": "July",
-//       "dayLight": "16:11",
-//       "hourlyMeanTemperature": "19.2",
-//       "createdDate": "2021-11-18T08:42:17.797Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95ec9f1",
-//       "sub": 8,
-//       "location": "Vancouver",
-//       "month": "August",
-//       "dayLight": "15.08",
-//       "hourlyMeanTemperature": "18.7",
-//       "createdDate": "2021-11-18T08:42:17.797Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95ec9f2",
-//       "sub": 9,
-//       "location": "Vancouver",
-//       "month": "September",
-//       "dayLight": "13.27",
-//       "hourlyMeanTemperature": "14.9",
-//       "createdDate": "2021-11-18T08:42:17.797Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95ec9f3",
-//       "sub": 10,
-//       "location": "Vancouver",
-//       "month": "October",
-//       "dayLight": "11.38",
-//       "hourlyMeanTemperature": "11.5",
-//       "createdDate": "2021-11-18T08:42:17.797Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95ec9f4",
-//       "sub": 11,
-//       "location": "Vancouver",
-//       "month": "November",
-//       "dayLight": "9:50",
-//       "hourlyMeanTemperature": "6.6",
-//       "createdDate": "2021-11-18T08:42:17.797Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95ec9f5",
-//       "sub": 12,
-//       "location": "Vancouver",
-//       "month": "December",
-//       "dayLight": "8.37",
-//       "hourlyMeanTemperature": "5.4",
-//       "createdDate": "2021-11-18T08:42:17.797Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95ec9f6",
-//       "sub": 13,
-//       "location": "West Vancouver",
-//       "month": "January",
-//       "dayLight": "9:22",
-//       "hourlyMeanTemperature": "5",
-//       "createdDate": "2021-11-18T08:42:17.797Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95ec9f7",
-//       "sub": 14,
-//       "location": "West Vancouver",
-//       "month": "February",
-//       "dayLight": "10:56",
-//       "hourlyMeanTemperature": "2.8",
-//       "createdDate": "2021-11-18T08:42:17.797Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95ec9f8",
-//       "sub": 15,
-//       "location": "West Vancouver",
-//       "month": "March",
-//       "dayLight": "13:12",
-//       "hourlyMeanTemperature": "6.1",
-//       "createdDate": "2021-11-18T08:42:17.797Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95ec9f9",
-//       "sub": 16,
-//       "location": "West Vancouver",
-//       "month": "April",
-//       "dayLight": "14:35",
-//       "hourlyMeanTemperature": "9.9",
-//       "createdDate": "2021-11-18T08:42:17.797Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95ec9fa",
-//       "sub": 17,
-//       "location": "West Vancouver",
-//       "month": "May",
-//       "dayLight": "15:57",
-//       "hourlyMeanTemperature": "12.2",
-//       "createdDate": "2021-11-18T08:42:17.798Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95ec9fb",
-//       "sub": 18,
-//       "location": "West Vancouver",
-//       "month": "June",
-//       "dayLight": "16:17",
-//       "hourlyMeanTemperature": "18.3",
-//       "createdDate": "2021-11-18T08:42:17.798Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95ec9fc",
-//       "sub": 19,
-//       "location": "West Vancouver",
-//       "month": "July",
-//       "dayLight": "16:11",
-//       "hourlyMeanTemperature": "19.6",
-//       "createdDate": "2021-11-18T08:42:17.798Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95ec9fd",
-//       "sub": 20,
-//       "location": "West Vancouver",
-//       "month": "August",
-//       "dayLight": "15.08",
-//       "hourlyMeanTemperature": "18.7",
-//       "createdDate": "2021-11-18T08:42:17.798Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95ec9fe",
-//       "sub": 21,
-//       "location": "Vancouver",
-//       "month": "September",
-//       "dayLight": "13.27",
-//       "hourlyMeanTemperature": "14.6",
-//       "createdDate": "2021-11-18T08:42:17.798Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95ec9ff",
-//       "sub": 22,
-//       "location": "West Vancouver",
-//       "month": "October",
-//       "dayLight": "11.38",
-//       "hourlyMeanTemperature": "10.9",
-//       "createdDate": "2021-11-18T08:42:17.798Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95eca00",
-//       "sub": 23,
-//       "location": "West Vancouver",
-//       "month": "November",
-//       "dayLight": "9:50",
-//       "hourlyMeanTemperature": "6.1",
-//       "createdDate": "2021-11-18T08:42:17.798Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95eca01",
-//       "sub": 24,
-//       "location": "West Vancouver",
-//       "month": "December",
-//       "dayLight": "8.37",
-//       "hourlyMeanTemperature": "5.2",
-//       "createdDate": "2021-11-18T08:42:17.798Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95eca02",
-//       "sub": 25,
-//       "location": "Richmond",
-//       "month": "January",
-//       "dayLight": "9:22",
-//       "hourlyMeanTemperature": "5.4",
-//       "createdDate": "2021-11-18T08:42:17.798Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95eca03",
-//       "sub": 26,
-//       "location": "Richmond",
-//       "month": "February",
-//       "dayLight": "10:57",
-//       "hourlyMeanTemperature": "3.5",
-//       "createdDate": "2021-11-18T08:42:17.799Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95eca04",
-//       "sub": 27,
-//       "location": "Richmond",
-//       "month": "March",
-//       "dayLight": "13:12",
-//       "hourlyMeanTemperature": "6.5",
-//       "createdDate": "2021-11-18T08:42:17.799Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95eca05",
-//       "sub": 28,
-//       "location": "Richmond",
-//       "month": "April",
-//       "dayLight": "14:34",
-//       "hourlyMeanTemperature": "9.8",
-//       "createdDate": "2021-11-18T08:42:17.799Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95eca06",
-//       "sub": 29,
-//       "location": "Richmond",
-//       "month": "May",
-//       "dayLight": "15:55",
-//       "hourlyMeanTemperature": "12.7",
-//       "createdDate": "2021-11-18T08:42:17.799Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95eca07",
-//       "sub": 30,
-//       "location": "Richmond",
-//       "month": "June",
-//       "dayLight": "16:15",
-//       "hourlyMeanTemperature": "17.7",
-//       "createdDate": "2021-11-18T08:42:17.799Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95eca08",
-//       "sub": 31,
-//       "location": "Richmond",
-//       "month": "July",
-//       "dayLight": "16:09",
-//       "hourlyMeanTemperature": "19.2",
-//       "createdDate": "2021-11-18T08:42:17.799Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95eca09",
-//       "sub": 32,
-//       "location": "Richmond",
-//       "month": "August",
-//       "dayLight": "15.08",
-//       "hourlyMeanTemperature": "18.7",
-//       "createdDate": "2021-11-18T08:42:17.799Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95eca0a",
-//       "sub": 33,
-//       "location": "Richmond",
-//       "month": "September",
-//       "dayLight": "13.27",
-//       "hourlyMeanTemperature": "14.9",
-//       "createdDate": "2021-11-18T08:42:17.800Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95eca0b",
-//       "sub": 34,
-//       "location": "Richmond",
-//       "month": "October",
-//       "dayLight": "11.38",
-//       "hourlyMeanTemperature": "11.5",
-//       "createdDate": "2021-11-18T08:42:17.800Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95eca0c",
-//       "sub": 35,
-//       "location": "Richmond",
-//       "month": "November",
-//       "dayLight": "9:51",
-//       "hourlyMeanTemperature": "6.6",
-//       "createdDate": "2021-11-18T08:42:17.800Z"
-//   },
-//   {
-//       "_id": "618f0d859df1faa2f95eca0d",
-//       "sub": 36,
-//       "location": "Richmond",
-//       "month": "December",
-//       "dayLight": "8.37",
-//       "hourlyMeanTemperature": "5.4",
-//       "createdDate": "2021-11-18T08:42:17.800Z"
-//   }
-// ]
