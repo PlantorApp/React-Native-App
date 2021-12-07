@@ -94,7 +94,8 @@ const SavedScreen = (props) => {
                       date : item.date,
                       cityLightingDuration : item.cityLightingDuration,
                       petFriendly : item.petFriendly,
-                      lightDirLighting : item.lightDirLighting
+                      lightDirLighting : item.lightDirLighting,
+                      alreadySaved : true
                     })} style={styles.titleStyle}>{item.title}</Text>
                       <AntDesign name="ellipsis1" size={24} color="black" onPress={(id) => {
                         setActionSheet(true); 
@@ -108,7 +109,7 @@ const SavedScreen = (props) => {
                       <Svg width="22" height="22" viewBox="0 -1 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <Path d="M19 12.6561C19 13.3535 18.7222 14.0223 18.2276 14.5154C17.7331 15.0085 17.0623 15.2855 16.3629 15.2855H5.66804C4.96864 15.2937 4.29464 15.0244 3.79432 14.5371C3.294 14.0497 3.00834 13.3842 3.00018 12.6868C2.99202 11.9894 3.26203 11.3174 3.75081 10.8185C4.23959 10.3197 4.9071 10.0348 5.60651 10.0267C5.4955 9.19728 5.68137 8.35541 6.13141 7.64915C6.58145 6.94289 7.26684 6.41747 8.06702 6.16532C8.86721 5.91316 9.73095 5.95042 10.5063 6.27053C11.2817 6.59064 11.919 7.17311 12.3062 7.91548C12.7089 7.67024 13.1678 7.5315 13.6393 7.51236C14.1109 7.49323 14.5795 7.59435 15.0009 7.80614C15.4223 8.01794 15.7826 8.33342 16.0477 8.72274C16.3127 9.11207 16.4738 9.56237 16.5156 10.0311C17.1875 10.0699 17.819 10.3634 18.2809 10.8515C18.7427 11.3395 19 11.9851 19 12.6561V12.6561Z" stroke="#B7A878" strokeWidth="1.5" strokeLinejoin="round"/>
                       </Svg>
-                      <Text style={styles.descriptionText}> {item.season? item.season : "Fall"}</Text>
+                      <Text style={styles.descriptionText}> {item.season? item.season : "Summer"}</Text>
                       <Svg style={{marginLeft: 20}} width="22" height="22" viewBox="0 -1 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <Ellipse rx="2.52632" ry="2.59649" transform="matrix(-1 0 0 1 11.0967 9.80743)" stroke="#B7A878" strokeWidth="1.5" strokeLinejoin="round"/>
                         <Path d="M11.0264 3C14.6308 3 17.5527 5.9222 17.5527 9.52691C17.5527 10.7914 17.1932 12.0625 16.5708 13.0623C15.6291 14.7092 12.1595 19 11.0264 19C10.0747 19 6.58991 15.2682 5.48204 13.0623C4.85963 12.0625 4.5001 10.7914 4.5001 9.52691C4.5001 5.9222 7.42203 3 11.0264 3Z" stroke="#B7A878" strokeWidth="1.5" strokeLinejoin="round"/>
