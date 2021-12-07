@@ -5,7 +5,7 @@ import { View, Image, Platform, TouchableWithoutFeedback, Animated, TouchableOpa
 import { Box, Heading, HStack, ScrollView } from "native-base";
 import Svg, { Path } from 'react-native-svg';
 
-const Home = ({ navigation, loggedInUser }) => {
+const Home = ({ navigation, loggedInUser, verify }) => {
   const [bookmarkedOne, setBookmarkedOne] = useState(false)
   const [bookmarkedTwo, setBookmarkedTwo] = useState(false)
   const [bookmarkedThree, setBookmarkedThree] = useState(false)
@@ -16,29 +16,53 @@ const Home = ({ navigation, loggedInUser }) => {
   const [animatedValueLoop] = useState(new Animated.Value(1))
   const animatedStyle = { transform: [{ scale: animatedValue }] }
   const animatedStyleLoop = { transform: [{ scale: animatedValueLoop }] }
+  let user = loggedInUser;
+  const userVerifyID = verify;
+
+  const updateBookmarks = (articlesBookmarked) => {
+    for(let i = 0; i< articlesBookmarked.length; i++) {
+      switch (articlesBookmarked[i]) {
+        case  "1":
+          setBookmarkedOne(true);
+          break;
+        case "2":
+          setBookmarkedTwo(true);
+          break;
+        case "3":
+          setBookmarkedThree(true);
+          break;
+        case "4":
+          setBookmarkedFour(true);
+          break;
+        case "5":
+          setBookmarkedFive(true);
+          break;
+        default:
+          break;
+      }
+    }
+  }
 
   const toggleBookmarked = async (id) => {
-    // console.log("clicked id is :", id);
-    let user = loggedInUser;
-    // console.log(user);
     if(user) {
-      const response = await fetch(`https://app.plantor.app/backend-users/users/${user.sub}`);
-      // const response = await fetch(`http://192.168.0.18:3003/users/${user.sub}`);
+      const requestOptions = {
+        method: "GET",
+        headers: { "Content-Type": "application/json", "Authorization": verify }
+      };
+      const response = await fetch(`https://app.plantor.app/backend-users/users/${user.sub}`, requestOptions);
+      // const response = await fetch(`http://192.168.0.18:3003/users/${user.sub}`, requestOptions);
       const data = await response.json();
-      // console.log("user from db :", data)
-      
+      // console.log(data)
+      // updateBookmarks(data.favouriteArticles);
       let condition;
       if (id === "1") {
-        // console.log("user is :", user)
         condition = data.favouriteArticles.findIndex((element) => element === "1")
         if(condition === -1) {
           setBookmarkedOne(true)
-          // console.log("inside line 70",condition)
           data.favouriteArticles.push(id);
-          // console.log("after pushing : ", data)
           const requestOptions = {
             method: "PUT",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "Authorization": verify },
             body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
           };
           const response2 = await fetch(`https://app.plantor.app/backend-users/users/${data.sub}`,
@@ -46,7 +70,6 @@ const Home = ({ navigation, loggedInUser }) => {
             requestOptions
           );
           const data2 = await response2.json();
-          // console.log("inside favouriteArticles :", data2)
         } else {
           setBookmarkedOne(false);
           let condition = data.favouriteArticles.findIndex((element) => element === id)
@@ -54,28 +77,24 @@ const Home = ({ navigation, loggedInUser }) => {
             data.favouriteArticles.splice(data.favouriteArticles.findIndex((element) => element === id), 1);
             const requestOptions = {
               method: "PUT",
-              headers: { "Content-Type": "application/json" },
+              headers: { "Content-Type": "application/json", "Authorization": verify },
               body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
             };
-
             const response = await fetch(`https://app.plantor.app/backend-users/users/${data.sub}`,
             // const response = await fetch(`http://192.168.0.18:3003/users/${data.sub}`,
               requestOptions
             );
             const data2 = await response.json();
-            // console.log("after removing", data2)
           }
         }
       } else if(id === "2") {
         condition = data.favouriteArticles.findIndex((element) => element === "2")
         if(condition === -1) {
           setBookmarkedTwo(true)
-          // console.log("inside line 70",condition)
           data.favouriteArticles.push(id);
-          // console.log("after pushing : ", data)
           const requestOptions = {
             method: "PUT",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "Authorization": verify },
             body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
           };
           const response2 = await fetch(`https://app.plantor.app/backend-users/users/${data.sub}`,
@@ -83,7 +102,6 @@ const Home = ({ navigation, loggedInUser }) => {
             requestOptions
           );
           const data2 = await response2.json();
-          // console.log("inside favouriteArticles :", data2)
         } else {
           setBookmarkedTwo(false);
           let condition = data.favouriteArticles.findIndex((element) => element === id)
@@ -91,7 +109,7 @@ const Home = ({ navigation, loggedInUser }) => {
             data.favouriteArticles.splice(data.favouriteArticles.findIndex((element) => element === id), 1);
             const requestOptions = {
               method: "PUT",
-              headers: { "Content-Type": "application/json" },
+              headers: { "Content-Type": "application/json", "Authorization": verify },
               body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
             };
             const response = await fetch(`https://app.plantor.app/backend-users/users/${data.sub}`,
@@ -99,19 +117,16 @@ const Home = ({ navigation, loggedInUser }) => {
               requestOptions
             );
             const data2 = await response.json();
-            // console.log("after removing", data2)
           }
         }
       } else if(id === "3") {
         condition = data.favouriteArticles.findIndex((element) => element === "3")
         if(condition === -1) {
           setBookmarkedThree(true)
-          // console.log("inside line 70",condition)
           data.favouriteArticles.push(id);
-          // console.log("after pushing : ", data)
           const requestOptions = {
             method: "PUT",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "Authorization": verify },
             body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
           };
           const response2 = await fetch(`https://app.plantor.app/backend-users/users/${data.sub}`,
@@ -119,7 +134,6 @@ const Home = ({ navigation, loggedInUser }) => {
             requestOptions
           );
           const data2 = await response2.json();
-          // console.log("inside favouriteArticles :", data2)
         } else {
           setBookmarkedThree(false);
           let condition = data.favouriteArticles.findIndex((element) => element === id)
@@ -127,7 +141,7 @@ const Home = ({ navigation, loggedInUser }) => {
             data.favouriteArticles.splice(data.favouriteArticles.findIndex((element) => element === id), 1);
             const requestOptions = {
               method: "PUT",
-              headers: { "Content-Type": "application/json" },
+              headers: { "Content-Type": "application/json", "Authorization": verify },
               body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
             };
             const response = await fetch(`https://app.plantor.app/backend-users/users/${data.sub}`,
@@ -135,19 +149,16 @@ const Home = ({ navigation, loggedInUser }) => {
               requestOptions
             );
             const data2 = await response.json();
-            // console.log("after removing", data2)
           }
         } 
       } else if(id === "4") {
         condition = data.favouriteArticles.findIndex((element) => element === "4")
         if(condition === -1){
           setBookmarkedFour(true)
-          // console.log("inside line 70",condition)
           data.favouriteArticles.push(id);
-          // console.log("after pushing : ", data)
           const requestOptions = {
             method: "PUT",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "Authorization": verify },
             body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
           };
           const response2 = await fetch(`https://app.plantor.app/backend-users/users/${data.sub}`,
@@ -155,7 +166,6 @@ const Home = ({ navigation, loggedInUser }) => {
             requestOptions
           );
           const data2 = await response2.json();
-          // console.log("inside favouriteArticles :", data2)
         } else {
           setBookmarkedFour(false);
           let condition = data.favouriteArticles.findIndex((element) => element === id)
@@ -163,7 +173,7 @@ const Home = ({ navigation, loggedInUser }) => {
             data.favouriteArticles.splice(data.favouriteArticles.findIndex((element) => element === id), 1);
             const requestOptions = {
               method: "PUT",
-              headers: { "Content-Type": "application/json" },
+              headers: { "Content-Type": "application/json", "Authorization": verify },
               body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
             };
             const response = await fetch(`https://app.plantor.app/backend-users/users/${data.sub}`,
@@ -171,19 +181,16 @@ const Home = ({ navigation, loggedInUser }) => {
               requestOptions
             );
             const data2 = await response.json();
-            // console.log("after removing", data2)
           }
         }
       } else {
         condition = data.favouriteArticles.findIndex((element) => element === "5")
         if(condition === -1) {
           setBookmarkedFive(true)
-          // console.log("inside line 70",condition)
           data.favouriteArticles.push(id);
-          // console.log("after pushing : ", data)
           const requestOptions = {
             method: "PUT",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "Authorization": verify },
             body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
           };
           const response2 = await fetch(`https://app.plantor.app/backend-users/users/${data.sub}`,
@@ -191,7 +198,6 @@ const Home = ({ navigation, loggedInUser }) => {
             requestOptions
           );
           const data2 = await response2.json();
-          // console.log("inside favouriteArticles :", data2)
         } else {
           setBookmarkedFive(false);
           let condition = data.favouriteArticles.findIndex((element) => element === id)
@@ -199,7 +205,7 @@ const Home = ({ navigation, loggedInUser }) => {
             data.favouriteArticles.splice(data.favouriteArticles.findIndex((element) => element === id), 1);
             const requestOptions = {
               method: "PUT",
-              headers: { "Content-Type": "application/json" },
+              headers: { "Content-Type": "application/json", "Authorization": verify },
               body: JSON.stringify({ favouriteArticles: data.favouriteArticles }),
             };
             const response = await fetch(`https://app.plantor.app/backend-users/users/${data.sub}`,
@@ -207,7 +213,6 @@ const Home = ({ navigation, loggedInUser }) => {
               requestOptions
             );
             const data2 = await response.json();
-            // console.log("after removing", data2)
           }
         }
       }
