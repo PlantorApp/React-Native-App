@@ -26,6 +26,7 @@ const EnvironmentName = ({ navigation, route, loggedInUser}) => {
             city : currentEnvironment.city,
             temp : currentEnvironment.temp,
             date : currentEnvironment.date,
+            season : currentEnvironment.season,
             cityLightingDuration : currentEnvironment.cityLightingDuration,
             petFriendly : currentEnvironment.petFriendly
         }
@@ -33,10 +34,13 @@ const EnvironmentName = ({ navigation, route, loggedInUser}) => {
         // console.log("before uodate : ", loggedInUser)
         
         const index = loggedInUser.savedEnvironments.findIndex((el) => el.id === currentEnvironment.id)
+        console.log("index is : ", index)
+        if(index >= 0){
+            loggedInUser.savedEnvironments.splice(index,1,environmentToSave)
+        }else{
+            loggedInUser.savedEnvironments.push(environmentToSave)
+        }
 
-        loggedInUser.savedEnvironments.splice(index,1)
-        loggedInUser.savedEnvironments.push(environmentToSave)
-    
         const requestOptions = {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Text, View, Image, Pressable, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import Svg, { Circle, Line, Path } from "react-native-svg";
+import uuid from 'react-native-uuid';
 
 const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
   const [entries, setEntries] = useState([])
@@ -19,6 +20,7 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
   // const temp = 22;
   const date = route.params.date;
   // const date = "April";
+  const season = route.params.season;
   const cityLightingDuration = Cities.length > 0 && Cities.filter(el => el.location === city).filter(el => el.month === date)[0].dayLight;
   // console.log(cityLightingDuration);
   let lightDirLighting;
@@ -202,10 +204,12 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
           </Box>
 
           <Pressable style={{borderRadius: 50, borderWidth: 1, borderColor: '#DDDDDD', padding: 14, width: 270, backgroundColor: '#827344', position: 'absolute', bottom: 24}} android_ripple={{color: '#DDDDDD', radius:4, foreground: true}} onPress={ () => navigation.navigate('EnvironmentName',{
+            id : uuid.v4(),
             outdoor : outdoor,
             city : city,
             temp : temp,
             date : date,
+            season : season,
             cityLightingDuration : cityLightingDuration,
             petFriendly : petFriendly 
           })} >
