@@ -42,7 +42,6 @@ const Climate = ({ navigation, route }) => {
     const api_call = await fetch(url)
 
     const response = await api_call.json()
-    console.log('response', response)
 
     setTemp(parseInt(response.main.temp))
     if(response.weather[0].main === "Drizzle") {
