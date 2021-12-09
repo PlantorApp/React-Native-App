@@ -43,22 +43,22 @@ const ProfileScreen = ({ isLogged, setIsLogged, setLoggedInUser, loggedInUser, s
             {!isLogged ? (<Login setUser={setUser} isLogged={isLogged} setVerify={setVerify} setIsLogged={setIsLogged} setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} setUserInfo={setUserInfo} setMongoLoggedInUser={setMongoLoggedInUser} />) : (<View>
               <Box mt={4}>
                 {profilePicUri ? <Image source={{ uri: userInfo?.profilePicUri }} alt="Logged in user" style={{width: 99, height: 99, borderRadius: 99}} />
-                : <Image source={require('../assets/plantImage.png')} alt="Profile Image" style={{width: 99, height: 99, borderRadius: 99}} />}
+                : <Image source={require('../assets/plantSuggestions.png')} alt="Profile Image" style={{width: 99, height: 99, borderRadius: 99}} />}
               </Box>
-              <HStack justifyContent="flex-start" space={2} style={styles.border} >
-              <Svg width="22" height="22" viewBox="0 -1 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <Path d="M17.6502 6H4.34981C3.60433 6 3 6.60433 3 7.34981V15.5379C3 16.2834 3.60433 16.8877 4.34981 16.8877H17.6502C18.3957 16.8877 19 16.2834 19 15.5379V7.34981C19 6.60433 18.3957 6 17.6502 6Z" stroke="#B7A878" strokeWidth="1.5" strokeMiterlimit="10" strokeLinejoin="round"/>
-                <Path d="M3.44531 6.46875L9.12446 12.23C9.12446 12.23 10.8586 14.4338 12.8342 12.23C14.8097 10.0263 18.5579 6.46875 18.5579 6.46875" stroke="#B7A878" strokeWidth="1.5" strokeMiterlimit="10" strokeLinejoin="round"/>
-                <Path d="M3.44531 16.4181L8.44398 11.5391" stroke="#B7A878" strokeWidth="1.5" strokeMiterlimit="10" strokeLinejoin="round"/>
-                <Path d="M18.5567 16.4192L13.5195 11.4844" stroke="#B7A878" strokeWidth="1.5" strokeMiterlimit="10" strokeLinejoin="round"/>
-              </Svg>
+              <HStack justifyContent="flex-start" space={2} style={{borderBottomWidth: 1, borderColor: "lightgrey", paddingBottom: 12, paddingTop: 20}} >
+                <Svg width="22" height="22" viewBox="0 -1 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <Path d="M17.6502 6H4.34981C3.60433 6 3 6.60433 3 7.34981V15.5379C3 16.2834 3.60433 16.8877 4.34981 16.8877H17.6502C18.3957 16.8877 19 16.2834 19 15.5379V7.34981C19 6.60433 18.3957 6 17.6502 6Z" stroke="#B7A878" strokeWidth="1.5" strokeMiterlimit="10" strokeLinejoin="round"/>
+                  <Path d="M3.44531 6.46875L9.12446 12.23C9.12446 12.23 10.8586 14.4338 12.8342 12.23C14.8097 10.0263 18.5579 6.46875 18.5579 6.46875" stroke="#B7A878" strokeWidth="1.5" strokeMiterlimit="10" strokeLinejoin="round"/>
+                  <Path d="M3.44531 16.4181L8.44398 11.5391" stroke="#B7A878" strokeWidth="1.5" strokeMiterlimit="10" strokeLinejoin="round"/>
+                  <Path d="M18.5567 16.4192L13.5195 11.4844" stroke="#B7A878" strokeWidth="1.5" strokeMiterlimit="10" strokeLinejoin="round"/>
+                </Svg>
                 <Text style={styles.emailStyle}>{userInfo?.email}</Text>
               </HStack>
               <HStack 
                 width="100%"
                 justifyContent="space-between"
                 alignItems="center"
-                style={styles.border}
+                style={{borderBottomWidth: 1, borderColor: "lightgrey", paddingBottom: 8, paddingTop: 8}}
               >
                 <Text style={styles.normalText}>Notifications Settings</Text>
                 <Switch
@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     justifyContent: 'center',
+    marginTop: 32,
     paddingVertical: 12,
     paddingHorizontal: 12,
     borderRadius: 90,
@@ -149,6 +150,6 @@ const styles = StyleSheet.create({
     color: "#666666",
     fontSize: 16,
     fontFamily: "QuickSandRegular",
-    marginBottom: 20
+    marginBottom: 10
   }
 });

@@ -212,7 +212,7 @@ const Suggestions = ({ navigation, route, loggedInUser, setEnvList }) => {
             petFriendly : petFriendly,
             lightDirLighting : lightDirLighting
           })} >
-            <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, lineHeight: 24, color: '#FFFFFF', textAlign: 'center'}}>Save Environment</Text>
+            <Text style={{fontFamily: 'QuickSandBold', fontSize: 20, lineHeight: 24, color: '#FFFFFF', textAlign: 'center'}}>{alreadySaved ? "Rename" : "Save"} Environment</Text>
         </Pressable>
         </View>
       </ScrollView>

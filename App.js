@@ -23,13 +23,6 @@ export default function App() {
   const [verify, setVerify] = useState("");
   let targetScreen;
 
-  // console.log("logged in user is : ", mongoLoggedInUser);
-  // console.log("value of is logged is: ", isLogged);
-  // console.log("App.js has setLoggedInUser ", setLoggedInUser)
-  // useEffect(() => {
-  //   registerForPushNotification().then(token => console.log(token)).catch(err => console.log(err))
-  // }, []);
-
   useEffect(() => {
     targetScreen = notification && notification.request.content.data.screen;
     registerForPushNotificationsAsync().then((token) =>
@@ -43,7 +36,6 @@ export default function App() {
 
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        // console.log("clicked");
         navigation.navigate('Notifications', { screen: 'NotificationScreen' });
       });
 
@@ -59,7 +51,7 @@ export default function App() {
     await Notifications.scheduleNotificationAsync({
       content: {
         title: "Rainfall Warning",
-        body: "Short description about alert & how it will impact the garden so that use...",
+        body: "Special weather statement in effect: Heavy precipitation and strong winds for the B.C. south...",
         data: { screen: "PushNotifications" },
       },
       trigger: { seconds: 2 },
@@ -81,7 +73,6 @@ export default function App() {
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
-      // console.log(token);
     } else {
       alert("Must use physical device for Push Notifications");
     }

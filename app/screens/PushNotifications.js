@@ -25,34 +25,34 @@ const PushNotifications = ({ navigation }) => {
     {
       id: "1",
       image: require("../assets/png/1872.png"),
-      title: "Rainfall Warning",
+      title: "Rainfall Warning!",
       description:
-        "Short description about alert & how it will impact the garden so that use...",
+        "Special weather statement in effect: Heavy precipitation and strong wind...",
       date: "12/09/2021",
     },
     {
       id: "2",
-      image: require("../assets/png/1875.png"),
-      title: "Heat Wave Warning",
-      description:
-        "Short description about alert & how it will impact the garden so that use...",
-      date: "19/06/2021",
-    },
-    {
-      id: "3",
       image: require("../assets/png/1871.png"),
       title: "Winter is coming!",
       description:
-        "Short description about alert & how it will impact the garden so that use...",
-      date: "22/08/2021",
+        "Winter can seem long but it's also a time of year that can be a lot of fun...",
+      date: "11/22/2021",
     },
     {
-      id: "4",
+      id: "3",
       image: require("../assets/png/1870.png"),
       title: "Fall is coming!",
       description:
-        "Short description about alert & how it will impact the garden so that use...",
-      date: "24/06/2021",
+        "In the fall, days seem shorter as there are fewer hours of sunlight and the...",
+      date: "08/24/2021",
+    },
+    {
+      id: "4",
+      image: require("../assets/png/1875.png"),
+      title: "Heat Wave Warning!",
+      description:
+        "long heat wave beginning Friday, June 25 and lasting until Tuesday, J...",
+      date: "06/19/2021",
     },
   ];
 

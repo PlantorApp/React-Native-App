@@ -18,13 +18,13 @@ const Lighting = ({ navigation }) => {
                 <HStack>
                     <TouchableOpacity onPress={() => {navigation.navigate('NaturalLight'); setNatural(true)}}>
                         <Card>
-                        <Card.Image source={require('../../assets/cardImage.svg')} />
+                        {/* <Card.Image source={require('../../assets/cardImage.svg')} /> */}
                         <Card.Title>Natural Light</Card.Title>
                     </Card>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {navigation.navigate('ArtificialLight'); setArtificial(true);}}>
                         <Card>
-                        <Card.Image source={require('../../assets/cardImage.svg')} />
+                        {/* <Card.Image source={require('../../assets/cardImage.svg')} /> */}
                         <Card.Title>Artificial Light</Card.Title>
                     </Card>
                     </TouchableOpacity>
